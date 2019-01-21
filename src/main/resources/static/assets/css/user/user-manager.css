@@ -1,0 +1,21 @@
+#logo-title{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 25px;
+    color: #1b9eca;
+    font-family: 新宋体;
+}
+
+.input-alert-lable{
+    color: red;
+    font-family: 宋体;
+    font-size: 8px;
+    display: none;
+}
+
+.my-am-modal-bd {
+    padding: 15px 10px;
+    text-align: left;
+    border-bottom: 1px solid #dedede;
+    border-radius: 2px 2px 0 0
+}
