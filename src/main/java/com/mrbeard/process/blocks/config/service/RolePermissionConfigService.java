@@ -16,5 +16,12 @@ public interface RolePermissionConfigService {
      * 获取角色列表
      * @return
      */
-    Result getRoleList() throws ProcessRuntimeException;
+    Result getRoleList(Integer pageNum,Integer pageSize) throws ProcessRuntimeException;
+
+    /**
+     * 获取权限列表
+     * @param rid
+     * @return
+     */
+    Result getPermissionList(String rid) throws ProcessRuntimeException;
 }

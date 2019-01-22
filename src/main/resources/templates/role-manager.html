@@ -278,10 +278,9 @@
                                        id="example-r">
                                     <thead>
                                     <tr>
-                                        <th>用户名</th>
-                                        <th>昵称</th>
+                                        <th>权限名</th>
+                                        <th>描述</th>
                                         <th>创建时间</th>
-                                        <th>状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -450,11 +449,12 @@
                     </div>
 
                     <div class="am-form-group">
-                        <label for="role-list">角色</label>
-                        <select id="role-list">
-                            <!--<option value="option1">选项一...</option>-->
-                            <!--<option value="option2">选项二.....</option>-->
-                            <!--<option value="option3">选项三........</option>-->
+                        <label for="permission-list">角色</label><br/>
+                        <select multiple data-am-selected="{maxHeight: 200}" id="permission-list">
+                            <!--<option value="a">Apple</option>-->
+                            <!--<option value="b" selected>Banana</option>-->
+                            <!--<option value="o">Orange</option>-->
+                            <!--<option value="m" selected>Mango</option>-->
                         </select>
                         <span class="am-form-caret"></span>
                     </div>

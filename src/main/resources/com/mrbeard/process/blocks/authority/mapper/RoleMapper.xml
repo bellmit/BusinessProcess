@@ -60,6 +60,19 @@
         from qx_role
     </select>
 
+    <select id="getPermissionList" resultType="com.mrbeard.process.blocks.authority.model.Permission" parameterType="java.lang.String">
+        select
+        p.pid,p.pname,p.ptype,p.pvalue,p.created,p.updated
+        from qx_permission p
+        <if test="roleId != null and roleId != ''">
+            left join qx_rolepermission rp on rp.pid = p.pid
+        </if>
+        where 1 = 1
+        <if test="roleId != null and roleId != ''">
+           and rp.rid = #{roleId,jdbcType=VARCHAR}
+        </if>
+    </select>
+
     <delete id="deleteById" parameterType="java.lang.String">
         delete
         from qx_role

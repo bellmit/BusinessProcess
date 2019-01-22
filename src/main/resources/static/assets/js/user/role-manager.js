@@ -64,31 +64,29 @@ $(function () {
     });
 
     /**
-     * 获取用户列表数据
+     * 获取角色列表数据
      */
-    getUserList(1, 5, '', usertoken);
+    getMainRoleList(1, 5, usertoken);
 
 
 })
 
 /**
- * /getUserList
+ * /getRoleList参数
  * @param pageNum
  * @param pageSize
  * @param uname
  * @param usertoken
  * @returns {{pageNum: *, pageSize: *, uname: *, usertoken: *}}
  */
-function getUserListParms(pageNum, pageSize, uname, usertoken) {
+function getROleListParms(pageNum, pageSize, usertoken) {
     var pageNum = pageNum;
     var pageSize = pageSize;
-    var uname = uname;
     var usertoken = usertoken;
 
     var data = {
         'pageNum': pageNum,
         'pageSize': pageSize,
-        'uname': uname,
         'usertoken': usertoken
     }
     return data;
@@ -96,15 +94,15 @@ function getUserListParms(pageNum, pageSize, uname, usertoken) {
 
 
 /**
- * 获取用户列表
+ * 获取角色列表
  */
-function getUserList(pageNum, pageSize, uname, usertoken) {
+function getMainRoleList(pageNum, pageSize, usertoken) {
     $.ajax({
-        url: '/api/getUserList',
+        url: '/api/getRoleList',
         cache: true,
         type: 'GET',
         dataType: 'json',
-        data: getUserListParms(pageNum, pageSize, uname, usertoken)
+        data: getROleListParms(pageNum, pageSize, usertoken)
     }).then(function (data) {
         // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
         //取消加载动画
@@ -116,7 +114,7 @@ function getUserList(pageNum, pageSize, uname, usertoken) {
             //设置底部分页栏
             setPageBar(data);
             //设置数据列表
-            setUserList(data);
+            setRoleDataList(data);
         } else {
             // 返回信息
             $('#modal-alert .am-modal-bd').text(data.data);
@@ -176,28 +174,22 @@ function setPageBar(data) {
 /**
  * 设置数据列表
  */
-function setUserList(result) {
+function setRoleDataList(result) {
     var list = '';
     var {code, message, data} = result;
     var html = '';
     data.list.forEach((item, index) => {
-        var state = '';
-        if (item.state == 1) {
-            state = "  <td>启用</td>";
-        } else {
-            state = "  <td>禁用</td>";
-        }
-        let uid = "\'" + item.uid + "\'";
+        let rid = "\'" + item.rid + "\'";
         html += "<tr class=\"gradeX\">" +
-            "  <td>" + item.uname + "</td>" +
-            "  <td>" + item.nick + "</td>" +
-            "  <td>" + item.created + "</td>" + state +
+            "  <td>" + item.rname + "</td>" +
+            "  <td>" + item.rdescription + "</td>" +
+            "  <td>" + item.created + "</td>" +
             "  <td>" +
             "      <div class=\"tpl-table-black-operation\">" +
-            "            <a href=\"javascript:;\" onclick=\"editUser(" + uid + ")\">" +
+            "            <a href=\"javascript:;\" onclick=\"editRole(" + rid + ")\">" +
             "                <i class=\"am-icon-pencil\"></i> 编辑" +
             "            </a>" +
-            "            <a href=\"javascript:;\" class=\"tpl-table-black-operation-del\" onclick=\"deleteUser(" + uid + ")\">" +
+            "            <a href=\"javascript:;\" class=\"tpl-table-black-operation-del\" onclick=\"deleteRole(" + rid + ")\">" +
             "                 <i class=\"am-icon-trash\"></i> 删除" +
             "            </a>" +
             "       </div>" +
@@ -227,7 +219,7 @@ function setAlertPage(flag) {
  * @param prePage
  */
 function nexPage(prePage) {
-    getUserList(prePage + 1, 5, "", usertoken);
+    getMainRoleList(prePage + 1, 5, usertoken);
 }
 
 /**
@@ -236,39 +228,39 @@ function nexPage(prePage) {
  * @param prePage
  */
 function prePage(prePage) {
-    getUserList(prePage - 1, 5, "", usertoken);
+    getMainRoleList(prePage - 1, 5, usertoken);
 }
 
 /**
- * 新增用户
+ * 新增角色
  */
 $('#add-user-buttton').on('click', function () {
-    //获取所有角色
-    getRoleList();
+    //获取所有权限
+    getPermissionList();
     //修改标题为新增用户
-    $('#user-edit-title').html("新增用户");
+    $('#user-edit-title').html("新增角色");
     //新增
     $('#add-user-modal').modal();
 })
 
 
 /**
- * 获取角色列表
+ * 获取权限列表
  */
-function getRoleList() {
+function getPermissionList(rid) {
     $.ajax({
-        url: '/api/getRoleList',
+        url: '/api/getPermissionList',
         cache: true,
         type: 'GET',
         dataType: 'json',
-        data: {"usertoken": usertoken}
+        data: {"rid":rid,"usertoken": usertoken}
     }).then(function (data) {
         // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
         //取消加载动画
         $('#reload-modal-loading').modal('close');
         if (data.code == 200 && data.message == "success") {
-            //设置角色下拉框
-            setRoleList(data);
+            //设置权限下拉框
+            setPermissionList(data);
         } else {
             $('#add-user-modal').modal("close");
             // 返回信息
@@ -287,18 +279,18 @@ function getRoleList() {
 /**
  * 设置下拉列表
  */
-function setRoleList(result) {
+function setPermissionList(result) {
     var html = '';
     //循环数据
     result.data.forEach((item, index) => {
-        html += "<option value=" + item.rid + ">" + item.rname + "</option>";
+        html += "<option value=" + item.pid + ">" + item.pname + "</option>";
     })
     //设置
     $('#role-list').html(html);
 }
 
 /**
- * 新增、编辑用户
+ * 新增、编辑用户提交
  */
 $('#adduser-submit-button').on('click', function () {
     //校验信息输入
@@ -394,14 +386,14 @@ $('#reload-buttton').on('click', function () {
 /**
  * 编辑
  */
-function editUser(uid) {
+function editRole(rid) {
     //获取对应用户信息
     $.ajax({
         url: '/api/getUser',
         cache: true,
         type: 'GET',
         dataType: 'json',
-        data: {"uid": uid, "usertoken": usertoken}
+        data: {"rid": rid, "usertoken": usertoken}
     }).then(function (data) {
         // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
         //取消加载动画
@@ -410,7 +402,7 @@ function editUser(uid) {
             // 返回信息并设置到输入框中
             $('#uname-input').val(data.data.uname);
             $('#nick-input').val(data.data.nick);
-            $('#uid-input').val(uid);
+            $('#uid-input').val(rid);
             //修改标题为编辑用户
             $('#user-edit-title').html("编辑用户");
             getRoleList();
@@ -431,10 +423,10 @@ function editUser(uid) {
 
 
 /**
- * 删除用户信息
- * @param uid
+ * 删除角色信息
+ * @param rid
  */
-function deleteUser(uid) {
+function deleteRole(rid) {
     $('#delete-confirm').modal({
         relatedTarget: this,
         onConfirm: function (options) {
@@ -444,7 +436,7 @@ function deleteUser(uid) {
                 cache: true,
                 type: 'POST',
                 dataType: 'json',
-                data: {"uid": uid, "usertoken": usertoken}
+                data: {"rid": rid, "usertoken": usertoken}
             }).then(function (data) {
                 // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
                 //取消加载动画

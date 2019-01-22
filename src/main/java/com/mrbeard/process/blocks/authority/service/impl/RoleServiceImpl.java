@@ -1,10 +1,12 @@
 package com.mrbeard.process.blocks.authority.service.impl;
 
 import com.mrbeard.process.blocks.authority.mapper.RoleMapper;
+import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.UserRole;
 import com.mrbeard.process.blocks.authority.service.RoleService;
 import com.mrbeard.process.exception.ProcessRuntimeException;
+import com.mrbeard.process.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -174,6 +176,21 @@ public class RoleServiceImpl  implements RoleService {
     public List<Role> getRoleList() throws ProcessRuntimeException {
         try {
             return roleDao.getRoleList();
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取权限列表
+     * @param rid
+     * @return
+     */
+    @Override
+    public List<Permission> getPermissionList(String rid) {
+        try {
+            return roleDao.getPermissionList(rid);
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             throw new ProcessRuntimeException(e.getMessage());

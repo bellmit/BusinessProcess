@@ -1,9 +1,11 @@
 package com.mrbeard.process.blocks.authority.service;
 
 
+import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.UserRole;
 import com.mrbeard.process.exception.ProcessRuntimeException;
+import com.mrbeard.process.result.Result;
 
 import java.util.List;
 
@@ -88,4 +90,11 @@ public interface RoleService {
      * @throws ProcessRuntimeException
      */
     List<Role> getRoleList() throws ProcessRuntimeException;
+
+    /**
+     * 获取权限列表
+     * @param rid
+     * @return
+     */
+    List<Permission> getPermissionList(String rid);
 }

@@ -261,7 +261,7 @@ function getRoleList() {
         cache: true,
         type: 'GET',
         dataType: 'json',
-        data: {"usertoken": usertoken}
+        data: {"pageNum":1,"pageSize":100,"usertoken": usertoken}
     }).then(function (data) {
         // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
         //取消加载动画
@@ -290,7 +290,7 @@ function getRoleList() {
 function setRoleList(result) {
     var html = '';
     //循环数据
-    result.data.forEach((item, index) => {
+    result.data.list.forEach((item, index) => {
         html += "<option value=" + item.rid + ">" + item.rname + "</option>";
     })
     //设置

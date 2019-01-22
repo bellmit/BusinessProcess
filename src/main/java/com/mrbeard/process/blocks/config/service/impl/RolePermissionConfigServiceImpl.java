@@ -1,5 +1,8 @@
 package com.mrbeard.process.blocks.config.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.service.RoleService;
 import com.mrbeard.process.blocks.config.service.RolePermissionConfigService;
@@ -30,12 +33,30 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      * @return
      */
     @Override
-    public Result getRoleList() throws ProcessRuntimeException {
+    public Result getRoleList(Integer pageNum,Integer pageSize) throws ProcessRuntimeException {
         //判断是否有权限
         if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
             return ResultGenerator.getErrorResult("权限不足！");
         }
+        PageHelper.startPage(pageNum,pageSize);
         List<Role> roleList = roleService.getRoleList();
-        return ResultGenerator.getSuccessResult(roleList);
+        PageInfo<Role> pageInfo = new PageInfo<>(roleList);
+        return ResultGenerator.getSuccessResult(pageInfo);
+    }
+
+    /**
+     * 获取权限列表
+     * @param rid
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @Override
+    public Result getPermissionList(String rid) throws ProcessRuntimeException {
+        //判断是否有权限
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
+        }
+        List<Permission> permissionList = roleService.getPermissionList(rid);
+        return ResultGenerator.getSuccessResult(permissionList);
     }
 }
