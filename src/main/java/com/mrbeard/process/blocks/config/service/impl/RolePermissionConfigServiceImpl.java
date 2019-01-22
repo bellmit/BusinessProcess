@@ -6,12 +6,11 @@ import com.mrbeard.process.blocks.config.service.RolePermissionConfigService;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
-import com.mrbeard.process.util.SessionUtil;
+import com.mrbeard.process.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @ClassName RolePermissionConfigServiceImpl
@@ -33,10 +32,8 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
     @Override
     public Result getRoleList() throws ProcessRuntimeException {
         //判断是否有权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         List<Role> roleList = roleService.getRoleList();
         return ResultGenerator.getSuccessResult(roleList);

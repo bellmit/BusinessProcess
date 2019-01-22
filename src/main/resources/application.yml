@@ -11,7 +11,7 @@ spring:
 
   datasource:
 #    url: jdbc:mysql://119.29.170.125:3306/zone?useUnicode=true&characterEncoding=utf8&useSSL=false
-    url: jdbc:mysql://127.0.0.1:3306/zone?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/process?useUnicode=true&characterEncoding=utf8&useSSL=false
 #    username: ENC(KcvL6ofBXlc6fJJYt+/jNA==) #本地 root
     username: ENC(KcvL6ofBXlc6fJJYt+/jNA==) #服务器 root
     password: ENC(RYoioQ8+Wj3EKcKT7/csgNhjJzNDdaUJ) #服务器

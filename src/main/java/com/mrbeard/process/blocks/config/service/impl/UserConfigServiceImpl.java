@@ -50,10 +50,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     @Override
     public Result postUserRole(String userId, String roleId)  throws ProcessRuntimeException {
         //判断是否有权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         //判断操作类型：新增、修改、删除
         //新增
@@ -89,10 +87,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     @Override
     public Result postRolePermissions(String roleId, String[] permissionIds) throws ProcessRuntimeException {
         //判断是否有权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         //判断操作类型：新增、修改、删除
         //新增
@@ -132,10 +128,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     @Override
     public Result postRole(Role role) throws ProcessRuntimeException {
         //判断是否有权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         /**
          *
@@ -179,11 +173,9 @@ public class UserConfigServiceImpl implements UserConfigService {
      */
     @Override
     public Result postPermission(Permission permission) throws ProcessRuntimeException {
-        //判断是否有权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        //判断是否有修改权限
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         //判断是什么操作：新增、删除、修改
         if(ToolUtil.isNotEmpty(permission.getPid())){
@@ -226,10 +218,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     @Override
     public Result postUser(User user) throws ProcessRuntimeException {
         //判断是否有修改权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         /**
          * 判断当前操作：增加、修改、删除
@@ -289,11 +279,9 @@ public class UserConfigServiceImpl implements UserConfigService {
      */
     @Override
     public Result getUserList(Integer pageNum, Integer pageSize, User user) throws ProcessRuntimeException {
-        //判断是否有权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        //判断是否有修改权限
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         PageHelper.startPage(pageNum,pageSize);
         List<User> userList = userService.selectUserList(user);
@@ -310,10 +298,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     @Override
     public Result getUser(String uid) throws ProcessRuntimeException {
         //判断是否有权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         User user =  userService.getUser(uid);
         return ResultGenerator.getSuccessResult(user);

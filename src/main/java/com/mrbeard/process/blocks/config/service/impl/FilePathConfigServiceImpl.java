@@ -39,10 +39,8 @@ public class FilePathConfigServiceImpl implements FilePathConfigService {
     @Override
     public Result postFilePath(FileUrl urlConfig) throws ProcessRuntimeException {
         //判断是否有权限
-        Set<String> permissions = SessionUtil.getPermissions();
-        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-        if (permissions.contains(methodName) != true) {
-            return ResultGenerator.getErrorResult("权限不足！请联系管理员");
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
         }
         /**
          * 判断操作类型

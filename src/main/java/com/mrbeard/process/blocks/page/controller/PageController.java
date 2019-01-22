@@ -1,5 +1,6 @@
 package com.mrbeard.process.blocks.page.controller;
 
+import com.mrbeard.process.util.ToolUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -28,6 +29,11 @@ public class PageController {
     @GetMapping("/user-manager")
     public String userManager(){
         return "user-manager";
+    }
+
+    @GetMapping("/role-manager")
+    public String roleManager(){
+        return "role-manager";
     }
 
 

@@ -515,7 +515,7 @@ $('#loginout-a').on('click', function () {
 /**
  * 角色管理跳转
  */
-$("#role-manager-a").on("click",function () {
+$("#user-manager-a").on("click",function () {
     //获取usertoken
     var usertoken = localStorage.getItem("usertoken");
     //usertoken为空,跳转到登陆页
@@ -525,7 +525,7 @@ $("#role-manager-a").on("click",function () {
         $('#login-modal-alert').modal();
         window.location.href = getRootPath()+"/login";
     }
-    window.location.href = getRootPath()+"/role-manager?usertoken="+usertoken;
+    window.location.href = getRootPath()+"/user-manager?usertoken="+usertoken;
 })
 
 
