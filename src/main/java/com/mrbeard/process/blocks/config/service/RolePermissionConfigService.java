@@ -1,5 +1,7 @@
 package com.mrbeard.process.blocks.config.service;
 
+import com.mrbeard.process.blocks.authority.model.Permission;
+import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 
@@ -24,4 +26,37 @@ public interface RolePermissionConfigService {
      * @return
      */
     Result getPermissionList(String rid) throws ProcessRuntimeException;
+
+    /**
+     * 获取所有权限，如果Role有该权限的话添加标志位
+     * @param rid
+     * @return
+     */
+    Result getRolePermission(String rid) throws ProcessRuntimeException;
+
+
+    /**
+     * 配置角色权限
+     * @param roleId 角色id
+     * @throws ProcessRuntimeException
+     * @param permissionIds 权限列表
+     * @return
+     */
+    Result postRolePermissions(String roleId, String[] permissionIds) throws ProcessRuntimeException;
+
+    /**
+     * 配置角色
+     * @param role 角色信息
+     * @throws ProcessRuntimeException
+     * @return
+     */
+    Result postRole(Role role) throws ProcessRuntimeException;
+
+    /**
+     * 配置权限
+     * @param permission 权限信息
+     * @throws ProcessRuntimeException
+     * @return
+     */
+    Result postPermission(Permission permission) throws ProcessRuntimeException;
 }

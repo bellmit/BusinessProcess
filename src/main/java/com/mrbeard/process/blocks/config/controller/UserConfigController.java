@@ -57,40 +57,6 @@ public class UserConfigController {
         return userConfigService.postUserRole(userId, roleId);
     }
 
-    /**
-     * 配置角色权限
-     * @param roleId
-     * @param permissionIds
-     * @return
-     */
-    @RequestMapping(value = "/postRolePermissions",method = RequestMethod.POST)
-    public Result postRolePermissions(String roleId, String [] permissionIds) throws ProcessRuntimeException {
-        //参数校验
-        if(ToolUtil.checkParamter(roleId,permissionIds) != true){
-            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
-        }
-        return userConfigService.postRolePermissions(roleId,permissionIds);
-    }
-
-    /**
-     * 配置角色
-     * @param role
-     * @return
-     */
-    @RequestMapping(value = "/postRole",method = RequestMethod.POST)
-    public Result postRole(Role role) throws ProcessRuntimeException {
-        return userConfigService.postRole(role);
-    }
-
-    /**
-     * 配置权限
-     * @param permission
-     * @return
-     */
-    @RequestMapping(value = "/postPermission",method = RequestMethod.POST)
-    public Result postPermission(Permission permission) throws ProcessRuntimeException {
-        return userConfigService.postPermission(permission);
-    }
 
     /**
      * 获取用户列表

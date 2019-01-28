@@ -21,7 +21,7 @@ spring:
   redis:
     host: ${MRBEARD_REDIS_HOST:119.29.170.125}
     port: ${MRBEARD_REDIS_PORT:6379}
-    password: ${MRBEARD_REDIS_PASSWORD:}
+    password: ${MRBEARD_REDIS_PASSWORD:12138}
     timeout: 10000
     jedis:
       pool:

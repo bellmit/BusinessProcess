@@ -26,30 +26,7 @@ public interface UserConfigService {
      */
     Result postUserRole(String userId, String roleId) throws ProcessRuntimeException;
 
-    /**
-     * 配置角色权限
-     * @param roleId 角色id
-     * @throws ProcessRuntimeException
-     * @param permissionIds 权限列表
-     * @return
-     */
-    Result postRolePermissions(String roleId, String[] permissionIds) throws ProcessRuntimeException;
 
-    /**
-     * 配置角色
-     * @param role 角色信息
-     * @throws ProcessRuntimeException
-     * @return
-     */
-    Result postRole(Role role) throws ProcessRuntimeException;
-
-    /**
-     * 配置权限
-     * @param permission 权限信息
-     * @throws ProcessRuntimeException
-     * @return
-     */
-    Result postPermission(Permission permission) throws ProcessRuntimeException;
 
     /**
      * 配置用户信息

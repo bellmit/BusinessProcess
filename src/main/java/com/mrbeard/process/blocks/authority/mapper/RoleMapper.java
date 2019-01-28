@@ -3,6 +3,7 @@ package com.mrbeard.process.blocks.authority.mapper;
 import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.UserRole;
+import com.mrbeard.process.blocks.config.dto.PermissionDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

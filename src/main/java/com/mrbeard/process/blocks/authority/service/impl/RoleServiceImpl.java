@@ -5,6 +5,7 @@ import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.UserRole;
 import com.mrbeard.process.blocks.authority.service.RoleService;
+import com.mrbeard.process.blocks.config.dto.PermissionDto;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -186,11 +188,47 @@ public class RoleServiceImpl  implements RoleService {
      * 获取权限列表
      * @param rid
      * @return
+     * @throws ProcessRuntimeException
      */
     @Override
-    public List<Permission> getPermissionList(String rid) {
+    public List<Permission> getPermissionList(String rid) throws ProcessRuntimeException {
         try {
             return roleDao.getPermissionList(rid);
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException(e.getMessage());
+        }
+    }
+
+    /**
+     * 返回带有标志位的权限
+     * @param rid
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @Override
+    public List<PermissionDto> getRolePermission(String rid) throws ProcessRuntimeException {
+        try {
+            List<PermissionDto> permissionDtos = new ArrayList<>();
+            List<Permission> permissionListWithRid = roleDao.getPermissionList(rid);
+            List<Permission> permissionList = roleDao.getPermissionList(null);
+            permissionList.forEach(permission -> {
+                permissionListWithRid.forEach(permissionWithRid->{
+                    PermissionDto permissionDto = new PermissionDto();
+                    if(permission.getPid().equals(permissionWithRid.getPid())){
+                        permissionDto.setPid(permission.getPid());
+                        permissionDto.setPname(permission.getPname());
+                        permissionDto.setPtype(permission.getPtype());
+                        permissionDto.setCreated(permission.getCreated());
+                        permissionDto.setUpdated(permission.getUpdated());
+                        permissionDto.setPvalue(permission.getPvalue());
+                        permissionDto.setUsed(true);
+                    }
+                    permissionDto.setUsed(false);
+                    permissionDtos.add(permissionDto);
+                });
+            });
+            return permissionDtos;
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             throw new ProcessRuntimeException(e.getMessage());

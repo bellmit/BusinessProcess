@@ -6,12 +6,21 @@ import java.util.Date;
  * @author 胡彬
  */
 public class Role {
+    /**
+     * 角色id
+     */
     private String rid;
-
+    /**
+     * 角色名
+     */
     private String rname;
-
+    /**
+     * 角色描述
+     */
     private String rdescription;
-
+    /**
+     * 角色值
+     */
     private String rvalue;
 
     private Date created;
