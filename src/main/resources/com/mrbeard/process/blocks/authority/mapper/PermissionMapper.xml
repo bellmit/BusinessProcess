@@ -5,7 +5,6 @@
         <constructor>
             <idArg column="pid" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="pname" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="ptype" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="pvalue" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="updated" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -13,7 +12,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-      pid, pname, ptype, pvalue, created, updated
+      pid, pname, pvalue, created, updated
     </sql>
 
     <sql id="RolePermission_Column_List">
@@ -57,9 +56,9 @@
     </delete>
 
     <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Permission">
-      insert into qx_permission (pid, pname, ptype,
+      insert into qx_permission (pid, pname,
         pvalue, created, updated)
-      values (#{pid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, #{ptype,jdbcType=INTEGER},
+      values (#{pid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR},
         #{pvalue,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
     </insert>
 
@@ -76,9 +75,6 @@
       <set>
           <if test="pname != null">
               pname = #{pname,jdbcType=VARCHAR},
-          </if>
-          <if test="ptype != null">
-              ptype = #{ptype,jdbcType=INTEGER},
           </if>
           <if test="pvalue != null">
               pvalue = #{pvalue,jdbcType=VARCHAR},

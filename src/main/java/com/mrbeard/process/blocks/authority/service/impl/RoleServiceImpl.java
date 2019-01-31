@@ -185,7 +185,7 @@ public class RoleServiceImpl  implements RoleService {
     }
 
     /**
-     * 获取权限列表
+     * 获取对应角色的所有权限
      * @param rid
      * @return
      * @throws ProcessRuntimeException
@@ -213,22 +213,37 @@ public class RoleServiceImpl  implements RoleService {
             List<Permission> permissionListWithRid = roleDao.getPermissionList(rid);
             List<Permission> permissionList = roleDao.getPermissionList(null);
             permissionList.forEach(permission -> {
+                PermissionDto permissionDto = new PermissionDto();
+                permissionDto.setPid(permission.getPid());
+                permissionDto.setPname(permission.getPname());
+                permissionDto.setCreated(permission.getCreated());
+                permissionDto.setUpdated(permission.getUpdated());
+                permissionDto.setPvalue(permission.getPvalue());
+                permissionDto.setUsed(false);
                 permissionListWithRid.forEach(permissionWithRid->{
-                    PermissionDto permissionDto = new PermissionDto();
                     if(permission.getPid().equals(permissionWithRid.getPid())){
-                        permissionDto.setPid(permission.getPid());
-                        permissionDto.setPname(permission.getPname());
-                        permissionDto.setPtype(permission.getPtype());
-                        permissionDto.setCreated(permission.getCreated());
-                        permissionDto.setUpdated(permission.getUpdated());
-                        permissionDto.setPvalue(permission.getPvalue());
                         permissionDto.setUsed(true);
                     }
-                    permissionDto.setUsed(false);
-                    permissionDtos.add(permissionDto);
                 });
+                permissionDtos.add(permissionDto);
             });
             return permissionDtos;
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据id获取角色信息
+     * @param rid
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @Override
+    public Role getRole(String rid) throws ProcessRuntimeException {
+        try {
+            return roleDao.selectById(rid);
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             throw new ProcessRuntimeException(e.getMessage());

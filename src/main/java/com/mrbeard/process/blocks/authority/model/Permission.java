@@ -11,18 +11,15 @@ public class Permission {
 
     private String pname;
 
-    private Integer ptype;
-
     private String pvalue;
 
     private Date created;
 
     private Date updated;
 
-    public Permission(String pid, String pname, Integer ptype, String pvalue, Date created, Date updated) {
+    public Permission(String pid, String pname, String pvalue, Date created, Date updated) {
         this.pid = pid;
         this.pname = pname;
-        this.ptype = ptype;
         this.pvalue = pvalue;
         this.created = created;
         this.updated = updated;
@@ -46,14 +43,6 @@ public class Permission {
 
     public void setPname(String pname) {
         this.pname = pname == null ? null : pname.trim();
-    }
-
-    public Integer getPtype() {
-        return ptype;
-    }
-
-    public void setPtype(Integer ptype) {
-        this.ptype = ptype;
     }
 
     public String getPvalue() {

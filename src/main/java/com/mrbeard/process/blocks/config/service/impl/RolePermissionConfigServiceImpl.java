@@ -9,6 +9,7 @@ import com.mrbeard.process.blocks.authority.model.RolePermission;
 import com.mrbeard.process.blocks.authority.service.PermissionService;
 import com.mrbeard.process.blocks.authority.service.RoleService;
 import com.mrbeard.process.blocks.config.dto.PermissionDto;
+import com.mrbeard.process.blocks.config.dto.PostRoleDto;
 import com.mrbeard.process.blocks.config.service.RolePermissionConfigService;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;
@@ -140,7 +141,7 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      * @return
      */
     @Override
-    public Result postRole(Role role) throws ProcessRuntimeException {
+    public Result postRole(PostRoleDto role) throws ProcessRuntimeException {
         //判断是否有权限
         if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
             return ResultGenerator.getErrorResult("权限不足！");
@@ -151,32 +152,55 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
          */
         if(ToolUtil.isNotEmpty(role.getRid())){
             //所有数据都不存在
-            if(ToolUtil.checkIfAllParamtersExit(role.getRname(),role.getRvalue(),role.getRdescription()) != true){
+            if(ToolUtil.checkIfAllParamtersExit(role.getRname(),role.getRdescription()) != true){
+                //删除角色、权限对应表
+                permissionService.deleteRolePermissionByRoleId(role.getRid());
                 //删除
                 roleService.deleteById(role.getRid());
                 return ResultGenerator.getSuccessResult("删除成功！");
             }
             //修改
-            if(ToolUtil.checkParamter(role.getRvalue(),role.getRname(),role.getRdescription()) != true){
+            if(ToolUtil.checkParamter(role.getRname(),role.getRdescription()) != true){
                 return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
             }
             Role roleInData = roleService.selectById(role.getRid());
             roleInData.setUpdated(new Date());
             roleInData.setRdescription(role.getRdescription());
             roleInData.setRname(role.getRname());
-            roleInData.setRvalue(role.getRvalue());
             roleService.updateById(roleInData);
+            permissionService.updateRolePermissionByRoleId(role.getRid(),role.getPermissions());
             return ResultGenerator.getSuccessResult("更新成功！");
         }
         //新增
-        if(ToolUtil.checkParamter(role.getRname(),role.getRvalue(),role.getRdescription()) != true){
+        if(ToolUtil.checkParamter(role.getRname(),role.getRdescription()) != true){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
-        role.setRid(UUIDUtil.getUUID());
-        role.setCreated(new Date());
-        role.setUpdated(new Date());
-        roleService.insert(role);
+        Role roleNew = new Role();
+        roleNew.setRname(role.getRname());
+        roleNew.setRdescription(role.getRdescription());
+        String rid = UUIDUtil.getUUID();
+        roleNew.setRid(rid);
+        roleNew.setCreated(new Date());
+        roleNew.setUpdated(new Date());
+        roleService.insert(roleNew);
+        //设置权限到RolePermission实体类
+        List<RolePermission> rolePermissions = setRolePermission(rid,role.getPermissions());
+        permissionService.insertRolePermission(rolePermissions);
         return ResultGenerator.getSuccessResult("新增成功！");
+    }
+
+    /**
+     * 将权限列表设置到对应rid
+     * @param permissions
+     * @return
+     */
+    private List<RolePermission> setRolePermission(String rid,String[] permissions) {
+        List<RolePermission> rolePermissions = new ArrayList<>();
+        for(String permission : permissions){
+            RolePermission rolePermission = new RolePermission(rid,permission);
+            rolePermissions.add(rolePermission);
+        }
+        return rolePermissions;
     }
 
     /**
@@ -194,20 +218,19 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
         //判断是什么操作：新增、删除、修改
         if(ToolUtil.isNotEmpty(permission.getPid())){
             //所有数据都不存在
-            if(ToolUtil.checkIfAllParamtersExit(permission.getPname(),permission.getPvalue(),permission.getPtype()) != true){
+            if(ToolUtil.checkIfAllParamtersExit(permission.getPname(),permission.getPvalue()) != true){
                 //删除
                 permissionService.deleteById(permission.getPid());
                 return ResultGenerator.getSuccessResult("删除成功！");
             }
             //修改
-            if(ToolUtil.checkParamter(permission.getPname(),permission.getPvalue(),permission.getPtype()) != true){
+            if(ToolUtil.checkParamter(permission.getPname(),permission.getPvalue()) != true){
                 return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
             }
             //设置数据
             Permission permissionInData = permissionService.selectById(permission.getPid());
             permissionInData.setUpdated(new Date());
             permissionInData.setPname(permission.getPname());
-            permissionInData.setPtype(permission.getPtype());
             permissionInData.setPvalue(permission.getPvalue());
             //更新
             permissionService.updateById(permissionInData);
@@ -221,6 +244,53 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
         permissionService.insert(permission);
         //返回结果
         return ResultGenerator.getSuccessResult("新增成功！");
+    }
+
+    /**
+     * 获取对应角色信息
+     * @param rid
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @Override
+    public Result getRole(String rid) throws ProcessRuntimeException {
+        //判断是否有修改权限
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
+        }
+        Role role = roleService.getRole(rid);
+        return ResultGenerator.getSuccessResult(role);
+    }
+
+    /**
+     * 获取权限分页列表
+     * @param pageNum
+     * @param pageSize
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @Override
+    public Result getPermissionPage(Integer pageNum, Integer pageSize) throws ProcessRuntimeException {
+        //判断是否有修改权限
+        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
+            return ResultGenerator.getErrorResult("权限不足！");
+        }
+        PageHelper.startPage(pageNum,pageSize);
+        List<Permission> list = roleService.getPermissionList(null);
+        PageInfo<Permission> pageInfo = new PageInfo<>(list);
+        return ResultGenerator.getSuccessResult(pageInfo);
+    }
+
+    /**
+     * 获取权限信息
+     * @param pid
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @Override
+    public Result getPermission(String pid) throws ProcessRuntimeException {
+        Permission permission = permissionService.selectById(pid);
+        return ResultGenerator.getSuccessResult(permission);
     }
 
 }

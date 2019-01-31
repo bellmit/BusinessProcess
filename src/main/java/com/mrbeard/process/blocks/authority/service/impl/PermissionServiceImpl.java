@@ -111,7 +111,9 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public void insertRolePermission(List<RolePermission> rolePermissionList) throws ProcessRuntimeException {
         try {
-            permissionDao.insertRolePermission(rolePermissionList);
+            if(rolePermissionList != null && rolePermissionList.size() > 0){
+                permissionDao.insertRolePermission(rolePermissionList);
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             throw new ProcessRuntimeException(e.getMessage());
@@ -133,7 +135,9 @@ public class PermissionServiceImpl implements PermissionService {
                 RolePermission rolePermission = new RolePermission(roleId,permissionIds[i]);
                 rolePermissionList.add(rolePermission);
             }
-            permissionDao.insertRolePermission(rolePermissionList);
+            if(rolePermissionList != null && rolePermissionList.size() > 0){
+                permissionDao.insertRolePermission(rolePermissionList);
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             throw new ProcessRuntimeException(e.getMessage());

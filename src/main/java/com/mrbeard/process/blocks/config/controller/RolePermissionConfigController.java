@@ -3,6 +3,7 @@ package com.mrbeard.process.blocks.config.controller;
 
 import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
+import com.mrbeard.process.blocks.config.dto.PostRoleDto;
 import com.mrbeard.process.blocks.config.service.RolePermissionConfigService;
 import com.mrbeard.process.blocks.config.service.UserConfigService;
 import com.mrbeard.process.blocks.publish.model.Comment;
@@ -11,6 +12,7 @@ import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.ToolUtil;
+import org.apache.ibatis.executor.ResultExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +35,19 @@ public class RolePermissionConfigController {
     @Autowired
     RolePermissionConfigService rolePermissionConfigService;
 
+    /**
+     * 获取对应的角色信息
+     * @param rid
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @RequestMapping(value = "/getRole",method = RequestMethod.GET)
+    public Result getRole(String rid) throws ProcessRuntimeException{
+        if(ToolUtil.isEmpty(rid)){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
+        return rolePermissionConfigService.getRole(rid);
+    }
 
     /**
      * 获取角色列表
@@ -44,6 +59,19 @@ public class RolePermissionConfigController {
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
         return rolePermissionConfigService.getRoleList(pageNum,pageSize);
+    }
+
+
+    /**
+     * 获取权限分页列表
+     * @param pageNum
+     * @param pageSize
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @RequestMapping(value = "/getPermissionPage",method = RequestMethod.GET)
+    public Result getPermissionPage(Integer pageNum,Integer pageSize) throws ProcessRuntimeException{
+        return rolePermissionConfigService.getPermissionPage(pageNum,pageSize);
     }
 
     /**
@@ -94,7 +122,7 @@ public class RolePermissionConfigController {
      * @return
      */
     @RequestMapping(value = "/postRole",method = RequestMethod.POST)
-    public Result postRole(Role role) throws ProcessRuntimeException {
+    public Result postRole(PostRoleDto role) throws ProcessRuntimeException {
         return rolePermissionConfigService.postRole(role);
     }
 
@@ -106,5 +134,16 @@ public class RolePermissionConfigController {
     @RequestMapping(value = "/postPermission",method = RequestMethod.POST)
     public Result postPermission(Permission permission) throws ProcessRuntimeException {
         return rolePermissionConfigService.postPermission(permission);
+    }
+
+    /**
+     * 获取权限信息
+     * @param pid
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    @RequestMapping(value = "/getPermission",method = RequestMethod.GET)
+    public Result getPermission(String pid) throws ProcessRuntimeException{
+        return rolePermissionConfigService.getPermission(pid);
     }
 }

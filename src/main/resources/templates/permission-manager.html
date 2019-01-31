@@ -216,8 +216,13 @@
                 </a>
             </li>
             <li class="sidebar-nav-link">
+                <a  href="javascript:;" id="role-manager-a" >
+                    <i class="am-icon-street-view sidebar-nav-link-logo"></i> 角色管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
                 <a  class="active">
-                    <i class="am-icon-street-view sidebar-nav-link-logo"></i> 角色权限管理
+                    <i class="am-icon-unlock sidebar-nav-link-logo"></i> 权限管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
@@ -279,7 +284,7 @@
                                     <thead>
                                     <tr>
                                         <th>权限名</th>
-                                        <th>描述</th>
+                                        <th>权限值</th>
                                         <th>创建时间</th>
                                         <th>操作</th>
                                     </tr>
@@ -364,24 +369,24 @@
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="add-role-modal">
     <div class="am-modal-dialog">
         <div class="am-modal-hd">
-            <label id="user-edit-title">新增角色</label>
+            <label id="permission-edit-title">新增权限</label>
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
         </div>
         <div class="my-am-modal-bd">
             <form class="am-form" action="javascript:;">
                     <div class="am-form-group">
-                        <input type="hidden" class="" id="rid-input">
+                        <input type="hidden" class="" id="pid-input">
                     </div>
                     <div class="am-form-group">
-                        <label for="rname-input">角色名</label>
-                        <input type="text" class="" id="rname-input" placeholder="角色名为3-20位字母或数字">
-                        <span class="input-alert-lable" id="rname-alert">*角色名不符合规范！</span>
+                        <label for="pname-input">权限名</label>
+                        <input type="text" class="" id="pname-input" placeholder="权限名称">
+                        <span class="input-alert-lable" id="pname-alert">*权限名不符合规范！</span>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="rdescription-input">角色描述</label>
-                        <input type="password" class="" id="rdescription-input" placeholder="角色描述">
-                        <span class="input-alert-lable" id="rdescription-alert">*角色描述必填！</span>
+                        <label for="pvalue-input">权限值</label>
+                        <input type="text" class="" id="pvalue-input" placeholder="权限值为3-20位字母">
+                        <span class="input-alert-lable" id="pvalue-alert">*权限值不符合规范！</span>
                     </div>
 
 
@@ -433,16 +438,16 @@
                     <!--</div>-->
 
 
-                    <div class="am-form-group">
-                        <label for="permission-list">角色</label><br/>
-                        <select multiple data-am-selected="{maxHeight: 200}" id="permission-list">
-                            <!--<option value="a">Apple</option>-->
-                            <!--<option value="b" selected>Banana</option>-->
-                            <!--<option value="o">Orange</option>-->
-                            <!--<option value="m" selected>Mango</option>-->
-                        </select>
-                        <span class="am-form-caret"></span>
-                    </div>
+                    <!--<div class="am-form-group">-->
+                        <!--<label for="permission-list">角色</label><br/>-->
+                        <!--<select multiple data-am-selected="{maxHeight: 200}" id="permission-list">-->
+                            <!--&lt;!&ndash;<option value="a">Apple</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="b" selected>Banana</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="o">Orange</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="m" selected>Mango</option>&ndash;&gt;-->
+                        <!--</select>-->
+                        <!--<span class="am-form-caret"></span>-->
+                    <!--</div>-->
 
                     <!--<div class="am-form-group">-->
                         <!--<label for="doc-select-2"></label>-->
@@ -471,7 +476,7 @@
 <script src="../static/assets/js/amazeui.datatables.min.js"></script>
 <script src="../static/assets/js/dataTables.responsive.min.js"></script>
 <script src="../static/assets/js/app.js"></script>
-<script src="../static/assets/js/user/role-manager.js"></script>
+<script src="../static/assets/js/user/permission-manager.js"></script>
 
 </body>
 

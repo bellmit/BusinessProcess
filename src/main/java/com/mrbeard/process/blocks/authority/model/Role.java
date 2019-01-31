@@ -18,20 +18,15 @@ public class Role {
      * 角色描述
      */
     private String rdescription;
-    /**
-     * 角色值
-     */
-    private String rvalue;
 
     private Date created;
 
     private Date updated;
 
-    public Role(String rid, String rname, String rdescription, String rvalue, Date created, Date updated) {
+    public Role(String rid, String rname, String rdescription, Date created, Date updated) {
         this.rid = rid;
         this.rname = rname;
         this.rdescription = rdescription;
-        this.rvalue = rvalue;
         this.created = created;
         this.updated = updated;
     }
@@ -62,14 +57,6 @@ public class Role {
 
     public void setRdescription(String rdescription) {
         this.rdescription = rdescription == null ? null : rdescription.trim();
-    }
-
-    public String getRvalue() {
-        return rvalue;
-    }
-
-    public void setRvalue(String rvalue) {
-        this.rvalue = rvalue == null ? null : rvalue.trim();
     }
 
     public Date getCreated() {

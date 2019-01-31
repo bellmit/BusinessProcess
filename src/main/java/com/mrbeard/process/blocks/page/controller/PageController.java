@@ -36,5 +36,10 @@ public class PageController {
         return "role-manager";
     }
 
+    @GetMapping("/permission-manager")
+    public String permissionManager(){
+        return "permission-manager";
+    }
+
 
 }

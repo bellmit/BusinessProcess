@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>角色权限管理</title>
+    <title>角色管理</title>
     <meta name="description" content="user-manager">
     <meta name="keywords" content="user-manager">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -217,7 +217,12 @@
             </li>
             <li class="sidebar-nav-link">
                 <a  class="active">
-                    <i class="am-icon-street-view sidebar-nav-link-logo"></i> 角色权限管理
+                    <i class="am-icon-street-view sidebar-nav-link-logo"></i> 角色管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a  href="javascript:;" id="permission-manager-a">
+                    <i class="am-icon-unlock sidebar-nav-link-logo"></i> 权限管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
@@ -278,7 +283,7 @@
                                        id="example-r">
                                     <thead>
                                     <tr>
-                                        <th>权限名</th>
+                                        <th>角色名</th>
                                         <th>描述</th>
                                         <th>创建时间</th>
                                         <th>操作</th>
@@ -380,7 +385,7 @@
 
                     <div class="am-form-group">
                         <label for="rdescription-input">角色描述</label>
-                        <input type="password" class="" id="rdescription-input" placeholder="角色描述">
+                        <input type="text" class="" id="rdescription-input" placeholder="角色描述">
                         <span class="input-alert-lable" id="rdescription-alert">*角色描述必填！</span>
                     </div>
 
@@ -434,7 +439,7 @@
 
 
                     <div class="am-form-group">
-                        <label for="permission-list">角色</label><br/>
+                        <label for="permission-list">权限</label><br/>
                         <select multiple data-am-selected="{maxHeight: 200}" id="permission-list">
                             <!--<option value="a">Apple</option>-->
                             <!--<option value="b" selected>Banana</option>-->

@@ -528,6 +528,21 @@ $("#role-manager-a").on("click",function () {
     window.location.href = getRootPath()+"/role-manager?usertoken="+usertoken;
 })
 
+/**
+ * 权限管理跳转
+ */
+$("#permission-manager-a").on("click",function () {
+    //获取usertoken
+    var usertoken = localStorage.getItem("usertoken");
+    //usertoken为空,跳转到登陆页
+    if(usertoken == null){
+        // 返回信息
+        $('#login-modal-alert .am-modal-bd').text("登陆已失效，请重新登陆!");
+        $('#login-modal-alert').modal();
+        window.location.href = getRootPath()+"/login";
+    }
+    window.location.href = getRootPath()+"/permission-manager?usertoken="+usertoken;
+})
 
 /**
  * 首页跳转

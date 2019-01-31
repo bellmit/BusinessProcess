@@ -106,4 +106,12 @@ public interface RoleService {
      * @throws ProcessRuntimeException
      */
     List<PermissionDto> getRolePermission(String rid) throws ProcessRuntimeException;
+
+    /**
+     * 通过id获取角色信息
+     * @param rid
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    Role getRole(String rid) throws ProcessRuntimeException;
 }

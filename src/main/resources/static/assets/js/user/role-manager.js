@@ -245,7 +245,7 @@ $('#add-role-buttton').on('click', function () {
 
 
 /**
- * 获取权限列表
+ * 获取所有权限列表
  */
 function getPermissionList(rid) {
     $.ajax({
@@ -277,6 +277,39 @@ function getPermissionList(rid) {
 }
 
 /**
+ * 获取带有标志位的权限列表
+ */
+function getPermissions(rid) {
+    $.ajax({
+        url: '/api/getRolePermission',
+        cache: true,
+        type: 'GET',
+        dataType: 'json',
+        data: {"rid":rid,"usertoken":usertoken}
+    }).then(function (data) {
+        // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
+        //取消加载动画
+        $('#reload-modal-loading').modal('close');
+        if (data.code == 200 && data.message == "success") {
+            console.log(data);
+            //设置权限下拉框
+            setPermissionList(data);
+        } else {
+            $('#add-role-modal').modal("close");
+            // 返回信息
+            $('#modal-alert .am-modal-bd').text(data.data);
+            $('#modal-alert').modal();
+        }
+    }, function (data) {
+        // Ajax 请求失败，根据需要决定验证是否通过，然后返回 validity
+        // 返回信息
+        $('#add-role-modal').modal("close");
+        $('#modal-alert .am-modal-bd').text('登陆失败！');
+        $('#modal-alert').modal();
+    });
+}
+
+/**
  * 设置下拉列表
  */
 function setPermissionList(result) {
@@ -284,12 +317,13 @@ function setPermissionList(result) {
     //循环数据
     result.data.forEach((item, index) => {
         var selected = "";
-        if(item.isUsed){
+        if(item.used){
             selected = "selected";
         }else{
             selected = "";
         }
-        html += "<option value=" + item.pid +"\""+selected+">" + item.pname + "</option>";
+        console.log(selected)
+        html += "'<option value='"+item.pid +"'"+selected+">" + item.pname + "</option>";
     })
     //设置
     $('#permission-list').html(html);
@@ -303,11 +337,11 @@ $('#adduser-submit-button').on('click', function () {
     if (validateAddUserInput() == true) {
         //信息校验成功
         $.ajax({
-            url: '/api/postUser',
+            url: '/api/postRole',
             cache: true,
             type: 'POST',
             dataType: 'json',
-            data: postUser()
+            data: postRole()
         }).then(function (data) {
             // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
             //取消加载动画
@@ -339,21 +373,20 @@ $('#adduser-submit-button').on('click', function () {
  * validateAddUserInput
  */
 function validateAddUserInput() {
-    var unamePattern = "^[a-zA-Z0-9]{3,20}$";
-    var passwordPattern = "^[a-zA-Z0-9]{6,30}$";
-    var uname = $('#uname-input').val();
-    var password = $('#password-input').val();
-    if (uname.match(unamePattern) == null) {
-        $('#uname-alert').css("display", "block");
+    var rnamePattern = "^[a-zA-Z0-9]{3,20}$";
+    var rname = $('#rname-input').val();
+    var rdescription = $('#rdescription-input').val();
+    if (rname.match(rnamePattern) == null) {
+        $('#rname-alert').css("display", "block");
         return false;
     } else {
-        $('#uname-alert').css("display", "none");
+        $('#rname-alert').css("display", "none");
     }
-    if (password.match(passwordPattern) == null) {
-        $('#password-alert').css("display", "block");
+    if (rdescription == null || rdescription == "") {
+        $('#rdescription-alert').css("display", "block");
         return false;
     } else {
-        $('#password-alert').css("display", "none");
+        $('#rdescription-alert').css("display", "none");
     }
     return true;
 }
@@ -361,23 +394,24 @@ function validateAddUserInput() {
 /**
  * 获取参数
  */
-function postUser() {
-    var uname = $('#uname-input').val();
-    var password = $('#password-input').val();
-    var nick = $('#nick-input').val();
-    var state = $('input:radio[name="state-input"]:checked').val();
-    var role = $('#role-list option:selected').val();
-    var uid = $('#uid-input').val();
-    console.log(uid);
-
+function postRole() {
+    var rname = $('#rname-input').val();
+    var rdescription = $('#rdescription-input').val();
+    var permissions = "";
+    var rid = $('#rid-input').val();
+    $("#permission-list option:selected").each(function () {
+        permissions += $(this).val()+",";
+    })
+    if(permissions.length > 0){
+        permissions = permissions.substring(0,permissions.length - 1);
+    }
+    console.log(permissions)
     var data = {
-        "uname": uname,
-        "password": password,
-        "nick": nick,
-        "state": state,
-        "role": role,
-        "usertoken": usertoken,
-        "uid": uid
+        "rname": rname,
+        "rdescription": rdescription,
+        "usertoken":usertoken,
+        "permissions":permissions,
+        "rid":rid
     }
     return data;
 }
@@ -393,9 +427,9 @@ $('#reload-buttton').on('click', function () {
  * 编辑
  */
 function editRole(rid) {
-    //获取对应用户信息
+    //获取对应角色信息
     $.ajax({
-        url: '/api/getUser',
+        url: '/api/getRole',
         cache: true,
         type: 'GET',
         dataType: 'json',
@@ -406,12 +440,12 @@ function editRole(rid) {
         $('#reload-modal-loading').modal('close');
         if (data.code == 200 && data.message == "success") {
             // 返回信息并设置到输入框中
-            $('#uname-input').val(data.data.uname);
-            $('#nick-input').val(data.data.nick);
-            $('#uid-input').val(rid);
+            $('#rname-input').val(data.data.rname);
+            $('#rdescription-input').val(data.data.rdescription);
+            $('#rid-input').val(rid);
             //修改标题为编辑用户
             $('#user-edit-title').html("编辑用户");
-            getRoleList();
+            getPermissions(data.data.rid);
             //新增
             $('#add-role-modal').modal();
         } else {
@@ -438,7 +472,7 @@ function deleteRole(rid) {
         onConfirm: function (options) {
             //获取对应用户信息
             $.ajax({
-                url: '/api/postUser',
+                url: '/api/postRole',
                 cache: true,
                 type: 'POST',
                 dataType: 'json',
@@ -507,6 +541,22 @@ $('#loginout-a').on('click', function () {
     localStorage.removeItem('usertoken');
     //重定向
     window.location.href = getRootPath();
+})
+
+/**
+ * 权限管理跳转
+ */
+$("#permission-manager-a").on("click",function () {
+    //获取usertoken
+    var usertoken = localStorage.getItem("usertoken");
+    //usertoken为空,跳转到登陆页
+    if(usertoken == null){
+        // 返回信息
+        $('#login-modal-alert .am-modal-bd').text("登陆已失效，请重新登陆!");
+        $('#login-modal-alert').modal();
+        window.location.href = getRootPath()+"/login";
+    }
+    window.location.href = getRootPath()+"/permission-manager?usertoken="+usertoken;
 })
 
 
