@@ -2,23 +2,17 @@ package com.mrbeard.process.blocks.config.controller;
 
 
 import com.mrbeard.process.blocks.authority.model.Permission;
-import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.config.dto.PostRoleDto;
 import com.mrbeard.process.blocks.config.service.RolePermissionConfigService;
-import com.mrbeard.process.blocks.config.service.UserConfigService;
-import com.mrbeard.process.blocks.publish.model.Comment;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.ToolUtil;
-import org.apache.ibatis.executor.ResultExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.awt.*;
 
 /**
  * @ClassName RolePermissionConfigController

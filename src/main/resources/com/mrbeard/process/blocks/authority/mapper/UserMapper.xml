@@ -10,16 +10,18 @@
       <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="loginIp" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="loginPort" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="deptid" jdbcType="java.lang.String" javaType="VARCHAR"/>
+      <arg column="parentsid" jdbcType="java.lang.String" javaType="VARCHAR"/>
+      <arg column="created_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updated_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    uid, uname, state, nick, password, loginIp, loginPort, created, updated
+    uid, uname, state, nick, password, loginIp, loginPort, deptid, parentsid, created_time, updated_time
   </sql>
 
   <sql id="Base_User_List">
-    uid, uname, state, nick, created, updated
+    uid, uname, state, nick, created_time, updated_time
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -45,7 +47,7 @@
         uname like CONCAT(CONCAT('%', #{uname,jdbcType=VARCHAR}), '%')
       </if>
     </where>
-    order by updated desc
+    order by updated_time desc
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -55,12 +57,13 @@
 
   <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.User">
     insert into qx_user (uid, uname, nick, 
-      password, created,updated,
-      state, loginIp, loginPort)
+      password, created_time,updated_time,
+      state, loginIp, loginPort, deptid, parentsid)
     values (#{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR},  #{created,jdbcType=TIMESTAMP},
-      #{updated,jdbcType=TIMESTAMP},#{state,jdbcType=INTEGER},
-      #{loginIp,jdbcType=VARCHAR}, #{loginPort,jdbcType=INTEGER})
+      #{password,jdbcType=VARCHAR},  #{created_time,jdbcType=TIMESTAMP},
+      #{updated_time,jdbcType=TIMESTAMP},#{state,jdbcType=INTEGER},
+      #{loginIp,jdbcType=VARCHAR}, #{loginPort,jdbcType=INTEGER},
+      #{deptid,jdbcType=VARCHAR},#{parentsid,jdbcType=VARCHAR})
   </insert>
 
   <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.authority.model.User">
@@ -68,11 +71,13 @@
     set uname = #{uname,jdbcType=VARCHAR},
       nick = #{nick,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP},
+      created_time = #{created_time,jdbcType=TIMESTAMP},
+      updated_time = #{updated_time,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
       loginIp = #{loginIp,jdbcType=VARCHAR},
-      loginPort = #{loginPort,jdbcType=INTEGER}
+      loginPort = #{loginPort,jdbcType=INTEGER},
+      deptid = #{deptid,jdbcType=VARCHAR},
+      parentsid = #{parentsid,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
 </mapper>

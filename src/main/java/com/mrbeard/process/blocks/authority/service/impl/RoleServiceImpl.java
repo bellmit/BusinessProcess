@@ -7,7 +7,6 @@ import com.mrbeard.process.blocks.authority.model.UserRole;
 import com.mrbeard.process.blocks.authority.service.RoleService;
 import com.mrbeard.process.blocks.config.dto.PermissionDto;
 import com.mrbeard.process.exception.ProcessRuntimeException;
-import com.mrbeard.process.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -216,8 +215,8 @@ public class RoleServiceImpl  implements RoleService {
                 PermissionDto permissionDto = new PermissionDto();
                 permissionDto.setPid(permission.getPid());
                 permissionDto.setPname(permission.getPname());
-                permissionDto.setCreated(permission.getCreated());
-                permissionDto.setUpdated(permission.getUpdated());
+                permissionDto.setCreated(permission.getCreated_time());
+                permissionDto.setUpdated(permission.getUpdated_time());
                 permissionDto.setPvalue(permission.getPvalue());
                 permissionDto.setUsed(false);
                 permissionListWithRid.forEach(permissionWithRid->{

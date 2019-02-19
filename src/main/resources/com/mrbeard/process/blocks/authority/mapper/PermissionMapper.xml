@@ -6,13 +6,13 @@
             <idArg column="pid" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="pname" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="pvalue" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-            <arg column="updated" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="created_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="updated_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
 
     <sql id="Base_Column_List">
-      pid, pname, pvalue, created, updated
+      pid, pname, pvalue, created_time, updated_time
     </sql>
 
     <sql id="RolePermission_Column_List">
@@ -57,9 +57,9 @@
 
     <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Permission">
       insert into qx_permission (pid, pname,
-        pvalue, created, updated)
+        pvalue, created_time, updated_time)
       values (#{pid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR},
-        #{pvalue,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+        #{pvalue,jdbcType=VARCHAR}, #{created_time,jdbcType=TIMESTAMP}, #{updated_time,jdbcType=TIMESTAMP})
     </insert>
 
     <insert id="insertRolePermission" parameterType="java.util.List">
@@ -79,11 +79,11 @@
           <if test="pvalue != null">
               pvalue = #{pvalue,jdbcType=VARCHAR},
           </if>
-          <if test="created != null">
-              created = #{created,jdbcType=TIMESTAMP},
+          <if test="created_time != null">
+              created_time = #{created_time,jdbcType=TIMESTAMP},
           </if>
-          <if test="updated != null">
-              updated = #{updated,jdbcType=TIMESTAMP},
+          <if test="updated_time != null">
+              updated_time = #{updated_time,jdbcType=TIMESTAMP},
           </if>
       </set>
       where pid = #{pid,jdbcType=VARCHAR}

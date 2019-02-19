@@ -106,8 +106,8 @@ CREATE TABLE `qx_permission`  (
   `pname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
   `ptype` int(11) NULL DEFAULT NULL COMMENT '权限类型 1.删除2.修改3.增加4.查看',
   `pvalue` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限值',
-  `created` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `updated` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `updated_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`pid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
@@ -129,8 +129,8 @@ CREATE TABLE `qx_role`  (
   `rname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
   `rdescription` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色描述',
   `rvalue` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色值',
-  `created` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `updated` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `updated_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   INDEX `rid`(`rid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
@@ -173,8 +173,8 @@ CREATE TABLE `qx_user`  (
   `uname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `nick` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户昵称',
   `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
-  `created` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `updated` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `updated_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `state` int(10) NOT NULL COMMENT '状态 ：1正常 0禁用',
   `loginIp` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录ip',
   `loginPort` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录端口',

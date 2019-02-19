@@ -29,11 +29,11 @@ public class User  implements Serializable {
     /**
      * 创建时间
      */
-    private Date created;
+    private Date created_time;
     /**
      * 更新时间
      */
-    private Date updated;
+    private Date updated_time;
     /**
      * 状态 1:启用 0：禁用
      */
@@ -58,16 +58,28 @@ public class User  implements Serializable {
      */
     private Set<String> permissions = new HashSet<>();
 
-    public User(String uid, String uname, Integer state,String nick, String password,  String loginIp, Integer loginPort,Date created, Date updated) {
+    /**
+     * 部门id
+     */
+    private String deptid;
+
+    /**
+     * 上级id
+     */
+    private String parentsid;
+
+    public User(String uid, String uname, Integer state, String nick, String password, String loginIp, Integer loginPort, Date created_time, Date updated_time,String deptid,String parentsid) {
         this.uid = uid;
         this.uname = uname;
         this.nick = nick;
         this.password = password;
-        this.created = created;
-        this.updated = updated;
+        this.created_time = created_time;
+        this.updated_time = updated_time;
         this.state = state;
         this.loginIp = loginIp;
         this.loginPort = loginPort;
+        this.deptid = deptid;
+        this.parentsid = parentsid;
     }
 
     public User() {
@@ -107,20 +119,20 @@ public class User  implements Serializable {
     }
 
 
-    public Date getCreated() {
-        return created;
+    public Date getCreated_time() {
+        return created_time;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreated_time(Date created_time) {
+        this.created_time = created_time;
     }
 
-    public Date getUpdated() {
-        return updated;
+    public Date getUpdated_time() {
+        return updated_time;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setUpdated_time(Date updated_time) {
+        this.updated_time = updated_time;
     }
 
     public String getRole() {
@@ -161,5 +173,21 @@ public class User  implements Serializable {
 
     public void setLoginPort(Integer loginPort) {
         this.loginPort = loginPort;
+    }
+
+    public String getDeptid() {
+        return deptid;
+    }
+
+    public void setDeptid(String deptid) {
+        this.deptid = deptid;
+    }
+
+    public String getParentsid() {
+        return parentsid;
+    }
+
+    public void setParentsid(String parentsid) {
+        this.parentsid = parentsid;
     }
 }

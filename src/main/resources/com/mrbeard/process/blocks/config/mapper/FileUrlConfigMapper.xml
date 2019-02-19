@@ -6,14 +6,14 @@
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="created_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updated_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
     </constructor>
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, url, name, created, updated,type
+    id, url, name, created_time, updated_time,type
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -53,11 +53,11 @@
       <if test="name != null">
         name,
       </if>
-      <if test="created != null">
-        created,
+      <if test="created_time != null">
+        created_time,
       </if>
-      <if test="updated != null">
-        updated,
+      <if test="updated_time != null">
+        updated_time,
       </if>
       <if test="type != null">
         type,
@@ -73,11 +73,11 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="created != null">
-        #{created,jdbcType=TIMESTAMP},
+      <if test="created_time != null">
+        #{created_time,jdbcType=TIMESTAMP},
       </if>
       <if test="name != null">
-        #{updated,jdbcType=TIMESTAMP},
+        #{updated_time,jdbcType=TIMESTAMP},
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
@@ -94,11 +94,11 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="created != null">
-        created = #{created,jdbcType=TIMESTAMP},
+      <if test="created_time != null">
+        created_time = #{created_time,jdbcType=TIMESTAMP},
       </if>
-      <if test="updated != null">
-        updated = #{updated,jdbcType=TIMESTAMP},
+      <if test="updated_time != null">
+        updated_time = #{updated_time,jdbcType=TIMESTAMP},
       </if>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},

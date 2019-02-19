@@ -13,16 +13,16 @@ public class Permission {
 
     private String pvalue;
 
-    private Date created;
+    private Date created_time;
 
-    private Date updated;
+    private Date updated_time;
 
-    public Permission(String pid, String pname, String pvalue, Date created, Date updated) {
+    public Permission(String pid, String pname, String pvalue, Date created_time, Date updated_time) {
         this.pid = pid;
         this.pname = pname;
         this.pvalue = pvalue;
-        this.created = created;
-        this.updated = updated;
+        this.created_time = created_time;
+        this.updated_time = updated_time;
     }
 
     public Permission() {
@@ -53,19 +53,19 @@ public class Permission {
         this.pvalue = pvalue == null ? null : pvalue.trim();
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getCreated_time() {
+        return created_time;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreated_time(Date created_time) {
+        this.created_time = created_time;
     }
 
-    public Date getUpdated() {
-        return updated;
+    public Date getUpdated_time() {
+        return updated_time;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setUpdated_time(Date updated_time) {
+        this.updated_time = updated_time;
     }
 }

@@ -11,16 +11,13 @@ import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
-import com.mrbeard.process.util.SessionUtil;
 import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @ClassName UserConfigServiceImpl
@@ -107,7 +104,7 @@ public class UserConfigServiceImpl implements UserConfigService {
             //修改
             //设置数据
             User userInData = userService.selectUserById(user.getUid());
-            userInData.setUpdated(new Date());
+            userInData.setUpdated_time(new Date());
             userInData.setUname(user.getUname());
             userInData.setPassword(ToolUtil.Md5(user.getPassword()));
             userInData.setState(user.getState());
@@ -129,8 +126,8 @@ public class UserConfigServiceImpl implements UserConfigService {
                 return ResultGenerator.getErrorResult("该用户名已被注册!");
             }
             user.setUid(UUIDUtil.getUUID());
-            user.setCreated(new Date());
-            user.setUpdated(new Date());
+            user.setCreated_time(new Date());
+            user.setUpdated_time(new Date());
             user.setPassword(ToolUtil.Md5(user.getPassword()));
             userService.insert(user);
             //新增用户角色信息

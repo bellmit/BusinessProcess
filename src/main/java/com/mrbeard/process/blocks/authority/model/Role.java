@@ -19,16 +19,16 @@ public class Role {
      */
     private String rdescription;
 
-    private Date created;
+    private Date created_time;
 
-    private Date updated;
+    private Date updated_time;
 
-    public Role(String rid, String rname, String rdescription, Date created, Date updated) {
+    public Role(String rid, String rname, String rdescription, Date created_time, Date updated_time) {
         this.rid = rid;
         this.rname = rname;
         this.rdescription = rdescription;
-        this.created = created;
-        this.updated = updated;
+        this.created_time = created_time;
+        this.updated_time = updated_time;
     }
 
     public Role() {
@@ -59,19 +59,19 @@ public class Role {
         this.rdescription = rdescription == null ? null : rdescription.trim();
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getCreated_time() {
+        return created_time;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreated_time(Date created_time) {
+        this.created_time = created_time;
     }
 
-    public Date getUpdated() {
-        return updated;
+    public Date getUpdated_time() {
+        return updated_time;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setUpdated_time(Date updated_time) {
+        this.updated_time = updated_time;
     }
 }

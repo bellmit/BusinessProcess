@@ -63,7 +63,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         String uid = SessionUtil.getUserInfo().getUid();
         User userInData = userService.selectUserById(uid);
         //设置数据
-        userInData.setUpdated(new Date());
+        userInData.setUpdated_time(new Date());
         userInData.setPassword(ToolUtil.Md5(user.getPassword()));
         userInData.setNick(user.getNick());
         userInData.setUname(user.getUname());

@@ -91,6 +91,7 @@ function login() {
             localStorage.setItem('usertoken',data.data.usertoken);
             localStorage.setItem('uname',data.data.uname);
             localStorage.setItem('nick',data.data.nick);
+            localStorage.setItem("uid",data.data.uid);
             //跳转到首页
             window.location.href = getRootPath()+"/index?usertoken="+data.data.usertoken;
         }else{

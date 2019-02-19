@@ -6,13 +6,13 @@
             <arg column="rid" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="rname" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="rdescription" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="created" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
-            <arg column="updated" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="created_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="updated_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
 
     <sql id="Base_Column_List">
-        rid,rname,rdescription,created,updated
+        rid,rname,rdescription,created_time,updated_time
     </sql>
 
     <sql id="UserRole_Column_List">
@@ -20,9 +20,9 @@
     </sql>
 
     <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Role">
-        insert into qx_role (rid, rname, rdescription, created, updated)
+        insert into qx_role (rid, rname, rdescription, created_time, updated_time)
         values (#{rid,jdbcType=VARCHAR}, #{rname,jdbcType=VARCHAR}, #{rdescription,jdbcType=VARCHAR},
-        #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+        #{created_time,jdbcType=TIMESTAMP}, #{updated_time,jdbcType=TIMESTAMP})
     </insert>
 
     <insert id="insertUserRole" parameterType="com.mrbeard.process.blocks.authority.model.UserRole">
@@ -60,7 +60,7 @@
 
     <select id="getPermissionList" resultType="com.mrbeard.process.blocks.authority.model.Permission" parameterType="java.lang.String">
         select
-        p.pid,p.pname,p.pvalue,p.created,p.updated
+        p.pid,p.pname,p.pvalue,p.created_time,p.updated_time
         from qx_permission p
         <if test="roleId != null and roleId != ''">
             left join qx_rolepermission rp on rp.pid = p.pid
@@ -92,11 +92,11 @@
             <if test="rdescription != null">
                 rdescription = #{rdescription,jdbcType=VARCHAR},
             </if>
-            <if test="created != null">
-                created = #{created,jdbcType=TIMESTAMP},
+            <if test="created_time != null">
+                created_time = #{created_time,jdbcType=TIMESTAMP},
             </if>
-            <if test="updated != null">
-                updated = #{updated,jdbcType=TIMESTAMP},
+            <if test="updated_time != null">
+                updated_time = #{updated_time,jdbcType=TIMESTAMP},
             </if>
         </set>
         where rid = #{rid,jdbcType=VARCHAR}
