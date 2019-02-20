@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mrbeard.process.blocks.professional.mapper.ProcessMapper">
+  <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.professional.model.Process">
+    <constructor>
+      <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="typeid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tempid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="level" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="createdid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="created_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updated_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="handle_state" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="file_state" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="state" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, typeid, tempid, level, createdid, created_time, updated_time, handle_state, 
+    file_state, state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_process
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from p_process
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.Process">
+    insert into p_process (id, title, typeid, 
+      tempid, level, createdid, 
+      created_time, updated_time, handle_state, 
+      file_state, state)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR}, 
+      #{tempid,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, #{createdid,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{handleState,jdbcType=TINYINT}, 
+      #{fileState,jdbcType=TINYINT}, #{state,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.Process">
+    insert into p_process
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="typeid != null">
+        typeid,
+      </if>
+      <if test="tempid != null">
+        tempid,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="createdid != null">
+        createdid,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="handleState != null">
+        handle_state,
+      </if>
+      <if test="fileState != null">
+        file_state,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=VARCHAR},
+      </if>
+      <if test="tempid != null">
+        #{tempid,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=TINYINT},
+      </if>
+      <if test="createdid != null">
+        #{createdid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleState != null">
+        #{handleState,jdbcType=TINYINT},
+      </if>
+      <if test="fileState != null">
+        #{fileState,jdbcType=TINYINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.professional.model.Process">
+    update p_process
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        typeid = #{typeid,jdbcType=VARCHAR},
+      </if>
+      <if test="tempid != null">
+        tempid = #{tempid,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=TINYINT},
+      </if>
+      <if test="createdid != null">
+        createdid = #{createdid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleState != null">
+        handle_state = #{handleState,jdbcType=TINYINT},
+      </if>
+      <if test="fileState != null">
+        file_state = #{fileState,jdbcType=TINYINT},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.Process">
+    update p_process
+    set title = #{title,jdbcType=VARCHAR},
+      typeid = #{typeid,jdbcType=VARCHAR},
+      tempid = #{tempid,jdbcType=VARCHAR},
+      level = #{level,jdbcType=TINYINT},
+      createdid = #{createdid,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      handle_state = #{handleState,jdbcType=TINYINT},
+      file_state = #{fileState,jdbcType=TINYINT},
+      state = #{state,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

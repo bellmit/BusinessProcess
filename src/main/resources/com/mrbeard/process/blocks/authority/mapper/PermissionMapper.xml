@@ -59,7 +59,7 @@
       insert into qx_permission (pid, pname,
         pvalue, created_time, updated_time)
       values (#{pid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR},
-        #{pvalue,jdbcType=VARCHAR}, #{created_time,jdbcType=TIMESTAMP}, #{updated_time,jdbcType=TIMESTAMP})
+        #{pvalue,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
     </insert>
 
     <insert id="insertRolePermission" parameterType="java.util.List">
@@ -80,10 +80,10 @@
               pvalue = #{pvalue,jdbcType=VARCHAR},
           </if>
           <if test="created_time != null">
-              created_time = #{created_time,jdbcType=TIMESTAMP},
+              created_time = #{createdTime,jdbcType=TIMESTAMP},
           </if>
           <if test="updated_time != null">
-              updated_time = #{updated_time,jdbcType=TIMESTAMP},
+              updated_time = #{updatedTime,jdbcType=TIMESTAMP},
           </if>
       </set>
       where pid = #{pid,jdbcType=VARCHAR}

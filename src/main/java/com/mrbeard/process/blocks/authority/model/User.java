@@ -29,11 +29,11 @@ public class User  implements Serializable {
     /**
      * 创建时间
      */
-    private Date created_time;
+    private Date createdTime;
     /**
      * 更新时间
      */
-    private Date updated_time;
+    private Date updatedTime;
     /**
      * 状态 1:启用 0：禁用
      */
@@ -68,13 +68,13 @@ public class User  implements Serializable {
      */
     private String parentsid;
 
-    public User(String uid, String uname, Integer state, String nick, String password, String loginIp, Integer loginPort, Date created_time, Date updated_time,String deptid,String parentsid) {
+    public User(String uid, String uname, Integer state, String nick, String password, String loginIp, Integer loginPort, Date createdTime, Date updatedTime,String deptid,String parentsid) {
         this.uid = uid;
         this.uname = uname;
         this.nick = nick;
         this.password = password;
-        this.created_time = created_time;
-        this.updated_time = updated_time;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
         this.state = state;
         this.loginIp = loginIp;
         this.loginPort = loginPort;
@@ -119,20 +119,20 @@ public class User  implements Serializable {
     }
 
 
-    public Date getCreated_time() {
-        return created_time;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreated_time(Date created_time) {
-        this.created_time = created_time;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Date getUpdated_time() {
-        return updated_time;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdated_time(Date updated_time) {
-        this.updated_time = updated_time;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public String getRole() {

@@ -60,8 +60,8 @@
       password, created_time,updated_time,
       state, loginIp, loginPort, deptid, parentsid)
     values (#{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR},  #{created_time,jdbcType=TIMESTAMP},
-      #{updated_time,jdbcType=TIMESTAMP},#{state,jdbcType=INTEGER},
+      #{password,jdbcType=VARCHAR},  #{createdTime,jdbcType=TIMESTAMP},
+      #{updatedTime,jdbcType=TIMESTAMP},#{state,jdbcType=INTEGER},
       #{loginIp,jdbcType=VARCHAR}, #{loginPort,jdbcType=INTEGER},
       #{deptid,jdbcType=VARCHAR},#{parentsid,jdbcType=VARCHAR})
   </insert>
@@ -71,8 +71,8 @@
     set uname = #{uname,jdbcType=VARCHAR},
       nick = #{nick,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      created_time = #{created_time,jdbcType=TIMESTAMP},
-      updated_time = #{updated_time,jdbcType=TIMESTAMP},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
       loginIp = #{loginIp,jdbcType=VARCHAR},
       loginPort = #{loginPort,jdbcType=INTEGER},
