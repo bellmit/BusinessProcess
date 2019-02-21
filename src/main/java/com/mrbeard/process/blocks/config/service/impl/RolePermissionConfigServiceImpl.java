@@ -164,7 +164,7 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
                 return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
             }
             Role roleInData = roleService.selectById(role.getRid());
-            roleInData.setUpdated_time(new Date());
+            roleInData.setUpdatedTime(new Date());
             roleInData.setRdescription(role.getRdescription());
             roleInData.setRname(role.getRname());
             roleService.updateById(roleInData);
@@ -180,8 +180,8 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
         roleNew.setRdescription(role.getRdescription());
         String rid = UUIDUtil.getUUID();
         roleNew.setRid(rid);
-        roleNew.setCreated_time(new Date());
-        roleNew.setUpdated_time(new Date());
+        roleNew.setCreatedTime(new Date());
+        roleNew.setUpdatedTime(new Date());
         roleService.insert(roleNew);
         //设置权限到RolePermission实体类
         List<RolePermission> rolePermissions = setRolePermission(rid,role.getPermissions());
@@ -229,7 +229,7 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
             }
             //设置数据
             Permission permissionInData = permissionService.selectById(permission.getPid());
-            permissionInData.setUpdated_time(new Date());
+            permissionInData.setUpdatedTime(new Date());
             permissionInData.setPname(permission.getPname());
             permissionInData.setPvalue(permission.getPvalue());
             //更新
@@ -238,8 +238,8 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
         }
         //新增
         permission.setPid(UUIDUtil.getUUID());
-        permission.setUpdated_time(new Date());
-        permission.setCreated_time(new Date());
+        permission.setUpdatedTime(new Date());
+        permission.setCreatedTime(new Date());
         //新增
         permissionService.insert(permission);
         //返回结果

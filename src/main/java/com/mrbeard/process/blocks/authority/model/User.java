@@ -68,7 +68,7 @@ public class User  implements Serializable {
      */
     private String parentsid;
 
-    public User(String uid, String uname, Integer state, String nick, String password, String loginIp, Integer loginPort, Date createdTime, Date updatedTime,String deptid,String parentsid) {
+    public User(String uid, String uname, Integer state, String nick, String password, String loginIp, Integer loginPort, String deptid,String parentsid,Date createdTime, Date updatedTime) {
         this.uid = uid;
         this.uname = uname;
         this.nick = nick;

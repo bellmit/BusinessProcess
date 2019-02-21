@@ -183,7 +183,7 @@ function setRoleDataList(result) {
         html += "<tr class=\"gradeX\">" +
             "  <td>" + item.rname + "</td>" +
             "  <td>" + item.rdescription + "</td>" +
-            "  <td>" + item.created + "</td>" +
+            "  <td>" + item.createdTime + "</td>" +
             "  <td>" +
             "      <div class=\"tpl-table-black-operation\">" +
             "            <a href=\"javascript:;\" onclick=\"editRole(" + rid + ")\">" +

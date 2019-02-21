@@ -183,7 +183,7 @@ function setPermissionDataList(result) {
         html += "<tr class=\"gradeX\">" +
             "  <td>" + item.pname + "</td>" +
             "  <td>" + item.pvalue + "</td>" +
-            "  <td>" + item.created + "</td>" +
+            "  <td>" + item.createdTime + "</td>" +
             "  <td>" +
             "      <div class=\"tpl-table-black-operation\">" +
             "            <a href=\"javascript:;\" onclick=\"editPermission(" + pid + ")\">" +

@@ -215,8 +215,8 @@ public class RoleServiceImpl  implements RoleService {
                 PermissionDto permissionDto = new PermissionDto();
                 permissionDto.setPid(permission.getPid());
                 permissionDto.setPname(permission.getPname());
-                permissionDto.setCreated(permission.getCreated_time());
-                permissionDto.setUpdated(permission.getUpdated_time());
+                permissionDto.setCreated(permission.getCreatedTime());
+                permissionDto.setUpdated(permission.getUpdatedTime());
                 permissionDto.setPvalue(permission.getPvalue());
                 permissionDto.setUsed(false);
                 permissionListWithRid.forEach(permissionWithRid->{

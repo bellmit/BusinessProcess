@@ -1,5 +1,7 @@
 package com.mrbeard.process.blocks.professional.service;
 
+import com.mrbeard.process.blocks.professional.dto.ProcessDto;
+import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,13 @@ import org.springframework.stereotype.Service;
  * @Date 2019/1/31 14:18
  * @Version 1.0
  **/
-@Service
 public interface ProcessService {
 
+    /**
+     * 创建新流程
+     * @param processDto
+     * @return
+     * @throws ProcessRuntimeException
+     */
+    Result createProcess(ProcessDto processDto) throws ProcessRuntimeException;
 }

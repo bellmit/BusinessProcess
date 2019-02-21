@@ -104,7 +104,7 @@ public class UserConfigServiceImpl implements UserConfigService {
             //修改
             //设置数据
             User userInData = userService.selectUserById(user.getUid());
-            userInData.setUpdated_time(new Date());
+            userInData.setUpdatedTime(new Date());
             userInData.setUname(user.getUname());
             userInData.setPassword(ToolUtil.Md5(user.getPassword()));
             userInData.setState(user.getState());
@@ -126,8 +126,8 @@ public class UserConfigServiceImpl implements UserConfigService {
                 return ResultGenerator.getErrorResult("该用户名已被注册!");
             }
             user.setUid(UUIDUtil.getUUID());
-            user.setCreated_time(new Date());
-            user.setUpdated_time(new Date());
+            user.setCreatedTime(new Date());
+            user.setUpdatedTime(new Date());
             user.setPassword(ToolUtil.Md5(user.getPassword()));
             userService.insert(user);
             //新增用户角色信息

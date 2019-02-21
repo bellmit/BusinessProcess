@@ -191,7 +191,7 @@ function setUserList(result) {
         html += "<tr class=\"gradeX\">" +
             "  <td>" + item.uname + "</td>" +
             "  <td>" + item.nick + "</td>" +
-            "  <td>" + item.created + "</td>" + state +
+            "  <td>" + item.createdTime + "</td>" + state +
             "  <td>" +
             "      <div class=\"tpl-table-black-operation\">" +
             "            <a href=\"javascript:;\" onclick=\"editUser(" + uid + ")\">" +

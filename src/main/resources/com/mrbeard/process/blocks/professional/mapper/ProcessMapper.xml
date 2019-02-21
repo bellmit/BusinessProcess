@@ -5,20 +5,20 @@
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="typeid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="tempid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="typeId" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tempId" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="level" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="createdid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="created_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="updated_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="handle_state" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="file_state" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="createdId" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="handleState" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="fileState" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="state" javaType="java.lang.Byte" jdbcType="TINYINT" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, typeid, tempid, level, createdid, created_time, updated_time, handle_state, 
-    file_state, state
+    id, title, typeId, tempId, level, createdId, createdTime, updatedTime, handleState, 
+    fileState, state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -31,12 +31,12 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.Process">
-    insert into p_process (id, title, typeid, 
-      tempid, level, createdid, 
-      created_time, updated_time, handle_state, 
-      file_state, state)
-    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR}, 
-      #{tempid,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, #{createdid,jdbcType=VARCHAR}, 
+    insert into p_process (id, title, typeId, 
+      tempId, level, createdId, 
+      createdTime, updatedTime, handleState, 
+      fileState, state)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, 
+      #{tempId,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, #{createdId,jdbcType=VARCHAR}, 
       #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{handleState,jdbcType=TINYINT}, 
       #{fileState,jdbcType=TINYINT}, #{state,jdbcType=TINYINT})
   </insert>
@@ -49,29 +49,29 @@
       <if test="title != null">
         title,
       </if>
-      <if test="typeid != null">
-        typeid,
+      <if test="typeId != null">
+        typeId,
       </if>
-      <if test="tempid != null">
-        tempid,
+      <if test="tempId != null">
+        tempId,
       </if>
       <if test="level != null">
         level,
       </if>
-      <if test="createdid != null">
-        createdid,
+      <if test="createdId != null">
+        createdId,
       </if>
       <if test="createdTime != null">
-        created_time,
+        createdTime,
       </if>
       <if test="updatedTime != null">
-        updated_time,
+        updatedTime,
       </if>
       <if test="handleState != null">
-        handle_state,
+        handleState,
       </if>
       <if test="fileState != null">
-        file_state,
+        fileState,
       </if>
       <if test="state != null">
         state,
@@ -84,17 +84,17 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="typeid != null">
-        #{typeid,jdbcType=VARCHAR},
+      <if test="typeId != null">
+        #{typeId,jdbcType=VARCHAR},
       </if>
-      <if test="tempid != null">
-        #{tempid,jdbcType=VARCHAR},
+      <if test="tempId != null">
+        #{tempId,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
         #{level,jdbcType=TINYINT},
       </if>
-      <if test="createdid != null">
-        #{createdid,jdbcType=VARCHAR},
+      <if test="createdId != null">
+        #{createdId,jdbcType=VARCHAR},
       </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
@@ -119,29 +119,29 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="typeid != null">
-        typeid = #{typeid,jdbcType=VARCHAR},
+      <if test="typeId != null">
+        typeId = #{typeId,jdbcType=VARCHAR},
       </if>
-      <if test="tempid != null">
-        tempid = #{tempid,jdbcType=VARCHAR},
+      <if test="tempId != null">
+        tempId = #{tempId,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
         level = #{level,jdbcType=TINYINT},
       </if>
-      <if test="createdid != null">
-        createdid = #{createdid,jdbcType=VARCHAR},
+      <if test="createdId != null">
+        createdId = #{createdId,jdbcType=VARCHAR},
       </if>
       <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
+        createdTime = #{createdTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+        updatedTime = #{updatedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="handleState != null">
-        handle_state = #{handleState,jdbcType=TINYINT},
+        handleState = #{handleState,jdbcType=TINYINT},
       </if>
       <if test="fileState != null">
-        file_state = #{fileState,jdbcType=TINYINT},
+        fileState = #{fileState,jdbcType=TINYINT},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=TINYINT},
@@ -152,14 +152,14 @@
   <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.Process">
     update p_process
     set title = #{title,jdbcType=VARCHAR},
-      typeid = #{typeid,jdbcType=VARCHAR},
-      tempid = #{tempid,jdbcType=VARCHAR},
+      typeId = #{typeId,jdbcType=VARCHAR},
+      tempId = #{tempId,jdbcType=VARCHAR},
       level = #{level,jdbcType=TINYINT},
-      createdid = #{createdid,jdbcType=VARCHAR},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      handle_state = #{handleState,jdbcType=TINYINT},
-      file_state = #{fileState,jdbcType=TINYINT},
+      createdId = #{createdId,jdbcType=VARCHAR},
+      createdTime = #{createdTime,jdbcType=TIMESTAMP},
+      updatedTime = #{updatedTime,jdbcType=TIMESTAMP},
+      handleState = #{handleState,jdbcType=TINYINT},
+      fileState = #{fileState,jdbcType=TINYINT},
       state = #{state,jdbcType=TINYINT}
     where id = #{id,jdbcType=VARCHAR}
   </update>

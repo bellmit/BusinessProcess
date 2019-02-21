@@ -7,13 +7,13 @@ public class Process {
 
     private String title;
 
-    private String typeid;
+    private String typeId;
 
-    private String tempid;
+    private String tempId;
 
     private Byte level;
 
-    private String createdid;
+    private String createdId;
 
     private Date createdTime;
 
@@ -25,13 +25,13 @@ public class Process {
 
     private Byte state;
 
-    public Process(String id, String title, String typeid, String tempid, Byte level, String createdid, Date createdTime, Date updatedTime, Byte handleState, Byte fileState, Byte state) {
+    public Process(String id, String title, String typeId, String tempId, Byte level, String createdId, Date createdTime, Date updatedTime, Byte handleState, Byte fileState, Byte state) {
         this.id = id;
         this.title = title;
-        this.typeid = typeid;
-        this.tempid = tempid;
+        this.typeId = typeId;
+        this.tempId = tempId;
         this.level = level;
-        this.createdid = createdid;
+        this.createdId = createdId;
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
         this.handleState = handleState;
@@ -59,20 +59,20 @@ public class Process {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getTypeid() {
-        return typeid;
+    public String gettypeId() {
+        return typeId;
     }
 
-    public void setTypeid(String typeid) {
-        this.typeid = typeid == null ? null : typeid.trim();
+    public void settypeId(String typeId) {
+        this.typeId = typeId == null ? null : typeId.trim();
     }
 
-    public String getTempid() {
-        return tempid;
+    public String gettempId() {
+        return tempId;
     }
 
-    public void setTempid(String tempid) {
-        this.tempid = tempid == null ? null : tempid.trim();
+    public void settempId(String tempId) {
+        this.tempId = tempId == null ? null : tempId.trim();
     }
 
     public Byte getLevel() {
@@ -83,12 +83,12 @@ public class Process {
         this.level = level;
     }
 
-    public String getCreatedid() {
-        return createdid;
+    public String getcreatedId() {
+        return createdId;
     }
 
-    public void setCreatedid(String createdid) {
-        this.createdid = createdid == null ? null : createdid.trim();
+    public void setcreatedId(String createdId) {
+        this.createdId = createdId == null ? null : createdId.trim();
     }
 
     public Date getCreatedTime() {
