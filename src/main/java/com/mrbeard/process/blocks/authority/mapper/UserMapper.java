@@ -17,6 +17,7 @@ public interface UserMapper {
      */
     int deleteByPrimaryKey(String uid);
 
+
     /**
      * insert
      * @param record
