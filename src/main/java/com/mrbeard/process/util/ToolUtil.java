@@ -59,7 +59,7 @@ public class ToolUtil {
     public static Boolean checkParamter(Object... paramters) {
         Boolean flag = true;
         for (int i = 0; i < paramters.length; i++) {
-            if (paramters[i] == null || paramters[i].toString().equals("")) {
+            if (paramters[i] == null || "".equals(paramters[i].toString())) {
                 flag = false;
             }
         }

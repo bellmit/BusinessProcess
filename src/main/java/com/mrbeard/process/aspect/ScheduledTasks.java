@@ -1,12 +1,15 @@
 package com.mrbeard.process.aspect;
 
+import cn.hutool.Hutool;
+import cn.hutool.core.date.DateUtil;
 import com.mrbeard.process.aspect.mapper.InteractiveLogMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @Author 胡彬
@@ -15,7 +18,8 @@ import javax.annotation.Resource;
  **/
 @Component
 public class ScheduledTasks {
-    private static Logger logger = LogManager.getLogger(ScheduledTasks.class);
+
+    static Logger logger = LoggerFactory.getLogger(Scheduled.class);
 
     @Resource
     private InteractiveLogMapper interactiveLogDao;
@@ -28,4 +32,12 @@ public class ScheduledTasks {
         int deleteRows = interactiveLogDao.deleteExpired();
         logger.info(">>> 删除 " + deleteRows + " 条过期交互日志！");
     }
+
+    /**
+     * 测试定时任务
+     */
+//    @Scheduled(cron = "*/5 * * * * ?")
+//    public void test(){
+//        logger.info("执行时间"+DateUtil.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
+//    }
 }

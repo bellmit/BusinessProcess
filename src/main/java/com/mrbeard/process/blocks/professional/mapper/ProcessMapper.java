@@ -1,7 +1,9 @@
 package com.mrbeard.process.blocks.professional.mapper;
 
 import com.mrbeard.process.blocks.professional.model.Process;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface ProcessMapper {
     int deleteByPrimaryKey(String id);
 

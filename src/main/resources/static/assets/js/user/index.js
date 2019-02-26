@@ -1,8 +1,8 @@
+var usertoken = localStorage.getItem("usertoken");
 $(function () {
     //页面加载时执行
     var username = localStorage.getItem("uname");
     var nick = localStorage.getItem("nick");
-    var usertoken = localStorage.getItem("usertoken");
     //设置用户名
     $('#user-name-span').html(username);
     //设置用户昵称
@@ -86,8 +86,6 @@ $("#role-manager-a").on("click",function () {
  * 权限管理跳转
  */
 $("#permission-manager-a").on("click",function () {
-    //获取usertoken
-    var usertoken = localStorage.getItem("usertoken");
     //usertoken为空,跳转到登陆页
     if(usertoken == null){
         // 返回信息
@@ -98,6 +96,44 @@ $("#permission-manager-a").on("click",function () {
     window.location.href = getRootPath()+"/permission-manager?usertoken="+usertoken;
 })
 
+/**
+ * 退出登陆
+ */
+$('#loginout-a').on('click', function () {
+    //清空session
+    localStorage.removeItem('nick');
+    localStorage.removeItem('uname');
+    //退出
+    $.ajax({
+        url: '/api/logout',
+        cache: true,
+        type: 'GET',
+        dataType: 'json',
+        data: {"usertoken": usertoken}
+    }).then(function (data) {
+        // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
+        //取消加载动画
+        $('#reload-modal-loading').modal('close');
+        if (data.code == 200 && data.message == "success") {
+            // 返回信息
+            $('#modal-alert .am-modal-bd').text(data.data);
+            $('#modal-alert').modal();
+        } else {
+            // 返回信息
+            $('#modal-alert .am-modal-bd').text(data.data);
+            $('#modal-alert').modal();
+        }
+    }, function (data) {
+        // Ajax 请求失败，根据需要决定验证是否通过，然后返回 validity
+        // 返回信息
+        $('#modal-alert .am-modal-bd').text('登陆失败！');
+        $('#modal-alert').modal();
+    });
+    //清除usertoken
+    localStorage.removeItem('usertoken');
+    //重定向
+    window.location.href = getRootPath()+'/login';
+})
 
 
 

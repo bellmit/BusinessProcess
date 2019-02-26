@@ -8,11 +8,12 @@ import com.mrbeard.process.blocks.authority.model.User;
 import com.mrbeard.process.util.SessionUtil;
 import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.WebUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -27,7 +28,8 @@ import java.util.Date;
 @Aspect
 public class InteractiveLogAspect {
 
-    private static Logger logger = LogManager.getLogger(InteractiveLogAspect.class);
+
+    static Logger logger = LoggerFactory.getLogger(Scheduled.class);
 
     @Resource
     InteractiveLogMapper interactiveLogDao;
