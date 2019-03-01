@@ -3,6 +3,7 @@ package com.mrbeard.process.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.exception.ProcessRuntimeException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class SessionUtil {
      * 根据usertoken获取redis中的用户session信息
      * @return
      */
-    public static User getUserInfo() {
+    public static User getUserInfo() throws ProcessRuntimeException {
         //从参数中获取usertoken
         String usertoken = WebUtil.getRequest().getParameter("usertoken");
         User user = null;
@@ -42,6 +43,7 @@ public class SessionUtil {
             user = JSON.parseObject(String.valueOf(userInfoMap.get("userInfo")), User.class);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new ProcessRuntimeException(e.getMessage());
         }
         return user;
     }

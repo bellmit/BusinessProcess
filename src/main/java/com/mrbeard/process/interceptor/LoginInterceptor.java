@@ -35,8 +35,13 @@ public class LoginInterceptor implements HandlerInterceptor {
         String usertoken = request.getParameter("usertoken");
         //如果usertoken为空,返回错误。
         if(ToolUtil.isEmpty(usertoken)){
-            logger.error("{LoginInterceptor}====>usertoken为空，重定向到" + request.getContextPath() + "/errorPage");
-            response.sendRedirect(request.getContextPath() + "/errorPage");
+            //用户未登录，或session已经失效,重定向到错误类中进行处理
+            String requestUrl = request.getRequestURL().toString().trim();
+            String servletPath = request.getServletPath();
+            //去除servletPath
+            requestUrl = requestUrl.replace(servletPath,"");
+            logger.error("{LoginInterceptor}====>usertoken为空，重定向到" + requestUrl + "/errorPage");
+            response.sendRedirect(requestUrl + "/errorPage");
             return false;
         }
         // redis中获取到了对应的值则重新刷新session有效时间
@@ -55,8 +60,12 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return true;
             }
             //用户未登录，或session已经失效,重定向到错误类中进行处理
-            logger.error("{LoginInterceptor}====>session为空，重定向到" + request.getContextPath() + "/errorPage");
-            response.sendRedirect(request.getContextPath() + "/errorPage");
+            String requestUrl = request.getRequestURL().toString().trim();
+            String servletPath = request.getServletPath();
+            //去除servletPath
+            requestUrl = requestUrl.replace(servletPath,"");
+            logger.error("{LoginInterceptor}====>session为空，重定向到" + requestUrl + "/errorPage");
+            response.sendRedirect(requestUrl + "/errorPage");
             return false;
         }
     }

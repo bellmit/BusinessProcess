@@ -1,6 +1,8 @@
 package com.mrbeard.process.blocks.authority.controller;
 
 import com.mrbeard.process.blocks.authority.dto.LoginDto;
+import com.mrbeard.process.blocks.authority.mapper.DepartmentMapper;
+import com.mrbeard.process.blocks.authority.model.Department;
 import com.mrbeard.process.blocks.authority.service.AuthorityService;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
@@ -28,6 +31,9 @@ public class AuthorityController {
 
     @Autowired
     AuthorityService authorityService;
+
+    @Resource
+    DepartmentMapper departmentDao;
 
     /**
      * 登录接口
@@ -87,6 +93,12 @@ public class AuthorityController {
     }
 
 
+    @RequestMapping(value = "/insertDepartment",method = RequestMethod.POST)
+    public Result insertDepartMent(Department department) throws ProcessRuntimeException{
+        department.setId(UUIDUtil.getUUID());
+        departmentDao.insertSelective(department);
+        return ResultGenerator.getSuccessResult("success");
+    }
 
 
 }

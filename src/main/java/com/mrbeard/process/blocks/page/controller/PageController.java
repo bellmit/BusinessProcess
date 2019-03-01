@@ -1,6 +1,7 @@
 package com.mrbeard.process.blocks.page.controller;
 
-import com.mrbeard.process.util.ToolUtil;
+import com.mrbeard.process.util.SessionUtil;
+import org.apache.catalina.manager.util.SessionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -11,6 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
 
+    @GetMapping("/")
+    public String indexToLogin(){
+        try{
+            SessionUtil.getUserInfo();
+        }catch (Exception e){
+            return "redirect:/static/login.html";
+        }
+        return "index";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "redirect:/static/login.html";
@@ -18,6 +29,7 @@ public class PageController {
 
     @GetMapping("/errorPage")
     public String error(){
+        String s = "";
         return "redirect:/static/login.html";
     }
 
