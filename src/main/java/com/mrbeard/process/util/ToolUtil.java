@@ -1,8 +1,10 @@
 package com.mrbeard.process.util;
 
+import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +18,8 @@ import java.util.regex.Pattern;
  * @date 2017年8月22日
  */
 public class ToolUtil {
+
+    static Logger logger = LoggerFactory.getLogger(ToolUtil.class);
 
     /**
      * MD5加密
@@ -43,8 +47,9 @@ public class ToolUtil {
 
             md5sString = buf.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
             md5sString = e.toString();
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException(e.getMessage());
         }
 
         return md5sString;

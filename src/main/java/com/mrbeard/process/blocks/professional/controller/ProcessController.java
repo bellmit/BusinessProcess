@@ -22,6 +22,11 @@ public class ProcessController {
     @Autowired
     private ProcessService processService;
 
+    /**
+     * 新建流程
+     * @param processDto
+     * @return
+     */
     @RequestMapping(value = "/createProcess",method = RequestMethod.POST)
     public Result createProcess(ProcessDto processDto){
         return processService.createProcess(processDto);

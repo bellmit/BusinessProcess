@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @Author 胡彬
@@ -96,6 +97,8 @@ public class AuthorityController {
     @RequestMapping(value = "/insertDepartment",method = RequestMethod.POST)
     public Result insertDepartMent(Department department) throws ProcessRuntimeException{
         department.setId(UUIDUtil.getUUID());
+        department.setCreatedtime(new Date());
+        department.setUpdatedtime(new Date());
         departmentDao.insertSelective(department);
         return ResultGenerator.getSuccessResult("success");
     }

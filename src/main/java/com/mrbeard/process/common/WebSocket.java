@@ -85,6 +85,7 @@ public class WebSocket {
             try {
                 item.sendMessage(message);
             } catch (IOException e) {
+                log.error(e.getMessage(),e);
                 e.printStackTrace();
             }
         }

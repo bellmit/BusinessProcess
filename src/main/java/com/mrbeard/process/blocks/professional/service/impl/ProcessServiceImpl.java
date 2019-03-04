@@ -76,6 +76,6 @@ public class ProcessServiceImpl implements ProcessService {
         process.setFileState((byte)0);
         process.setHandleState((byte)0);
         process.setId(UUIDUtil.getUUID());
-        process.setState((byte)0);
+        process.setState((byte)1);
     }
 }

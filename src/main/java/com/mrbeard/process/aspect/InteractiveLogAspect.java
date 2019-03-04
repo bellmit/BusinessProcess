@@ -5,6 +5,7 @@ import com.mrbeard.process.aspect.mapper.InteractiveLogMapper;
 import com.mrbeard.process.aspect.model.InteractiveLog;
 import com.mrbeard.process.blocks.authority.controller.AuthorityController;
 import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.util.SessionUtil;
 import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.WebUtil;
@@ -99,6 +100,7 @@ public class InteractiveLogAspect {
             //记录日志时发生异常，自己感知处理
             logger.warn("InteractiveLog >>> " + interactiveLog == null ? "null" : interactiveLog.toString());
             e.printStackTrace();
+            throw new ProcessRuntimeException(e.getMessage());
         }
     }
 
@@ -113,6 +115,7 @@ public class InteractiveLogAspect {
         } catch (Exception e) { //记录日志时发生异常，自己感知处理
             logger.warn("InteractiveLog >>> " + interactiveLog == null ? "null" : interactiveLog.toString());
             e.printStackTrace();
+            throw new ProcessRuntimeException(e.getMessage());
         }
     }
 

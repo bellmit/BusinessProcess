@@ -3,9 +3,13 @@ package com.mrbeard.process.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.page.controller.PageController;
 import com.mrbeard.process.exception.ProcessRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.websocket.Session;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +21,8 @@ import java.util.Set;
  */
 @Component
 public class SessionUtil {
+
+    private static Logger logger = LoggerFactory.getLogger(SessionUtil.class);
 
     /**
      * 根据usertoken获取redis中的用户session信息
@@ -42,7 +48,7 @@ public class SessionUtil {
             Map<String, Object> userInfoMap = JSON.parseObject(userInfo, new TypeReference<Map<String, Object>>() {});
             user = JSON.parseObject(String.valueOf(userInfoMap.get("userInfo")), User.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
             throw new ProcessRuntimeException(e.getMessage());
         }
         return user;

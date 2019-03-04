@@ -192,7 +192,8 @@ public class AuthorityServiceImpl implements AuthorityService {
             sos.write(buf);
             JedisUtil.add("browerToken_" + browerToken, new String(rands), Constant.BORWER_TOKEN_INVALIDTIME);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException(e.getMessage());
         } finally {
             if (bos != null) {
                 bos.close();
