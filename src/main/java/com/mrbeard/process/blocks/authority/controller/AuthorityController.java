@@ -93,15 +93,4 @@ public class AuthorityController {
         return ResultGenerator.getNotLoginResult();
     }
 
-
-    @RequestMapping(value = "/insertDepartment",method = RequestMethod.POST)
-    public Result insertDepartMent(Department department) throws ProcessRuntimeException{
-        department.setId(UUIDUtil.getUUID());
-        department.setCreatedtime(new Date());
-        department.setUpdatedtime(new Date());
-        departmentDao.insertSelective(department);
-        return ResultGenerator.getSuccessResult("success");
-    }
-
-
 }

@@ -19,7 +19,7 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://119.29.170.125:3306/process"
+                connectionURL="jdbc:mysql://127.0.0.1:3306/process"
                 userId="root"
                 password="bin@gege009">
         </jdbcConnection>
@@ -35,7 +35,7 @@
             targetPackage     指定生成的model生成所在的包名
             targetProject     指定在该项目下所在的路径
         -->
-        <javaModelGenerator targetPackage="com.mrbeard.process.blocks.authority.model"
+        <javaModelGenerator targetPackage="com.mrbeard.process.blocks.professional.model"
                             targetProject="src/main/java">
 
             <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
@@ -49,7 +49,7 @@
         </javaModelGenerator>
 
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
-        <sqlMapGenerator targetPackage="com.mrbeard.process.blocks.authority.mapper"
+        <sqlMapGenerator targetPackage="com.mrbeard.process.blocks.professional.mapper"
                          targetProject="src/main/resources/">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
@@ -59,17 +59,17 @@
                 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
-        <javaClientGenerator targetPackage="com.mrbeard.process.blocks.authority.mapper"
+        <javaClientGenerator targetPackage="com.mrbeard.process.blocks.professional.mapper"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
-        <table tableName="qx_department" domainObjectName="Department"
+        <table tableName="p_node" domainObjectName="ProcessNode"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <!-- 当字段为text的时候可以通过columnOverride转为varchaar -->
+             <!--当字段为text的时候可以通过columnOverride转为varchaar -->
             <!--<columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR" />-->
             <!--<columnOverride column="title" javaType="java.lang.String" jdbcType="VARCHAR" />-->
         </table>

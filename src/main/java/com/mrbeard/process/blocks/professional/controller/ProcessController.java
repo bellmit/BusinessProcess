@@ -2,7 +2,10 @@ package com.mrbeard.process.blocks.professional.controller;
 
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.service.ProcessService;
+import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.result.Result;
+import com.mrbeard.process.result.ResultGenerator;
+import com.mrbeard.process.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +32,10 @@ public class ProcessController {
      */
     @RequestMapping(value = "/createProcess",method = RequestMethod.POST)
     public Result createProcess(ProcessDto processDto){
+        //校验参数
+        if(ToolUtil.checkParamter(processDto.getTitle(),processDto.getLevel(),processDto.getTempId(),processDto.getTypeId()) != true){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
         return processService.createProcess(processDto);
     }
 

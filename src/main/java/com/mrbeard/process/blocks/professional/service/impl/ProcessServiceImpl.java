@@ -22,7 +22,7 @@ import java.util.Date;
 
 /**
  * @ClassName ProcessServiceImpl
- * @Description TODO
+ * @Description 流程服务实现类
  * @Author Mrbeard
  * @Date 2019/2/20 17:02
  * @Version 1.0
@@ -43,10 +43,6 @@ public class ProcessServiceImpl implements ProcessService {
      */
     @Override
     public Result createProcess(ProcessDto processDto) throws ProcessRuntimeException {
-        //校验参数
-        if(ToolUtil.checkParamter(processDto.getTitle(),processDto.getLevel(),processDto.getTempId(),processDto.getTypeId()) != true){
-            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
-        }
         Process process = new Process();
         //设置数据
         setProcessData(processDto,process);
@@ -55,8 +51,12 @@ public class ProcessServiceImpl implements ProcessService {
             processDao.insertSelective(process);
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
-            throw new ProcessRuntimeException(e.getMessage());
+            throw new ProcessRuntimeException("新建流程失败！");
         }
+        //设置节点
+
+        //通知上级审批
+        
         return ResultGenerator.getSuccessResult("新建流程成功");
     }
 
