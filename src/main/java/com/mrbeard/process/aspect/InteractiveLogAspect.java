@@ -98,9 +98,10 @@ public class InteractiveLogAspect {
             interactiveLogDao.insert(interactiveLog);
         } catch (Exception e) {
             //记录日志时发生异常，自己感知处理
-            logger.warn("InteractiveLog >>> " + interactiveLog == null ? "null" : interactiveLog.toString());
-            e.printStackTrace();
-            throw new ProcessRuntimeException(e.getMessage());
+            if(interactiveLog != null){
+                logger.warn("InteractiveLog >>> " + interactiveLog == null ? "null" : interactiveLog.toString());
+                throw new ProcessRuntimeException(e.getMessage());
+            }
         }
     }
 
@@ -113,9 +114,10 @@ public class InteractiveLogAspect {
             interactiveLog.setExceptionMes(exceptionMes);
             interactiveLogDao.insert(interactiveLog);
         } catch (Exception e) { //记录日志时发生异常，自己感知处理
-            logger.warn("InteractiveLog >>> " + interactiveLog == null ? "null" : interactiveLog.toString());
-            e.printStackTrace();
-            throw new ProcessRuntimeException(e.getMessage());
+            if(interactiveLog != null){
+                logger.warn("InteractiveLog >>> " + interactiveLog == null ? "null" : interactiveLog.toString());
+                throw new ProcessRuntimeException(e.getMessage());
+            }
         }
     }
 
