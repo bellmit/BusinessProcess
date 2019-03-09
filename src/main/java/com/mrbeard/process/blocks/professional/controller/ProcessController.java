@@ -33,7 +33,8 @@ public class ProcessController {
     @RequestMapping(value = "/createProcess",method = RequestMethod.POST)
     public Result createProcess(ProcessDto processDto){
         //校验参数
-        if(ToolUtil.checkParamter(processDto.getTitle(),processDto.getLevel(),processDto.getTempId(),processDto.getTypeId()) != true){
+        if(ToolUtil.checkParamter(processDto.getTitle(),processDto.getLevel(),
+                processDto.getTempId(),processDto.getTypeId(),processDto.getNodebranch()) != true){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
         return processService.createProcess(processDto);

@@ -2,27 +2,63 @@ package com.mrbeard.process.blocks.professional.model;
 
 import java.util.Date;
 
+/**
+ * 流程信息实体类
+ */
 public class Process {
+    /**
+     * 唯一id
+     */
     private String id;
 
+    /**
+     * 标题
+     */
     private String title;
 
+    /**
+     * 类型id
+     */
     private String typeId;
 
+    /**
+     * 模板id
+     */
     private String tempId;
 
+    /**
+     * 紧急程度 1-正常 2-重要 3-紧急
+     */
     private Byte level;
 
+    /**
+     * 创建人id
+     */
     private String createdId;
 
+    /**
+     * 创建时间
+     */
     private Date createdTime;
 
+    /**
+     * 更新时间
+     */
     private Date updatedTime;
 
+    /**
+     * 处理状态 0-待办 1-已办
+     */
     private Byte handleState;
 
+    /**
+     * 归档状态 0-未归档 1-已归档
+     */
     private Byte fileState;
 
+    /**
+     * 流程状态 0-无效 1-有效
+     */
     private Byte state;
 
     public Process(String id, String title, String typeId, String tempId, Byte level, String createdId, Date createdTime, Date updatedTime, Byte handleState, Byte fileState, Byte state) {

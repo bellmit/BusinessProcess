@@ -23,7 +23,7 @@ public class ProcessDto {
      */
     private String tempId;
     /**
-     * 紧急程度
+     * 紧急程度 1-正常 2-重要 3-紧急
      */
     private Byte level;
     /**
@@ -50,6 +50,11 @@ public class ProcessDto {
      * 更新时间
      */
     private Date updatedTime;
+
+    /**
+     * 是否拆分节点 0-不拆分 1-拆分  2-合并
+     */
+    private String nodebranch;
 
     public String getTitle() {
         return title;
@@ -129,5 +134,13 @@ public class ProcessDto {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public String getNodebranch() {
+        return nodebranch;
+    }
+
+    public void setNodebranch(String nodebranch) {
+        this.nodebranch = nodebranch;
     }
 }

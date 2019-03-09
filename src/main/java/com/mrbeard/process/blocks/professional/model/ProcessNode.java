@@ -2,25 +2,49 @@ package com.mrbeard.process.blocks.professional.model;
 
 import java.util.Date;
 
+/**
+ * 节点实体
+ */
 public class ProcessNode {
     private String id;
 
+    /**
+     * 节点code
+     */
     private String nodecode;
 
+    /**
+     * 节点名称
+     */
     private String nodename;
 
+    /**
+     * 节点类型 1-开始节点 2-过程节点 3-结束节点
+     */
     private Byte nodetype;
 
+    /**
+     * 流程id
+     */
     private String proid;
 
+    /**
+     * 节节点状态  0-未处理 1-已处理
+     */
     private Byte nodestate;
 
     private Date createdtime;
 
     private Date updatedtime;
 
+    /**
+     * 是否拆分节点 0-不拆分 1-拆分  2-合并
+     */
     private String nodebranch;
 
+    /**
+     * 当前处理人id
+     */
     private String currenthandlepersonid;
 
     public ProcessNode(String id, String nodecode, String nodename, Byte nodetype, String proid, Byte nodestate, Date createdtime, Date updatedtime, String nodebranch, String currenthandlepersonid) {

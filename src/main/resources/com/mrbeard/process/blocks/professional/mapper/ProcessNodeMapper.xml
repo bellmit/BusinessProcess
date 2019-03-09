@@ -1,155 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mrbeard.process.blocks.professional.mapper.ProcessNodeMapper">
-  <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.professional.model.ProcessNode">
-    <constructor>
-      <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nodeCode" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nodeName" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nodeType" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="proId" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nodeState" javaType="java.lang.Byte" jdbcType="TINYINT" />
-      <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="nodeBranch" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="currentHandlePersonId" javaType="java.lang.String" jdbcType="VARCHAR" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, nodeCode, nodeName, nodeType, proId, nodeState, createdTime, updatedTime, nodeBranch, 
-    currentHandlePersonId
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from p_node
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from p_node
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
-    insert into p_node (id, nodeCode, nodeName, 
-      nodeType, proId, nodeState, 
-      createdTime, updatedTime, nodeBranch, 
-      currentHandlePersonId)
-    values (#{id,jdbcType=VARCHAR}, #{nodecode,jdbcType=VARCHAR}, #{nodename,jdbcType=VARCHAR}, 
-      #{nodetype,jdbcType=TINYINT}, #{proid,jdbcType=VARCHAR}, #{nodestate,jdbcType=TINYINT}, 
-      #{createdtime,jdbcType=TIMESTAMP}, #{updatedtime,jdbcType=TIMESTAMP}, #{nodebranch,jdbcType=VARCHAR}, 
-      #{currenthandlepersonid,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
-    insert into p_node
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="nodecode != null">
-        nodeCode,
-      </if>
-      <if test="nodename != null">
-        nodeName,
-      </if>
-      <if test="nodetype != null">
-        nodeType,
-      </if>
-      <if test="proid != null">
-        proId,
-      </if>
-      <if test="nodestate != null">
-        nodeState,
-      </if>
-      <if test="createdtime != null">
-        createdTime,
-      </if>
-      <if test="updatedtime != null">
-        updatedTime,
-      </if>
-      <if test="nodebranch != null">
-        nodeBranch,
-      </if>
-      <if test="currenthandlepersonid != null">
-        currentHandlePersonId,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="nodecode != null">
-        #{nodecode,jdbcType=VARCHAR},
-      </if>
-      <if test="nodename != null">
-        #{nodename,jdbcType=VARCHAR},
-      </if>
-      <if test="nodetype != null">
-        #{nodetype,jdbcType=TINYINT},
-      </if>
-      <if test="proid != null">
-        #{proid,jdbcType=VARCHAR},
-      </if>
-      <if test="nodestate != null">
-        #{nodestate,jdbcType=TINYINT},
-      </if>
-      <if test="createdtime != null">
-        #{createdtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedtime != null">
-        #{updatedtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="nodebranch != null">
-        #{nodebranch,jdbcType=VARCHAR},
-      </if>
-      <if test="currenthandlepersonid != null">
-        #{currenthandlepersonid,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
-    update p_node
-    <set>
-      <if test="nodecode != null">
-        nodeCode = #{nodecode,jdbcType=VARCHAR},
-      </if>
-      <if test="nodename != null">
-        nodeName = #{nodename,jdbcType=VARCHAR},
-      </if>
-      <if test="nodetype != null">
-        nodeType = #{nodetype,jdbcType=TINYINT},
-      </if>
-      <if test="proid != null">
-        proId = #{proid,jdbcType=VARCHAR},
-      </if>
-      <if test="nodestate != null">
-        nodeState = #{nodestate,jdbcType=TINYINT},
-      </if>
-      <if test="createdtime != null">
-        createdTime = #{createdtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedtime != null">
-        updatedTime = #{updatedtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="nodebranch != null">
-        nodeBranch = #{nodebranch,jdbcType=VARCHAR},
-      </if>
-      <if test="currenthandlepersonid != null">
-        currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
-    update p_node
-    set nodeCode = #{nodecode,jdbcType=VARCHAR},
-      nodeName = #{nodename,jdbcType=VARCHAR},
-      nodeType = #{nodetype,jdbcType=TINYINT},
-      proId = #{proid,jdbcType=VARCHAR},
-      nodeState = #{nodestate,jdbcType=TINYINT},
-      createdTime = #{createdtime,jdbcType=TIMESTAMP},
-      updatedTime = #{updatedtime,jdbcType=TIMESTAMP},
-      nodeBranch = #{nodebranch,jdbcType=VARCHAR},
-      currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+    <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nodeCode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nodeName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nodeType" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="proId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nodeState" javaType="java.lang.Byte" jdbcType="TINYINT"/>
+            <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="nodeBranch" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="currentHandlePersonId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, nodeCode, nodeName, nodeType, proId, nodeState, createdTime, updatedTime, nodeBranch,
+        currentHandlePersonId
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p_node
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from p_node
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        insert into p_node (id, nodeCode, nodeName,
+          nodeType, proId, nodeState,
+          createdTime, updatedTime, nodeBranch,
+          currentHandlePersonId)
+        values (#{id,jdbcType=VARCHAR}, #{nodecode,jdbcType=VARCHAR}, #{nodename,jdbcType=VARCHAR},
+          #{nodetype,jdbcType=TINYINT}, #{proid,jdbcType=VARCHAR}, #{nodestate,jdbcType=TINYINT},
+          #{createdtime,jdbcType=TIMESTAMP}, #{updatedtime,jdbcType=TIMESTAMP}, #{nodebranch,jdbcType=VARCHAR},
+          #{currenthandlepersonid,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        insert into p_node
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="nodecode != null">
+                nodeCode,
+            </if>
+            <if test="nodename != null">
+                nodeName,
+            </if>
+            <if test="nodetype != null">
+                nodeType,
+            </if>
+            <if test="proid != null">
+                proId,
+            </if>
+            <if test="nodestate != null">
+                nodeState,
+            </if>
+            <if test="createdtime != null">
+                createdTime,
+            </if>
+            <if test="updatedtime != null">
+                updatedTime,
+            </if>
+            <if test="nodebranch != null">
+                nodeBranch,
+            </if>
+            <if test="currenthandlepersonid != null">
+                currentHandlePersonId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="nodecode != null">
+                #{nodecode,jdbcType=VARCHAR},
+            </if>
+            <if test="nodename != null">
+                #{nodename,jdbcType=VARCHAR},
+            </if>
+            <if test="nodetype != null">
+                #{nodetype,jdbcType=TINYINT},
+            </if>
+            <if test="proid != null">
+                #{proid,jdbcType=VARCHAR},
+            </if>
+            <if test="nodestate != null">
+                #{nodestate,jdbcType=TINYINT},
+            </if>
+            <if test="createdtime != null">
+                #{createdtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedtime != null">
+                #{updatedtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nodebranch != null">
+                #{nodebranch,jdbcType=VARCHAR},
+            </if>
+            <if test="currenthandlepersonid != null">
+                #{currenthandlepersonid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        update p_node
+        <set>
+            <if test="nodecode != null">
+                nodeCode = #{nodecode,jdbcType=VARCHAR},
+            </if>
+            <if test="nodename != null">
+                nodeName = #{nodename,jdbcType=VARCHAR},
+            </if>
+            <if test="nodetype != null">
+                nodeType = #{nodetype,jdbcType=TINYINT},
+            </if>
+            <if test="proid != null">
+                proId = #{proid,jdbcType=VARCHAR},
+            </if>
+            <if test="nodestate != null">
+                nodeState = #{nodestate,jdbcType=TINYINT},
+            </if>
+            <if test="createdtime != null">
+                createdTime = #{createdtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedtime != null">
+                updatedTime = #{updatedtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nodebranch != null">
+                nodeBranch = #{nodebranch,jdbcType=VARCHAR},
+            </if>
+            <if test="currenthandlepersonid != null">
+                currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        update p_node
+        set nodeCode = #{nodecode,jdbcType=VARCHAR},
+          nodeName = #{nodename,jdbcType=VARCHAR},
+          nodeType = #{nodetype,jdbcType=TINYINT},
+          proId = #{proid,jdbcType=VARCHAR},
+          nodeState = #{nodestate,jdbcType=TINYINT},
+          createdTime = #{createdtime,jdbcType=TIMESTAMP},
+          updatedTime = #{updatedtime,jdbcType=TIMESTAMP},
+          nodeBranch = #{nodebranch,jdbcType=VARCHAR},
+          currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

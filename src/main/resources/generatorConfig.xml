@@ -65,7 +65,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="p_node" domainObjectName="ProcessNode"
+        <table tableName="p_node_base" domainObjectName="ProcessNodeBase"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
