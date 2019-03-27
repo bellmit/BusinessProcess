@@ -1,6 +1,7 @@
 package com.mrbeard.process.blocks.professional.mapper;
 
 import com.mrbeard.process.blocks.professional.model.ProcessNodeBase;
+import com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

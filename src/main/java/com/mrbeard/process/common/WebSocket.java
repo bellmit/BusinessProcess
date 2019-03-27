@@ -1,10 +1,16 @@
 package com.mrbeard.process.common;
 
 
+import com.mrbeard.process.blocks.authority.mapper.UserLoginInfoMapper;
+import com.mrbeard.process.blocks.authority.model.UserLoginInfo;
+import com.mrbeard.process.exception.ProcessRuntimeException;
+import com.mrbeard.process.util.SessionUtil;
+import com.mrbeard.process.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -22,6 +28,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @ServerEndpoint("/websocket/{uid}")
 @Component
 public class WebSocket {
+    @Resource
+    private UserLoginInfoMapper userLoginInfoDao;
 
      private static Logger log = LoggerFactory.getLogger(WebSocket.class);
     /**
@@ -51,13 +59,47 @@ public class WebSocket {
         webSocketSet.add(this);
         //在线数加1
         addOnlineCount();
-
+        //用户信息存入库
+        setUserInfoToData(uid);
         log.info("有新窗口开始监听:"+uid+",当前在线人数为" + getOnlineCount());
         this.uid=uid;
         try {
             sendMessage("连接成功");
         } catch (IOException e) {
             log.error("websocket IO异常");
+        }
+    }
+
+    /**
+     * 将用户存入信息表
+     * @param uid
+     */
+    private void setUserInfoToData(String uid) {
+        //将在线用户存入在线用户表
+        //判断是否表里有数据
+        int countById = userLoginInfoDao.selectCountById(uid);
+        UserLoginInfo userLoginInfo = new UserLoginInfo();
+        if(countById <= 0){
+            //新插入数据
+            userLoginInfo.setUid(uid);
+            userLoginInfo.setIsonline("1");
+            userLoginInfo.setUname(SessionUtil.getUserInfo().getUname());
+            userLoginInfo.setIp(WebUtil.getRequest().getRemoteAddr());
+            userLoginInfoDao.insert(userLoginInfo);
+        }else{
+            userLoginInfo.setUid(uid);
+            userLoginInfo.setIsonline("1");
+            if(userLoginInfo.getSomeThingToDo() > 0){
+                //通知
+                try {
+                    sendInfo("您有"+userLoginInfo.getSomeThingToDo()+"条消息需要处理！",uid);
+                } catch (IOException e) {
+                    log.error(e.getMessage(),e);
+                    throw new ProcessRuntimeException(e.getMessage());
+                }
+            }
+            userLoginInfo.setSomeThingToDo(0);
+            userLoginInfoDao.updateByPrimaryKeySelective(userLoginInfo);
         }
     }
 
@@ -70,6 +112,10 @@ public class WebSocket {
         webSocketSet.remove(this);
         //在线数减1
         subOnlineCount();
+        //更新在线状态
+        UserLoginInfo userLoginInfo = userLoginInfoDao.selectByPrimaryKey(uid);
+        userLoginInfo.setIsonline("0");
+        userLoginInfoDao.updateByPrimaryKeySelective(userLoginInfo);
         log.info("有一连接关闭！当前在线人数为" + getOnlineCount());
     }
 

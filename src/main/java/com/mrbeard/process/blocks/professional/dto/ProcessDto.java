@@ -56,6 +56,17 @@ public class ProcessDto {
      */
     private String nodebranch;
 
+    /**
+     * 节点类型id
+     */
+    private String nodeTypeId;
+
+    /**
+     * 流程唯一id
+     */
+    private String id;
+
+
     public String getTitle() {
         return title;
     }
@@ -142,5 +153,21 @@ public class ProcessDto {
 
     public void setNodebranch(String nodebranch) {
         this.nodebranch = nodebranch;
+    }
+
+    public String getNodeTypeId() {
+        return nodeTypeId;
+    }
+
+    public void setNodeTypeId(String nodeTypeId) {
+        this.nodeTypeId = nodeTypeId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

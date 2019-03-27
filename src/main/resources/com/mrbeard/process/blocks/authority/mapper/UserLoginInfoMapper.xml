@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mrbeard.process.blocks.authority.mapper.UserLoginInfoMapper">
+  <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.authority.model.UserLoginInfo">
+    <constructor>
+      <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ip" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="isOnline" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="someThingToDo" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, ip, isOnline, uname, someThingToDo
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from qx_user_online_info
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectCountById" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from qx_user_online_info
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from qx_user_online_info
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.UserLoginInfo">
+    insert into qx_user_online_info (uid, ip, isOnline, 
+      uname,someThingToDo)
+    values (#{uid,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{isonline,jdbcType=VARCHAR}, 
+      #{uname,jdbcType=VARCHAR},#{someThingToDo,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.authority.model.UserLoginInfo">
+    insert into qx_user_online_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="isonline != null">
+        isOnline,
+      </if>
+      <if test="uname != null">
+        uname,
+      </if>
+      <if test="someThingToDo != null">
+        someThingToDo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="isonline != null">
+        #{isonline,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="someThingToDo != null">
+        #{someThingToDo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.authority.model.UserLoginInfo">
+    update qx_user_online_info
+    <set>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="isonline != null">
+        isOnline = #{isonline,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="someThingToDo != null">
+        #{someThingToDo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.authority.model.UserLoginInfo">
+    update qx_user_online_info
+    set ip = #{ip,jdbcType=VARCHAR},
+      isOnline = #{isonline,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      someThingToDo = #{uname,jdbcType=INTEGER}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

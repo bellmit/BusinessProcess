@@ -1,6 +1,8 @@
 package com.mrbeard.process.blocks.professional.controller;
 
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
+import com.mrbeard.process.blocks.professional.model.Process;
+import com.mrbeard.process.blocks.professional.model.ProcessNode;
 import com.mrbeard.process.blocks.professional.service.ProcessService;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.result.Result;
@@ -34,10 +36,24 @@ public class ProcessController {
     public Result createProcess(ProcessDto processDto){
         //校验参数
         if(ToolUtil.checkParamter(processDto.getTitle(),processDto.getLevel(),
-                processDto.getTempId(),processDto.getTypeId(),processDto.getNodebranch()) != true){
+                processDto.getTempId(),processDto.getTypeId(),processDto.getNodebranch(),processDto.getNodeTypeId()) != true){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
         return processService.createProcess(processDto);
+    }
+
+    /**
+     * 处理流程
+     * @param processNode
+     * @return
+     */
+    @RequestMapping(value = "/postProcess",method = RequestMethod.POST)
+    public Result postProcess(ProcessNode processNode){
+        //校验参数
+        if(ToolUtil.checkParamter(processNode.getProid(),processNode.getIsPass()) != true){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
+        return processService.postProcess(processNode);
     }
 
 }

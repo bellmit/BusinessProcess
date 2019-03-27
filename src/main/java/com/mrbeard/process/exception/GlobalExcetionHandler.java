@@ -29,7 +29,7 @@ public class GlobalExcetionHandler {
     @ResponseBody
     public Result handleCustemException(ProcessException e){
         logger.warn("warn:",e);
-        return ResultGenerator.getNotLoginResult();
+        return ResultGenerator.getErrorResult(e.getMessage());
     }
 
     @ExceptionHandler(ProcessRuntimeException.class)

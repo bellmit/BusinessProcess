@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * 节点实体
+ * @author Mrbeard
  */
 public class ProcessNode {
     private String id;
@@ -47,7 +48,25 @@ public class ProcessNode {
      */
     private String currenthandlepersonid;
 
-    public ProcessNode(String id, String nodecode, String nodename, Byte nodetype, String proid, Byte nodestate, Date createdtime, Date updatedtime, String nodebranch, String currenthandlepersonid) {
+    /**
+     * 节点流程id
+     */
+    private String typeId;
+
+    /**
+     * 不通过原因
+     */
+    private String unpassReason;
+
+    /**
+     * 是否通过
+     */
+    private String isPass;
+
+    public ProcessNode() {
+    }
+
+    public ProcessNode(String id, String nodecode, String nodename, Byte nodetype, String proid, Byte nodestate, Date createdtime, Date updatedtime, String nodebranch, String currenthandlepersonid, String typeId, String unpassReason, String isPass) {
         this.id = id;
         this.nodecode = nodecode;
         this.nodename = nodename;
@@ -58,10 +77,9 @@ public class ProcessNode {
         this.updatedtime = updatedtime;
         this.nodebranch = nodebranch;
         this.currenthandlepersonid = currenthandlepersonid;
-    }
-
-    public ProcessNode() {
-        super();
+        this.typeId = typeId;
+        this.unpassReason = unpassReason;
+        this.isPass = isPass;
     }
 
     public String getId() {
@@ -69,7 +87,7 @@ public class ProcessNode {
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
     public String getNodecode() {
@@ -77,7 +95,7 @@ public class ProcessNode {
     }
 
     public void setNodecode(String nodecode) {
-        this.nodecode = nodecode == null ? null : nodecode.trim();
+        this.nodecode = nodecode;
     }
 
     public String getNodename() {
@@ -85,7 +103,7 @@ public class ProcessNode {
     }
 
     public void setNodename(String nodename) {
-        this.nodename = nodename == null ? null : nodename.trim();
+        this.nodename = nodename;
     }
 
     public Byte getNodetype() {
@@ -101,7 +119,7 @@ public class ProcessNode {
     }
 
     public void setProid(String proid) {
-        this.proid = proid == null ? null : proid.trim();
+        this.proid = proid;
     }
 
     public Byte getNodestate() {
@@ -133,7 +151,7 @@ public class ProcessNode {
     }
 
     public void setNodebranch(String nodebranch) {
-        this.nodebranch = nodebranch == null ? null : nodebranch.trim();
+        this.nodebranch = nodebranch;
     }
 
     public String getCurrenthandlepersonid() {
@@ -141,6 +159,30 @@ public class ProcessNode {
     }
 
     public void setCurrenthandlepersonid(String currenthandlepersonid) {
-        this.currenthandlepersonid = currenthandlepersonid == null ? null : currenthandlepersonid.trim();
+        this.currenthandlepersonid = currenthandlepersonid;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getUnpassReason() {
+        return unpassReason;
+    }
+
+    public void setUnpassReason(String unpassReason) {
+        this.unpassReason = unpassReason;
+    }
+
+    public String getIsPass() {
+        return isPass;
+    }
+
+    public void setIsPass(String isPass) {
+        this.isPass = isPass;
     }
 }

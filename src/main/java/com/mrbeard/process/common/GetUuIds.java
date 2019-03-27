@@ -19,7 +19,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/api")
-public class GetUUids {
+public class GetUuIds {
 
 
     /**

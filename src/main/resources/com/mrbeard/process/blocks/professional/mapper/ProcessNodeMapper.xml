@@ -13,13 +13,55 @@
             <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="nodeBranch" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="currentHandlePersonId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="typeId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unpassReason" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isPass" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
 
 
     <sql id="Base_Column_List">
-        id, nodeCode, nodeName, nodeType, proId, nodeState, createdTime, updatedTime, nodeBranch,
-        currentHandlePersonId
+        id, nodeCode, nodeName, nodeType, proId, nodeState, createdTime, nodeBranch,
+        currentHandlePersonId, typeId, unpassReason, isPass
+    </sql>
+
+    <sql id="Base_Where_Case">
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="nodeCode != null and nodeCode != ''">
+            and nodeCode = #{nodeCode}
+        </if>
+        <if test="nodeName != null and nodeName != ''">
+            and nodeName = #{nodeName}
+        </if>
+        <if test="nodeType != null and nodeType != ''">
+            and nodeType = #{nodeType}
+        </if>
+        <if test="proId != null and proId != ''">
+            and proId = #{proId}
+        </if>
+        <if test="nodeState != null and nodeState != ''">
+            and nodeState = #{nodeState}
+        </if>
+        <if test="createdTime != null ">
+            and createdTime = #{createdTime}
+        </if>
+        <if test="nodeBranch != null and nodeBranch != '' ">
+            and nodeBranch = #{nodeBranch}
+        </if>
+        <if test="currentHandlePersonId != null and currentHandlePersonId != '' ">
+            and currentHandlePersonId = #{currentHandlePersonId}
+        </if>
+        <if test="typeId != null and typeId != '' ">
+            and typeId = #{typeId}
+        </if>
+        <if test="unpassReason != null and unpassReason != '' ">
+            and unpassReason = #{unpassReason}
+        </if>
+        <if test="isPass != null and isPass != '' ">
+            and isPass = #{isPass}
+        </if>
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -27,6 +69,14 @@
         <include refid="Base_Column_List"/>
         from p_node
         where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByCondition" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p_node
+        where 1=1
+        <include refid="Base_Where_Case"/>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -37,12 +87,14 @@
     <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
         insert into p_node (id, nodeCode, nodeName,
           nodeType, proId, nodeState,
-          createdTime, updatedTime, nodeBranch,
-          currentHandlePersonId)
+          createdTime, nodeBranch,
+          currentHandlePersonId,typeId,
+          unpassReason,isPass)
         values (#{id,jdbcType=VARCHAR}, #{nodecode,jdbcType=VARCHAR}, #{nodename,jdbcType=VARCHAR},
           #{nodetype,jdbcType=TINYINT}, #{proid,jdbcType=VARCHAR}, #{nodestate,jdbcType=TINYINT},
-          #{createdtime,jdbcType=TIMESTAMP}, #{updatedtime,jdbcType=TIMESTAMP}, #{nodebranch,jdbcType=VARCHAR},
-          #{currenthandlepersonid,jdbcType=VARCHAR})
+          #{createdtime,jdbcType=TIMESTAMP}, #{nodebranch,jdbcType=VARCHAR},
+          #{currenthandlepersonid,jdbcType=VARCHAR},#{typeId,jdbcType=VARCHAR},
+          #{unpassReason,jdbcType=VARCHAR},#{isPass,jdbcType=VARCHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
@@ -69,14 +121,20 @@
             <if test="createdtime != null">
                 createdTime,
             </if>
-            <if test="updatedtime != null">
-                updatedTime,
-            </if>
             <if test="nodebranch != null">
                 nodeBranch,
             </if>
             <if test="currenthandlepersonid != null">
                 currentHandlePersonId,
+            </if>
+            <if test="typeId != null">
+                typeId,
+            </if>
+            <if test="unpassReason != null">
+                unpassReason,
+            </if>
+            <if test="isPass != null">
+                isPass,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -101,16 +159,47 @@
             <if test="createdtime != null">
                 #{createdtime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updatedtime != null">
-                #{updatedtime,jdbcType=TIMESTAMP},
-            </if>
             <if test="nodebranch != null">
                 #{nodebranch,jdbcType=VARCHAR},
             </if>
             <if test="currenthandlepersonid != null">
                 #{currenthandlepersonid,jdbcType=VARCHAR},
             </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=VARCHAR},
+            </if>
+            <if test="unpassReason != null">
+                #{unpassReason,jdbcType=VARCHAR},
+            </if>
+            <if test="isPass != null">
+                #{isPass,jdbcType=VARCHAR},
+            </if>
         </trim>
+    </insert>
+
+    <insert id="insertBatch" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode" >
+        insert into p_node
+        (
+          id,nodeCode,nodeName,nodeType,proId,nodeState,
+          createdTime,nodeBranch,currentHandlePersonId,
+          typeId,unpassReason,isPass
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            nodeCode = #{nodecode,jdbcType=VARCHAR},
+            nodeName = #{nodename,jdbcType=VARCHAR},
+            nodeType = #{nodetype,jdbcType=TINYINT},
+            proId = #{proid,jdbcType=VARCHAR},
+            nodeState = #{nodestate,jdbcType=TINYINT},
+            createdTime = #{createdtime,jdbcType=TIMESTAMP},
+            nodeBranch = #{nodebranch,jdbcType=VARCHAR},
+            currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR},
+            typeId = #{typeId,jdbcType=VARCHAR},
+            unpassReason = #{unpassReason,jdbcType=VARCHAR},
+            isPass = #{isPass,jdbcType=VARCHAR}
+            )
+        </foreach>
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
@@ -134,14 +223,20 @@
             <if test="createdtime != null">
                 createdTime = #{createdtime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updatedtime != null">
-                updatedTime = #{updatedtime,jdbcType=TIMESTAMP},
-            </if>
             <if test="nodebranch != null">
                 nodeBranch = #{nodebranch,jdbcType=VARCHAR},
             </if>
             <if test="currenthandlepersonid != null">
                 currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                typeId = #{typeId,jdbcType=VARCHAR},
+            </if>
+            <if test="unpassReason != null">
+                unpassReason = #{unpassReason,jdbcType=VARCHAR},
+            </if>
+            <if test="isPass != null">
+                isPass = #{isPass,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
@@ -155,9 +250,11 @@
           proId = #{proid,jdbcType=VARCHAR},
           nodeState = #{nodestate,jdbcType=TINYINT},
           createdTime = #{createdtime,jdbcType=TIMESTAMP},
-          updatedTime = #{updatedtime,jdbcType=TIMESTAMP},
           nodeBranch = #{nodebranch,jdbcType=VARCHAR},
-          currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR}
+          currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR},
+          typeId = #{typeId,jdbcType=VARCHAR},
+          unpassReason = #{unpassReason,jdbcType=VARCHAR},
+          isPass = #{isPass,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>
