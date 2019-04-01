@@ -17,7 +17,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    uid, uname, state, nick, password, loginIp, loginPort,deptid, parentsid, createdTime, updatedTime
+    uid, uname, state, nick, password, loginIp, loginPort,deptid, parentsid, createdTime,updatedTime
   </sql>
 
   <sql id="Base_User_List">
@@ -60,8 +60,7 @@
       password, createdTime,updatedTime,
       state, loginIp, loginPort, deptid, parentsid)
     values (#{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR},  #{createdTime,jdbcType=TIMESTAMP},
-      #{updatedTime,jdbcType=TIMESTAMP},#{state,jdbcType=INTEGER},
+      #{password,jdbcType=VARCHAR},  #{createdTime,jdbcType=TIMESTAMP},#{state,jdbcType=INTEGER},
       #{loginIp,jdbcType=VARCHAR}, #{loginPort,jdbcType=INTEGER},
       #{deptid,jdbcType=VARCHAR},#{parentsid,jdbcType=VARCHAR})
   </insert>
@@ -72,7 +71,6 @@
       nick = #{nick,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       createdTime = #{createdTime,jdbcType=TIMESTAMP},
-      updatedTime = #{updatedTime,jdbcType=TIMESTAMP},
       state = #{state,jdbcType=INTEGER},
       loginIp = #{loginIp,jdbcType=VARCHAR},
       loginPort = #{loginPort,jdbcType=INTEGER},

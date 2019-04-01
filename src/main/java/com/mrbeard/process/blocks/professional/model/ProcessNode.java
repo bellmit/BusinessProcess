@@ -12,41 +12,41 @@ public class ProcessNode {
     /**
      * 节点code
      */
-    private String nodecode;
+    private String nodeCode;
 
     /**
      * 节点名称
      */
-    private String nodename;
+    private String nodeName;
 
     /**
      * 节点类型 1-开始节点 2-过程节点 3-结束节点
      */
-    private Byte nodetype;
+    private Byte nodeType;
 
     /**
      * 流程id
      */
-    private String proid;
+    private String proId;
 
     /**
      * 节节点状态  0-未处理 1-已处理
      */
-    private Byte nodestate;
+    private Byte nodeState;
 
-    private Date createdtime;
+    private Date createdTime;
 
-    private Date updatedtime;
+    private Date updatedTime;
 
     /**
      * 是否拆分节点 0-不拆分 1-拆分  2-合并
      */
-    private String nodebranch;
+    private String nodeBranch;
 
     /**
      * 当前处理人id
      */
-    private String currenthandlepersonid;
+    private String currentHandlePersonId;
 
     /**
      * 节点流程id
@@ -66,17 +66,17 @@ public class ProcessNode {
     public ProcessNode() {
     }
 
-    public ProcessNode(String id, String nodecode, String nodename, Byte nodetype, String proid, Byte nodestate, Date createdtime, Date updatedtime, String nodebranch, String currenthandlepersonid, String typeId, String unpassReason, String isPass) {
+    public ProcessNode(String id, String nodeCode, String nodeName, Byte nodeType, String proId, Byte nodeState, Date createdTime, Date updatedTime, String nodeBranch, String currentHandlePersonId, String typeId, String unpassReason, String isPass) {
         this.id = id;
-        this.nodecode = nodecode;
-        this.nodename = nodename;
-        this.nodetype = nodetype;
-        this.proid = proid;
-        this.nodestate = nodestate;
-        this.createdtime = createdtime;
-        this.updatedtime = updatedtime;
-        this.nodebranch = nodebranch;
-        this.currenthandlepersonid = currenthandlepersonid;
+        this.nodeCode = nodeCode;
+        this.nodeName = nodeName;
+        this.nodeType = nodeType;
+        this.proId = proId;
+        this.nodeState = nodeState;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
+        this.nodeBranch = nodeBranch;
+        this.currentHandlePersonId = currentHandlePersonId;
         this.typeId = typeId;
         this.unpassReason = unpassReason;
         this.isPass = isPass;
@@ -90,76 +90,76 @@ public class ProcessNode {
         this.id = id;
     }
 
-    public String getNodecode() {
-        return nodecode;
+    public String getNodeCode() {
+        return nodeCode;
     }
 
-    public void setNodecode(String nodecode) {
-        this.nodecode = nodecode;
+    public void setNodeCode(String nodeCode) {
+        this.nodeCode = nodeCode;
     }
 
-    public String getNodename() {
-        return nodename;
+    public String getNodeName() {
+        return nodeName;
     }
 
-    public void setNodename(String nodename) {
-        this.nodename = nodename;
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
     }
 
-    public Byte getNodetype() {
-        return nodetype;
+    public Byte getNodeType() {
+        return nodeType;
     }
 
-    public void setNodetype(Byte nodetype) {
-        this.nodetype = nodetype;
+    public void setNodeType(Byte nodeType) {
+        this.nodeType = nodeType;
     }
 
-    public String getProid() {
-        return proid;
+    public String getProId() {
+        return proId;
     }
 
-    public void setProid(String proid) {
-        this.proid = proid;
+    public void setProId(String proId) {
+        this.proId = proId;
     }
 
-    public Byte getNodestate() {
-        return nodestate;
+    public Byte getNodeState() {
+        return nodeState;
     }
 
-    public void setNodestate(Byte nodestate) {
-        this.nodestate = nodestate;
+    public void setNodeState(Byte nodeState) {
+        this.nodeState = nodeState;
     }
 
-    public Date getCreatedtime() {
-        return createdtime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreatedtime(Date createdtime) {
-        this.createdtime = createdtime;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Date getUpdatedtime() {
-        return updatedtime;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdatedtime(Date updatedtime) {
-        this.updatedtime = updatedtime;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
-    public String getNodebranch() {
-        return nodebranch;
+    public String getNodeBranch() {
+        return nodeBranch;
     }
 
-    public void setNodebranch(String nodebranch) {
-        this.nodebranch = nodebranch;
+    public void setNodeBranch(String nodeBranch) {
+        this.nodeBranch = nodeBranch;
     }
 
-    public String getCurrenthandlepersonid() {
-        return currenthandlepersonid;
+    public String getCurrentHandlePersonId() {
+        return currentHandlePersonId;
     }
 
-    public void setCurrenthandlepersonid(String currenthandlepersonid) {
-        this.currenthandlepersonid = currenthandlepersonid;
+    public void setCurrentHandlePersonId(String currentHandlePersonId) {
+        this.currentHandlePersonId = currentHandlePersonId;
     }
 
     public String getTypeId() {

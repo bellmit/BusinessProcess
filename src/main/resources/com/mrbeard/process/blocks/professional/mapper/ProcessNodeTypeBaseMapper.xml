@@ -7,11 +7,34 @@
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="parentsId" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="isBeginNode" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="isEndNode" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="correlationId" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, parentsId, isBeginNode, correlationId
+    id, name, parentsId, isBeginNode, isEndNode, correlationId
+  </sql>
+
+  <sql id="Base_Where_Clouse">
+    where 1=1
+    <if test="id != null and id != ''">
+       and id = #{id}
+    </if>
+    <if test="name != null and name != ''">
+       and name = #{name}
+    </if>
+    <if test="parentsId != null and parentsId != ''">
+       and parentsId = #{parentsId}
+    </if>
+    <if test="isBeginNode != null and isBeginNode != ''">
+       and isBeginNode = #{isBeginNode}
+    </if>
+    <if test="isEndNode != null and isEndNode != ''">
+       and isEndNode = #{isEndNode}
+    </if>
+    <if test="correlationId != null and correlationId != ''">
+       and correlationId = #{correlationId}
+    </if>
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -21,18 +44,18 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectPersonIds" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from p_node_type_base
-    where parentsId = #{id,jdbcType=VARCHAR}
-  </select>
-
   <select id="selectByParentsId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from p_node_type_base
-    where parentsId like CONCAT('%',#{id,jdbcType=VARCHAR},'%')
+    where parentsId like CONCAT(CONCAT('%', #{id,jdbcType=VARCHAR}), '%')
+  </select>
+
+  <select id="selectByCondition" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase" resultType="com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase">
+    select
+    <include refid="Base_Column_List"/>
+    from p_node_type_base
+    <include refid="Base_Where_Clouse"/>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -42,9 +65,9 @@
 
   <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase">
     insert into p_node_type_base (id, name, parentsId, 
-      isBeginNode, correlationId)
+      isBeginNode, isendnode, correlationId)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentsid,jdbcType=VARCHAR}, 
-      #{isbeginnode,jdbcType=TINYINT}, #{correlationid,jdbcType=VARCHAR})
+      #{isbeginnode,jdbcType=TINYINT},#{isendnode,jdbcType=TINYINT}, #{correlationid,jdbcType=VARCHAR})
   </insert>
 
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase">
@@ -62,6 +85,9 @@
       <if test="isbeginnode != null">
         isBeginNode,
       </if>
+      <if test="isendnode != null">
+        isEndNode,
+      </if>
       <if test="correlationid != null">
         correlationId,
       </if>
@@ -78,6 +104,9 @@
       </if>
       <if test="isbeginnode != null">
         #{isbeginnode,jdbcType=TINYINT},
+      </if>
+      <if test="isendnode != null">
+        #{isendnode,jdbcType=TINYINT},
       </if>
       <if test="correlationid != null">
         #{correlationid,jdbcType=VARCHAR},
@@ -97,6 +126,9 @@
       <if test="isbeginnode != null">
         isBeginNode = #{isbeginnode,jdbcType=TINYINT},
       </if>
+      <if test="isendnode != null">
+        isendnode = #{isendnode,jdbcType=TINYINT},
+      </if>
       <if test="correlationid != null">
         correlationId = #{correlationid,jdbcType=VARCHAR},
       </if>
@@ -109,6 +141,7 @@
     set name = #{name,jdbcType=VARCHAR},
       parentsId = #{parentsid,jdbcType=VARCHAR},
       isBeginNode = #{isbeginnode,jdbcType=TINYINT},
+      isEndNode = #{isendnode,jdbcType=TINYINT},
       correlationId = #{correlationid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

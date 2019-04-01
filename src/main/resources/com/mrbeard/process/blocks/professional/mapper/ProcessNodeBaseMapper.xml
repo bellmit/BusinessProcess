@@ -40,9 +40,9 @@
         insert into p_node_base (id, nodeName, nodeCode,
           nodeType, description, createdTime,
           updatedTime)
-        values (#{id,jdbcType=VARCHAR}, #{nodename,jdbcType=VARCHAR}, #{nodecode,jdbcType=VARCHAR},
-          #{nodetype,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP},
-          #{updatedtime,jdbcType=TIMESTAMP})
+        values (#{id,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR}, #{nodeCode,jdbcType=VARCHAR},
+          #{nodeType,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP},
+          #{updatedTime,jdbcType=TIMESTAMP})
     </insert>
 
     <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNodeBase">
@@ -51,22 +51,22 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="nodename != null">
+            <if test="nodeName != null">
                 nodeName,
             </if>
-            <if test="nodecode != null">
+            <if test="nodeCode != null">
                 nodeCode,
             </if>
-            <if test="nodetype != null">
+            <if test="nodeType != null">
                 nodeType,
             </if>
             <if test="description != null">
                 description,
             </if>
-            <if test="createdtime != null">
+            <if test="createdTime != null">
                 createdTime,
             </if>
-            <if test="updatedtime != null">
+            <if test="updatedTime != null">
                 updatedTime,
             </if>
         </trim>
@@ -74,23 +74,23 @@
             <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="nodename != null">
-                #{nodename,jdbcType=VARCHAR},
+            <if test="nodeName != null">
+                #{nodeName,jdbcType=VARCHAR},
             </if>
-            <if test="nodecode != null">
-                #{nodecode,jdbcType=VARCHAR},
+            <if test="nodeCode != null">
+                #{nodeCode,jdbcType=VARCHAR},
             </if>
-            <if test="nodetype != null">
-                #{nodetype,jdbcType=TINYINT},
+            <if test="nodeType != null">
+                #{nodeType,jdbcType=TINYINT},
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
             </if>
-            <if test="createdtime != null">
-                #{createdtime,jdbcType=TIMESTAMP},
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updatedtime != null">
-                #{updatedtime,jdbcType=TIMESTAMP},
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -99,23 +99,23 @@
             parameterType="com.mrbeard.process.blocks.professional.model.ProcessNodeBase">
         update p_node_base
         <set>
-            <if test="nodename != null">
-                nodeName = #{nodename,jdbcType=VARCHAR},
+            <if test="nodeName != null">
+                nodeName = #{nodeName,jdbcType=VARCHAR},
             </if>
-            <if test="nodecode != null">
-                nodeCode = #{nodecode,jdbcType=VARCHAR},
+            <if test="nodeCode != null">
+                nodeCode = #{nodeCode,jdbcType=VARCHAR},
             </if>
-            <if test="nodetype != null">
-                nodeType = #{nodetype,jdbcType=TINYINT},
+            <if test="nodeType != null">
+                nodeType = #{nodeType,jdbcType=TINYINT},
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
             </if>
-            <if test="createdtime != null">
-                createdTime = #{createdtime,jdbcType=TIMESTAMP},
+            <if test="createdTime != null">
+                createdTime = #{createdTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updatedtime != null">
-                updatedTime = #{updatedtime,jdbcType=TIMESTAMP},
+            <if test="updatedTime != null">
+                updatedTime = #{updatedTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
@@ -123,12 +123,12 @@
 
     <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNodeBase">
         update p_node_base
-        set nodeName = #{nodename,jdbcType=VARCHAR},
-          nodeCode = #{nodecode,jdbcType=VARCHAR},
-          nodeType = #{nodetype,jdbcType=TINYINT},
+        set nodeName = #{nodeName,jdbcType=VARCHAR},
+          nodeCode = #{nodeCode,jdbcType=VARCHAR},
+          nodeType = #{nodeType,jdbcType=TINYINT},
           description = #{description,jdbcType=VARCHAR},
-          createdTime = #{createdtime,jdbcType=TIMESTAMP},
-          updatedTime = #{updatedtime,jdbcType=TIMESTAMP}
+          createdTime = #{createdTime,jdbcType=TIMESTAMP},
+          updatedTime = #{updatedTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>

@@ -120,6 +120,8 @@ public class AuthorityServiceImpl implements AuthorityService {
         HttpServletRequest request = WebUtil.getRequest();
         user.setLoginIp(request.getRemoteAddr());
         user.setLoginPort(request.getRemotePort());
+        //更新ip、端口
+        userService.updateById(user);
         //获取到用户角色权限
         user.setRole(roleService.getRoleByUserId(user.getUid()));
         user.setPermissions(permissionService.getPermsByUserId(user.getUid()));

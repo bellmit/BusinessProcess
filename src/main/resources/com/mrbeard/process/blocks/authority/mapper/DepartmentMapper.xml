@@ -16,7 +16,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, code, parentsid, leaderid, description, state, createdTime, updatedTime
+    id, name, type, code, parentsid, leaderid, description, state, createdTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -31,12 +31,10 @@
   <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Department">
     insert into qx_department (id, name, type, 
       code, parentsid, leaderid, 
-      description, state, createdTime, 
-      updatedTime)
+      description, state, createdTime)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
       #{code,jdbcType=VARCHAR}, #{parentsid,jdbcType=VARCHAR}, #{leaderid,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{createdtime,jdbcType=TIMESTAMP}, 
-      #{updatedtime,jdbcType=TIMESTAMP})
+      #{description,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{createdtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.authority.model.Department">
     insert into qx_department
@@ -68,9 +66,6 @@
       <if test="createdtime != null">
         createdTime,
       </if>
-      <if test="updatedtime != null">
-        updatedTime,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -99,9 +94,6 @@
       </if>
       <if test="createdtime != null">
         #{createdtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedtime != null">
-        #{updatedtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -132,9 +124,6 @@
       <if test="createdtime != null">
         createdTime = #{createdtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedtime != null">
-        updatedTime = #{updatedtime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -147,8 +136,7 @@
       leaderid = #{leaderid,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       state = #{state,jdbcType=TINYINT},
-      createdTime = #{createdtime,jdbcType=TIMESTAMP},
-      updatedTime = #{updatedtime,jdbcType=TIMESTAMP}
+      createdTime = #{createdtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

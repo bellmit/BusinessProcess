@@ -5,18 +5,21 @@ public class ProcessNodeTypeBase {
 
     private String name;
 
-    private String parentsid;
+    private String parentsId;
 
-    private Byte isbeginnode;
+    private Byte isBeginNode;
 
-    private String correlationid;
+    private Byte isEndNode;
 
-    public ProcessNodeTypeBase(String id, String name, String parentsid, Byte isbeginnode, String correlationid) {
+    private String correlationId;
+
+    public ProcessNodeTypeBase(String id, String name, String parentsId, Byte isBeginNode, Byte isEndNode, String correlationId) {
         this.id = id;
         this.name = name;
-        this.parentsid = parentsid;
-        this.isbeginnode = isbeginnode;
-        this.correlationid = correlationid;
+        this.parentsId = parentsId;
+        this.isBeginNode = isBeginNode;
+        this.isEndNode = isEndNode;
+        this.correlationId = correlationId;
     }
 
     public ProcessNodeTypeBase() {
@@ -28,7 +31,7 @@ public class ProcessNodeTypeBase {
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
     public String getName() {
@@ -36,30 +39,38 @@ public class ProcessNodeTypeBase {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
-    public String getParentsid() {
-        return parentsid;
+    public String getParentsId() {
+        return parentsId;
     }
 
-    public void setParentsid(String parentsid) {
-        this.parentsid = parentsid == null ? null : parentsid.trim();
+    public void setParentsId(String parentsId) {
+        this.parentsId = parentsId;
     }
 
-    public Byte getIsbeginnode() {
-        return isbeginnode;
+    public Byte getIsBeginNode() {
+        return isBeginNode;
     }
 
-    public void setIsbeginnode(Byte isbeginnode) {
-        this.isbeginnode = isbeginnode;
+    public void setIsBeginNode(Byte isBeginNode) {
+        this.isBeginNode = isBeginNode;
     }
 
-    public String getCorrelationid() {
-        return correlationid;
+    public Byte getIsEndNode() {
+        return isEndNode;
     }
 
-    public void setCorrelationid(String correlationid) {
-        this.correlationid = correlationid == null ? null : correlationid.trim();
+    public void setIsEndNode(Byte isEndNode) {
+        this.isEndNode = isEndNode;
+    }
+
+    public String getCorrelationId() {
+        return correlationId;
+    }
+
+    public void setCorrelationId(String correlationId) {
+        this.correlationId = correlationId;
     }
 }

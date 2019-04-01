@@ -21,7 +21,7 @@
 
 
     <sql id="Base_Column_List">
-        id, nodeCode, nodeName, nodeType, proId, nodeState, createdTime, nodeBranch,
+        id, nodeCode, nodeName, nodeType, proId, nodeState, createdTime, updatedTime, nodeBranch,
         currentHandlePersonId, typeId, unpassReason, isPass
     </sql>
 
@@ -90,10 +90,10 @@
           createdTime, nodeBranch,
           currentHandlePersonId,typeId,
           unpassReason,isPass)
-        values (#{id,jdbcType=VARCHAR}, #{nodecode,jdbcType=VARCHAR}, #{nodename,jdbcType=VARCHAR},
-          #{nodetype,jdbcType=TINYINT}, #{proid,jdbcType=VARCHAR}, #{nodestate,jdbcType=TINYINT},
-          #{createdtime,jdbcType=TIMESTAMP}, #{nodebranch,jdbcType=VARCHAR},
-          #{currenthandlepersonid,jdbcType=VARCHAR},#{typeId,jdbcType=VARCHAR},
+        values (#{id,jdbcType=VARCHAR}, #{nodeCode,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR},
+          #{nodeType,jdbcType=TINYINT}, #{proId,jdbcType=VARCHAR}, #{nodeState,jdbcType=TINYINT},
+          #{createdTime,jdbcType=TIMESTAMP}, #{nodeBranch,jdbcType=VARCHAR},
+          #{currentHandlePersonId,jdbcType=VARCHAR},#{typeId,jdbcType=VARCHAR},
           #{unpassReason,jdbcType=VARCHAR},#{isPass,jdbcType=VARCHAR})
     </insert>
 
@@ -103,28 +103,28 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="nodecode != null">
+            <if test="nodeCode != null">
                 nodeCode,
             </if>
-            <if test="nodename != null">
+            <if test="nodeName != null">
                 nodeName,
             </if>
-            <if test="nodetype != null">
+            <if test="nodeType != null">
                 nodeType,
             </if>
-            <if test="proid != null">
+            <if test="proId != null">
                 proId,
             </if>
-            <if test="nodestate != null">
+            <if test="nodeState != null">
                 nodeState,
             </if>
-            <if test="createdtime != null">
+            <if test="createdTime != null">
                 createdTime,
             </if>
-            <if test="nodebranch != null">
+            <if test="nodeBranch != null">
                 nodeBranch,
             </if>
-            <if test="currenthandlepersonid != null">
+            <if test="currentHandlePersonId != null">
                 currentHandlePersonId,
             </if>
             <if test="typeId != null">
@@ -141,29 +141,29 @@
             <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="nodecode != null">
-                #{nodecode,jdbcType=VARCHAR},
+            <if test="nodeCode != null">
+                #{nodeCode,jdbcType=VARCHAR},
             </if>
-            <if test="nodename != null">
-                #{nodename,jdbcType=VARCHAR},
+            <if test="nodeName != null">
+                #{nodeName,jdbcType=VARCHAR},
             </if>
-            <if test="nodetype != null">
-                #{nodetype,jdbcType=TINYINT},
+            <if test="nodeType != null">
+                #{nodeType,jdbcType=TINYINT},
             </if>
-            <if test="proid != null">
-                #{proid,jdbcType=VARCHAR},
+            <if test="proId != null">
+                #{proId,jdbcType=VARCHAR},
             </if>
-            <if test="nodestate != null">
-                #{nodestate,jdbcType=TINYINT},
+            <if test="nodeState != null">
+                #{nodeState,jdbcType=TINYINT},
             </if>
-            <if test="createdtime != null">
-                #{createdtime,jdbcType=TIMESTAMP},
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="nodebranch != null">
-                #{nodebranch,jdbcType=VARCHAR},
+            <if test="nodeBranch != null">
+                #{nodeBranch,jdbcType=VARCHAR},
             </if>
-            <if test="currenthandlepersonid != null">
-                #{currenthandlepersonid,jdbcType=VARCHAR},
+            <if test="currentHandlePersonId != null">
+                #{currentHandlePersonId,jdbcType=VARCHAR},
             </if>
             <if test="typeId != null">
                 #{typeId,jdbcType=VARCHAR},
@@ -178,56 +178,49 @@
     </insert>
 
     <insert id="insertBatch" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode" >
-        insert into p_node
-        (
-          id,nodeCode,nodeName,nodeType,proId,nodeState,
-          createdTime,nodeBranch,currentHandlePersonId,
-          typeId,unpassReason,isPass
-        )
-        values
+        <if test="list != null">
+            insert into p_node(
+            id,nodeCode,nodeName,nodeType,proId,nodeState,
+            createdTime,nodeBranch,currentHandlePersonId,
+            typeId,unpassReason,isPass)
+            values
+        </if>
         <foreach collection="list" item="item" separator=",">
-            (
-            nodeCode = #{nodecode,jdbcType=VARCHAR},
-            nodeName = #{nodename,jdbcType=VARCHAR},
-            nodeType = #{nodetype,jdbcType=TINYINT},
-            proId = #{proid,jdbcType=VARCHAR},
-            nodeState = #{nodestate,jdbcType=TINYINT},
-            createdTime = #{createdtime,jdbcType=TIMESTAMP},
-            nodeBranch = #{nodebranch,jdbcType=VARCHAR},
-            currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR},
-            typeId = #{typeId,jdbcType=VARCHAR},
-            unpassReason = #{unpassReason,jdbcType=VARCHAR},
-            isPass = #{isPass,jdbcType=VARCHAR}
-            )
+            (#{item.id,jdbcType=VARCHAR},#{item.nodeCode,jdbcType=VARCHAR},
+             #{item.nodeName,jdbcType=VARCHAR},#{item.nodeType,jdbcType=TINYINT},
+             #{item.proId,jdbcType=VARCHAR},#{item.nodeState,jdbcType=TINYINT},
+             #{item.createdTime,jdbcType=TIMESTAMP},#{item.nodeBranch,jdbcType=VARCHAR},
+             #{item.currentHandlePersonId,jdbcType=VARCHAR},#{item.typeId,jdbcType=VARCHAR},
+             #{item.unpassReason,jdbcType=VARCHAR},#{item.isPass,jdbcType=VARCHAR})
         </foreach>
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
         update p_node
         <set>
-            <if test="nodecode != null">
-                nodeCode = #{nodecode,jdbcType=VARCHAR},
+            <if test="nodeCode != null">
+                nodeCode = #{nodeCode,jdbcType=VARCHAR},
             </if>
-            <if test="nodename != null">
-                nodeName = #{nodename,jdbcType=VARCHAR},
+            <if test="nodeName != null">
+                nodeName = #{nodeName,jdbcType=VARCHAR},
             </if>
-            <if test="nodetype != null">
-                nodeType = #{nodetype,jdbcType=TINYINT},
+            <if test="nodeType != null">
+                nodeType = #{nodeType,jdbcType=TINYINT},
             </if>
-            <if test="proid != null">
-                proId = #{proid,jdbcType=VARCHAR},
+            <if test="proId != null">
+                proId = #{proId,jdbcType=VARCHAR},
             </if>
-            <if test="nodestate != null">
-                nodeState = #{nodestate,jdbcType=TINYINT},
+            <if test="nodeState != null">
+                nodeState = #{nodeState,jdbcType=TINYINT},
             </if>
-            <if test="createdtime != null">
-                createdTime = #{createdtime,jdbcType=TIMESTAMP},
+            <if test="createdTime != null">
+                createdTime = #{createdTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="nodebranch != null">
-                nodeBranch = #{nodebranch,jdbcType=VARCHAR},
+            <if test="nodeBranch != null">
+                nodeBranch = #{nodeBranch,jdbcType=VARCHAR},
             </if>
-            <if test="currenthandlepersonid != null">
-                currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR},
+            <if test="currentHandlePersonId != null">
+                currentHandlePersonId = #{currentHandlePersonId,jdbcType=VARCHAR},
             </if>
             <if test="typeId != null">
                 typeId = #{typeId,jdbcType=VARCHAR},
@@ -244,14 +237,14 @@
 
     <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
         update p_node
-        set nodeCode = #{nodecode,jdbcType=VARCHAR},
-          nodeName = #{nodename,jdbcType=VARCHAR},
-          nodeType = #{nodetype,jdbcType=TINYINT},
-          proId = #{proid,jdbcType=VARCHAR},
-          nodeState = #{nodestate,jdbcType=TINYINT},
-          createdTime = #{createdtime,jdbcType=TIMESTAMP},
-          nodeBranch = #{nodebranch,jdbcType=VARCHAR},
-          currentHandlePersonId = #{currenthandlepersonid,jdbcType=VARCHAR},
+        set nodeCode = #{nodeCode,jdbcType=VARCHAR},
+          nodeName = #{nodeName,jdbcType=VARCHAR},
+          nodeType = #{nodeType,jdbcType=TINYINT},
+          proId = #{proId,jdbcType=VARCHAR},
+          nodeState = #{nodeState,jdbcType=TINYINT},
+          createdTime = #{createdTime,jdbcType=TIMESTAMP},
+          nodeBranch = #{nodeBranch,jdbcType=VARCHAR},
+          currentHandlePersonId = #{currentHandlePersonId,jdbcType=VARCHAR},
           typeId = #{typeId,jdbcType=VARCHAR},
           unpassReason = #{unpassReason,jdbcType=VARCHAR},
           isPass = #{isPass,jdbcType=VARCHAR}

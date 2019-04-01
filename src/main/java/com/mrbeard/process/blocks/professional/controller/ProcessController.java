@@ -1,6 +1,7 @@
 package com.mrbeard.process.blocks.professional.controller;
 
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
 import com.mrbeard.process.blocks.professional.model.Process;
 import com.mrbeard.process.blocks.professional.model.ProcessNode;
 import com.mrbeard.process.blocks.professional.service.ProcessService;
@@ -44,16 +45,16 @@ public class ProcessController {
 
     /**
      * 处理流程
-     * @param processNode
+     * @param processNodeDto
      * @return
      */
     @RequestMapping(value = "/postProcess",method = RequestMethod.POST)
-    public Result postProcess(ProcessNode processNode){
+    public Result postProcess(ProcessNodeDto processNodeDto){
         //校验参数
-        if(ToolUtil.checkParamter(processNode.getProid(),processNode.getIsPass()) != true){
+        if(ToolUtil.checkParamter(processNodeDto.getIsPass(),processNodeDto.getId()) != true){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
-        return processService.postProcess(processNode);
+        return processService.postProcess(processNodeDto);
     }
 
 }

@@ -90,7 +90,7 @@
         uname = #{uname,jdbcType=VARCHAR},
       </if>
       <if test="someThingToDo != null">
-        #{someThingToDo,jdbcType=INTEGER},
+        someThingToDo = #{someThingToDo,jdbcType=INTEGER},
       </if>
     </set>
     where uid = #{uid,jdbcType=VARCHAR}

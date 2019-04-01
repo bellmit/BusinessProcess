@@ -1,7 +1,9 @@
 package com.mrbeard.process.blocks.authority.mapper;
 
 import com.mrbeard.process.blocks.authority.model.UserLoginInfo;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UserLoginInfoMapper {
     int deleteByPrimaryKey(String uid);
 

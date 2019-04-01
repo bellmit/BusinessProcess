@@ -1,9 +1,11 @@
 package com.mrbeard.process.blocks.professional.mapper;
 
 import com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface ProcessNodeTypeBaseMapper {
     int deleteByPrimaryKey(String id);
 
@@ -12,13 +14,6 @@ public interface ProcessNodeTypeBaseMapper {
     int insertSelective(ProcessNodeTypeBase record);
 
     ProcessNodeTypeBase selectByPrimaryKey(String id);
-
-    /**
-     * 通过id获取负责人
-     * @param id
-     * @return
-     */
-    List<ProcessNodeTypeBase> selectPersonIds(String id);
 
     int updateByPrimaryKeySelective(ProcessNodeTypeBase record);
 
@@ -30,4 +25,11 @@ public interface ProcessNodeTypeBaseMapper {
      * @return
      */
     List<ProcessNodeTypeBase> selectByParentsId(String id);
+
+    /**
+     * 多项条件查询
+     * @param processNodeTypeBase
+     * @return
+     */
+    ProcessNodeTypeBase selectByCondition(ProcessNodeTypeBase processNodeTypeBase);
 }

@@ -8,26 +8,26 @@ import java.util.Date;
 public class ProcessNodeBase {
     private String id;
 
-    private String nodename;
+    private String nodeName;
 
-    private String nodecode;
+    private String nodeCode;
 
-    private Byte nodetype;
+    private Byte nodeType;
 
     private String description;
 
-    private Date createdtime;
+    private Date createdTime;
 
-    private Date updatedtime;
+    private Date updatedTime;
 
-    public ProcessNodeBase(String id, String nodename, String nodecode, Byte nodetype, String description, Date createdtime, Date updatedtime) {
+    public ProcessNodeBase(String id, String nodeName, String nodeCode, Byte nodeType, String description, Date createdTime, Date updatedTime) {
         this.id = id;
-        this.nodename = nodename;
-        this.nodecode = nodecode;
-        this.nodetype = nodetype;
+        this.nodeName = nodeName;
+        this.nodeCode = nodeCode;
+        this.nodeType = nodeType;
         this.description = description;
-        this.createdtime = createdtime;
-        this.updatedtime = updatedtime;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public ProcessNodeBase() {
@@ -39,31 +39,31 @@ public class ProcessNodeBase {
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
-    public String getNodename() {
-        return nodename;
+    public String getNodeName() {
+        return nodeName;
     }
 
-    public void setNodename(String nodename) {
-        this.nodename = nodename == null ? null : nodename.trim();
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
     }
 
-    public String getNodecode() {
-        return nodecode;
+    public String getNodeCode() {
+        return nodeCode;
     }
 
-    public void setNodecode(String nodecode) {
-        this.nodecode = nodecode == null ? null : nodecode.trim();
+    public void setNodeCode(String nodeCode) {
+        this.nodeCode = nodeCode;
     }
 
-    public Byte getNodetype() {
-        return nodetype;
+    public Byte getNodeType() {
+        return nodeType;
     }
 
-    public void setNodetype(Byte nodetype) {
-        this.nodetype = nodetype;
+    public void setNodeType(Byte nodeType) {
+        this.nodeType = nodeType;
     }
 
     public String getDescription() {
@@ -71,22 +71,22 @@ public class ProcessNodeBase {
     }
 
     public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+        this.description = description;
     }
 
-    public Date getCreatedtime() {
-        return createdtime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreatedtime(Date createdtime) {
-        this.createdtime = createdtime;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Date getUpdatedtime() {
-        return updatedtime;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdatedtime(Date updatedtime) {
-        this.updatedtime = updatedtime;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

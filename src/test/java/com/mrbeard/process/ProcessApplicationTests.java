@@ -26,5 +26,12 @@ public class ProcessApplicationTests {
         logger.info(labvalue);
     }
 
+    @Test
+    public void testIntegerWithInt(){
+        Integer a = new Integer("12");
+        int b = new Integer("13");
+        System.out.println(a>b);
+    }
+
 }
 
