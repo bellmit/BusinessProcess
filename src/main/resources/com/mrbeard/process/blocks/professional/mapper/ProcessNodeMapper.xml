@@ -89,35 +89,49 @@
 
     <select id="isAllNodeHandle" parameterType="java.util.List" resultType="java.lang.Integer">
         <if test="list != null">
-            select count(*) from p_node where
+            select count(*) from p_node where (
         </if>
-        <foreach collection="list" item="item">
-            id = #{item} and nodeState = 1
+        <foreach collection="list" item="item" separator=")or(">
+            typeId = #{item} and nodeState = 1
         </foreach>
+        <if test="list != null">
+            )
+        </if>
     </select>
 
     <select id="isAllNodePassed" parameterType="java.util.List" resultType="java.lang.Integer">
         <if test="list != null">
-            select count(*) from p_node where
+            select count(*) from p_node where (
         </if>
-        <foreach collection="list" item="item">
+        <foreach collection="list" item="item" separator=")or(">
             typeId = #{item} and isPass = 1
         </foreach>
+        <if test="list != null">
+            )
+        </if>
     </select>
 
     <select id="selectUnHandleNodeByTypeIds" parameterType="java.util.List" resultType="com.mrbeard.process.blocks.professional.model.ProcessNode">
         <if test="list != null">
             select <include refid="Base_Column_List"/>
-            from p_node where
+            from p_node where (
         </if>
-        <foreach collection="list" item="item">
+        <foreach collection="list" item="item" separator=")or(">
             typeId = #{item} and nodeState = 1
         </foreach>
+        <if test="list != null">
+            )
+        </if>
     </select>
-    
-    <select id="isExitCurrentHandlePersonId" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count(*) from p_node
-        where currentHandlePersonId = #{currentHandlePersonId,jdbcType=VARCHAR}
+
+    <select id="selectByTypeIds" parameterType="java.util.List" resultType="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        <if test="list != null">
+            select <include refid="Base_Column_List"/>
+            from p_node where typeId in
+        </if>
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -312,5 +326,106 @@
           isBeginNode = #{isBeginNode,jdbcType=VARCHAR},
           isEndNode = #{isEndNode,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByBatch" parameterType="java.util.List">
+        update p_node
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="nodeCode =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.nodeCode!=null">
+                        when id=#{i.id} then #{i.nodeCode}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="nodeName =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.nodeName!=null">
+                        when id=#{i.id} then #{i.nodeName}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="nodeType =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.nodeType!=null">
+                        when id=#{i.id} then #{i.nodeType}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="proId =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.proId!=null">
+                        when id=#{i.id} then #{i.proId}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="nodeState =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.nodeState!=null">
+                        when id=#{i.id} then #{i.nodeState}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="createdTime =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.createdTime!=null">
+                        when id=#{i.id} then #{i.createdTime}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="nodeBranch =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.nodeBranch!=null">
+                        when id=#{i.id} then #{i.nodeBranch}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="currentHandlePersonId =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.currentHandlePersonId!=null">
+                        when id=#{i.id} then #{i.currentHandlePersonId}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="typeId =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.typeId!=null">
+                        when id=#{i.id} then #{i.typeId}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="unpassReason =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.unpassReason!=null">
+                        when id=#{i.id} then #{i.unpassReason}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="isPass =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.isPass!=null">
+                        when id=#{i.id} then #{i.isPass}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="isBeginNode =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.isBeginNode!=null">
+                        when id=#{i.id} then #{i.isBeginNode}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="isEndNode =case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.isEndNode!=null">
+                        when id=#{i.id} then #{i.isEndNode}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index" >
+            id=#{i.id}
+        </foreach>
     </update>
 </mapper>

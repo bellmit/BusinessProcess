@@ -108,13 +108,14 @@ public class ProcessServiceImpl implements ProcessService {
     private void noticeHigherUps(ProcessNode processNode) {
         //用于存储下一（多个）个节点信息
         List<ProcessNodeTypeBase> processNodeTypeBases = new ArrayList<>();
-        //判断是否为结束节点
-        if("1".equals(processNode.getIsEndNode())){
-            updateNodeInfo(processNode);
-            return;
+        //判断下个节点是否为结束节点
+        processNodeTypeBases = processNodeTypeBaseDao.selectByParentsId(processNode.getTypeId());
+        for(ProcessNodeTypeBase nodeTypeBase : processNodeTypeBases){
+            if(nodeTypeBase.getIsEndNode() == 1){
+                return;
+            }
         }
         //获取下一个处理人，并通知
-        processNodeTypeBases = processNodeTypeBaseDao.selectByParentsId(processNode.getTypeId());
         //通知
         processNodeTypeBases.forEach(processNodeTypeBase -> {
             String correlationId = processNodeTypeBase.getCorrelationId();
@@ -158,7 +159,13 @@ public class ProcessServiceImpl implements ProcessService {
                 if(isAllNodeHandle(typeIds)){
                     //查询数据判断是否都通过
                     if(isAllNodePassed(typeIds)){
-                        //都通过,更新下一个节点
+                        //都通过,更新父节点的状态
+                        List<ProcessNode> processNodes = processNodeDao.selectByTypeIds(typeIds);
+                        for (ProcessNode node : processNodes){
+                            node.setNodeState((byte)1);
+                        }
+                        //批量更新
+                        processNodeDao.updateByBatch(processNodes);
                         break;
                     }else{
                         //有没有通过的
@@ -204,23 +211,15 @@ public class ProcessServiceImpl implements ProcessService {
                 //设置节点拆分状态
                 processNodeNew = setProcessNodeBranch(processNodeNew);
                 //判断下一个节点是否是结束节点
-                if("1".equals(processNodeTypeBase.getIsEndNode())){
+                if(processNodeTypeBase.getIsEndNode() == 1){
                     //为终节点
                     //更新流程信息
                     endingProcess(processNode);
-                    //更新当前节点信息
-                    processNode.setNodeState((byte)1);
-                    //更新节点信息
-                    processNodeDao.updateByPrimaryKeySelective(processNode);
                     //设置下一个节点为终节点
                     processNodeNew = setProcessNode(processNodeNew, "3");
                 }else{
                     //不是终节点
                     processNodeNew.setCurrentHandlePersonId(processNodeTypeBase.getCorrelationId());
-                    //更新当前节点信息
-                    processNode.setNodeState((byte)1);
-                    //更新节点信息
-                    processNodeDao.updateByPrimaryKeySelective(processNode);
                     //设置下一个节点为过程节点
                     processNodeNew = setProcessNode(processNodeNew,"2");
                 }

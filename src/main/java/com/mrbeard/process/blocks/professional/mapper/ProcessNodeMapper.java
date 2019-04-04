@@ -49,9 +49,17 @@ public interface ProcessNodeMapper {
     List<ProcessNode> selectUnHandleNodeByTypeIds(List<String> typeIds);
 
     /**
-     * 判断是否已经有节点是下一个处理人未处理的数据
-     * @param currentHandlePersonId
+     * 通过typeIds获取所有node
+     * @param typeIds
      * @return
      */
-    int isExitCurrentHandlePersonId(String currentHandlePersonId);
+    List<ProcessNode> selectByTypeIds(List<String> typeIds);
+
+
+    /**
+     * 批量更新
+     * @param processNodes
+     * @return
+     */
+    int updateByBatch(List<ProcessNode> processNodes);
 }
