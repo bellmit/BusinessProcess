@@ -20,6 +20,7 @@ import java.util.*;
 
 /**
  * JedisUtil.java
+ *
  * @author 胡彬
  * @version 创建时间：2018-10-25
  */
@@ -58,16 +59,17 @@ public class JedisUtil {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
-        if(password != null && !"".equals(password)){
-            jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout,password,0);
-        }else{
-            jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout,null,0);
+        if (password != null && !"".equals(password)) {
+            jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password, 0);
+        } else {
+            jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, null, 0);
         }
         return jedisPool;
     }
 
     /**
      * get jedis from pool
+     *
      * @return
      */
     public static Jedis getJedis() {
@@ -77,7 +79,7 @@ public class JedisUtil {
     public static Jedis getJedis(String host, Integer port) {
         Jedis jedis = new Jedis(host, port);
         jedis.connect();
-        if (jedis.isConnected()){
+        if (jedis.isConnected()) {
             return jedis;
         }
         return null;
@@ -88,7 +90,7 @@ public class JedisUtil {
             Jedis jedis = new Jedis(host, port);
             jedis.auth(password);
             jedis.connect();
-            if (jedis.isConnected()){
+            if (jedis.isConnected()) {
                 return jedis;
             }
         } catch (Exception e) {
@@ -101,13 +103,13 @@ public class JedisUtil {
     }
 
     public static Jedis getJedis(String host, Integer port, String password,
-            int database) {
+                                 int database) {
         try {
             Jedis jedis = new Jedis(host, port);
             jedis.auth(password);
             jedis.select(database);
             jedis.connect();
-            if (jedis.isConnected()){
+            if (jedis.isConnected()) {
                 return jedis;
             }
         } catch (Exception e) {
@@ -119,7 +121,7 @@ public class JedisUtil {
         return null;
     }
 
-        public static Jedis getJedis(int failedNum) {
+    public static Jedis getJedis(int failedNum) {
         Jedis jedis = null;
         if (failedNum < 2) {
             try {
@@ -127,7 +129,7 @@ public class JedisUtil {
             } catch (Exception e) {
                 e.printStackTrace();
                 logger.error("get jedis error : " + e.getMessage());
-                if(jedis!=null) {
+                if (jedis != null) {
                     jedis.close();
                 }
                 try {
@@ -144,6 +146,7 @@ public class JedisUtil {
 
     /**
      * this method will be block until return Jedis client
+     *
      * @return
      */
     public static Jedis bgetJedis() {
@@ -153,7 +156,7 @@ public class JedisUtil {
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("get jedis error : " + e.getMessage());
-            if(jedis!=null) {
+            if (jedis != null) {
                 jedis.close();
             }
             try {
@@ -168,42 +171,45 @@ public class JedisUtil {
 
     /**
      * return jedis to pool
+     *
      * @param jedis
      */
     public static void returnJedis(Jedis jedis) {
-    	try{
-    		jedis.close();
-    	}catch(JedisConnectionException e){
-    		returnBrokenJedis(jedis);
-    		//jedisPool.returnBrokenResource(jedis);
-    	}catch(Exception e){
+        try {
+            jedis.close();
+        } catch (JedisConnectionException e) {
+            returnBrokenJedis(jedis);
+            //jedisPool.returnBrokenResource(jedis);
+        } catch (Exception e) {
             jedis = null;
-    	}
+        }
     }
 
     public static void returnJedis(JedisPool theJedisPool, Jedis jedis) {
-    	try{
-    	    if(jedis!=null) {
+        try {
+            if (jedis != null) {
                 jedis.close();
             }
-    	}catch(JedisConnectionException e){
-    		returnBrokenJedis(jedis);
-    	}catch(Exception e){
+        } catch (JedisConnectionException e) {
+            returnBrokenJedis(jedis);
+        } catch (Exception e) {
             jedis.quit();
-    	}
+        }
     }
+
     /**
      * return broken jedis to pool
+     *
      * @param jedis
      */
     public static void returnBrokenJedis(Jedis jedis) {
-    	try {
-            if (jedis != null){
+        try {
+            if (jedis != null) {
                 jedis.close();
             }
-		} catch (Exception e) {
+        } catch (Exception e) {
             jedis.quit();
-		}
+        }
     }
 
     public static String get(String key) {
@@ -222,21 +228,22 @@ public class JedisUtil {
 
     /**
      * this method will be block, until timeout
+     *
      * @param key
      * @param timeout(millisecond)
      * @return
      */
-    public  String get(String key, long timeout) {
+    public String get(String key, long timeout) {
         Jedis jedis = getJedis();
         String value = null;
         long t1 = System.currentTimeMillis();
         try {
             while (true) {
                 value = jedis.get(key);
-                if (value!=null && !"".equals(value)){
+                if (value != null && !"".equals(value)) {
                     break;
                 }
-                if (System.currentTimeMillis() - t1 > timeout){
+                if (System.currentTimeMillis() - t1 > timeout) {
                     break;
                 }
                 Thread.sleep(100);
@@ -250,14 +257,14 @@ public class JedisUtil {
         return value;
     }
 
-    public  byte[] get(byte[] key) {
+    public byte[] get(byte[] key) {
         Jedis jedis = getJedis();
         byte[] value = null;
         try {
             value = jedis.get(key);
         } catch (Exception e) {
             try {
-                logger.error("get value from redis error[key:" + new String(key,"utf-8") + "]", e);
+                logger.error("get value from redis error[key:" + new String(key, "utf-8") + "]", e);
             } catch (UnsupportedEncodingException e1) {
                 e1.printStackTrace();
             }
@@ -270,28 +277,29 @@ public class JedisUtil {
 
     /**
      * this method will be block, until timeout
+     *
      * @param key
      * @param timeout(millisecond)
      * @return
      */
-    public  byte[] get(byte[] key, long timeout) {
+    public byte[] get(byte[] key, long timeout) {
         Jedis jedis = getJedis();
         byte[] value = null;
         long t1 = System.currentTimeMillis();
         try {
             while (true) {
                 value = jedis.get(key);
-                if (value != null){
+                if (value != null) {
                     break;
                 }
-                if (System.currentTimeMillis() - t1 > timeout){
+                if (System.currentTimeMillis() - t1 > timeout) {
                     break;
                 }
                 Thread.sleep(100);
             }
         } catch (Exception e) {
             try {
-                logger.error("get value from redis error[key:" + new String(key,"utf-8") + "]", e);
+                logger.error("get value from redis error[key:" + new String(key, "utf-8") + "]", e);
             } catch (UnsupportedEncodingException e1) {
                 e1.printStackTrace();
             }
@@ -302,12 +310,11 @@ public class JedisUtil {
         return value;
     }
 
-    public  void add(String key, String value) {
+    public void add(String key, String value) {
         add(key, value, 0, 0);
     }
 
     /**
-     *
      * @param key
      * @param value
      * @param expireTime seconds
@@ -317,12 +324,12 @@ public class JedisUtil {
     }
 
     public static void add(String key, String value, int expireTime,
-            int failedNum) {
+                           int failedNum) {
         if (failedNum < 3) {
             Jedis jedis = getJedis();
             try {
                 jedis.set(key, value);
-                if (expireTime > 0){
+                if (expireTime > 0) {
                     jedis.expire(key, expireTime);
                 }
             } catch (Exception e) {
@@ -336,26 +343,26 @@ public class JedisUtil {
         }
     }
 
-    public  void add(byte[] key, byte[] value) {
+    public void add(byte[] key, byte[] value) {
         add(key, value, 0, 0);
     }
 
-    public  void add(byte[] key, byte[] value, int expireTime) {
+    public void add(byte[] key, byte[] value, int expireTime) {
         add(key, value, expireTime, 0);
     }
 
-    public  void add(byte[] key, byte[] value, int expireTime,
-            int failedNum) {
+    public void add(byte[] key, byte[] value, int expireTime,
+                    int failedNum) {
         if (failedNum < 3) {
             Jedis jedis = getJedis();
             try {
                 jedis.set(key, value);
-                if (expireTime > 0){
+                if (expireTime > 0) {
                     jedis.expire(key, expireTime);
                 }
             } catch (Exception e) {
                 try {
-                    logger.error("add key[" + new String(key,"utf-8") + "] to redis error[" + failedNum
+                    logger.error("add key[" + new String(key, "utf-8") + "] to redis error[" + failedNum
                             + "] ", e);
                 } catch (UnsupportedEncodingException e1) {
                     e1.printStackTrace();
@@ -370,14 +377,15 @@ public class JedisUtil {
 
     /**
      * publish message to special channel
+     *
      * @param channel
      * @param message
      */
-    public  void publish(String channel, String message) {
+    public void publish(String channel, String message) {
         publish(channel, message, 0);
     }
 
-    public  void publish(String channel, String message, int failedNum) {
+    public void publish(String channel, String message, int failedNum) {
         if (failedNum < 3) {
             Jedis jedis = getJedis();
             try {
@@ -397,15 +405,16 @@ public class JedisUtil {
 
     /**
      * publish message to special channel and queue
+     *
      * @param channel
      * @param message
      */
-    public  void queuePublish(String key, String channel, String message) {
+    public void queuePublish(String key, String channel, String message) {
         queuePublish(key, channel, message, 0);
     }
 
-    public  void queuePublish(String key, String channel, String message,
-            int failedNum) {
+    public void queuePublish(String key, String channel, String message,
+                             int failedNum) {
         if (failedNum < 3) {
             Jedis jedis = getJedis();
             try {
@@ -426,15 +435,16 @@ public class JedisUtil {
 
     /**
      * subscribe special channel
+     *
      * @param listener
      * @param channel
      */
-    public  void subscribe(JedisPubSub listener, String channel) {
+    public void subscribe(JedisPubSub listener, String channel) {
         subscribe(listener, channel, 0);
     }
 
-    public  void subscribe(JedisPubSub listener, String channel,
-            int failedNum) {
+    public void subscribe(JedisPubSub listener, String channel,
+                          int failedNum) {
         Jedis jedis = getJedis();
         try {
             jedis.subscribe(listener, channel);
@@ -455,7 +465,7 @@ public class JedisUtil {
         }
     }
 
-    public  void listAdd(String key, String... value) {
+    public void listAdd(String key, String... value) {
         Jedis jedis = getJedis();
         try {
             jedis.lpush(key, value);
@@ -467,7 +477,7 @@ public class JedisUtil {
         }
     }
 
-    public  String listPop(String key) {
+    public String listPop(String key) {
         Jedis jedis = getJedis();
         try {
             return jedis.lpop(key);
@@ -480,7 +490,7 @@ public class JedisUtil {
         return null;
     }
 
-    public  List<String> listAll(String key) {
+    public List<String> listAll(String key) {
         Jedis jedis = getJedis();
         try {
             return jedis.lrange(key, 0, -1);
@@ -493,7 +503,7 @@ public class JedisUtil {
         return null;
     }
 
-    public  List<String> listPopAll(String key) {
+    public List<String> listPopAll(String key) {
         Jedis jedis = getJedis();
         try {
             long len = jedis.llen(key);
@@ -513,11 +523,12 @@ public class JedisUtil {
 
     /**
      * delete special value
+     *
      * @param key
-     * @param count	delete numbers
+     * @param count delete numbers
      * @param value
      */
-    public  long listDel(String key, int count, String value) {
+    public long listDel(String key, int count, String value) {
         Jedis jedis = getJedis();
         try {
             return jedis.lrem(key, count, value);
@@ -530,11 +541,11 @@ public class JedisUtil {
         return 0;
     }
 
-    public  void listDelAll(String key) {
+    public void listDelAll(String key) {
         Jedis jedis = getJedis();
         try {
             long len = jedis.llen(key);
-            for (int i = 0; i < len; i++){
+            for (int i = 0; i < len; i++) {
                 jedis.rpop(key);
             }
         } catch (Exception e) {
@@ -546,12 +557,11 @@ public class JedisUtil {
     }
 
     /**
-     *
      * @param key
      * @param value
-     * @return	1:add success	0:value is existed 	other:key is not a set type
+     * @return 1:add success	0:value is existed 	other:key is not a set type
      */
-    public  long setAdd(String key, String... value) {
+    public long setAdd(String key, String... value) {
         Jedis jedis = getJedis();
         try {
             return jedis.sadd(key, value);
@@ -565,12 +575,11 @@ public class JedisUtil {
     }
 
     /**
-     *
      * @param key
      * @param value
-     * @return	1:add success	0:value is existed 	other:key is not a set type
+     * @return 1:add success	0:value is existed 	other:key is not a set type
      */
-    public  long setDel(String key, String... value) {
+    public long setDel(String key, String... value) {
         Jedis jedis = getJedis();
         try {
             return jedis.srem(key, value);
@@ -583,7 +592,7 @@ public class JedisUtil {
         return 0;
     }
 
-    public  void setDelAll(String key) {
+    public void setDelAll(String key) {
         Jedis jedis = getJedis();
         try {
             long total = jedis.scard(key);
@@ -598,7 +607,7 @@ public class JedisUtil {
         }
     }
 
-    public  long setCount(String key) {
+    public long setCount(String key) {
         Jedis jedis = getJedis();
         try {
             return jedis.scard(key);
@@ -611,7 +620,7 @@ public class JedisUtil {
         return 0;
     }
 
-    public  Set<String> setAll(String key) {
+    public Set<String> setAll(String key) {
         Jedis jedis = getJedis();
         try {
             return jedis.smembers(key);
@@ -624,7 +633,7 @@ public class JedisUtil {
         return null;
     }
 
-    public  void expire(String key, int seconds) {
+    public void expire(String key, int seconds) {
         Jedis jedis = getJedis();
         try {
             jedis.expire(key, seconds);
@@ -642,11 +651,11 @@ public class JedisUtil {
 
 
     /**
-    * 追加数据到已有的缓存数据 <br>
-    * （基于保存Key,Map数据队列）
-    *
-    * @return
-    */
+     * 追加数据到已有的缓存数据 <br>
+     * （基于保存Key,Map数据队列）
+     *
+     * @return
+     */
     public boolean addObjectInMap(String rkey, String mkey, Object value) {
         Jedis jedis = getJedis();
 
@@ -665,7 +674,7 @@ public class JedisUtil {
      *
      * @return
      */
-    public  Object removeObjectInMap(String rkey, String mkey) {
+    public Object removeObjectInMap(String rkey, String mkey) {
         Jedis jedis = getJedis();
         String value = null;
         try {
@@ -684,7 +693,7 @@ public class JedisUtil {
      *
      * @return
      */
-    public  Object findObjectInMap(String rkey, String mkey) {
+    public Object findObjectInMap(String rkey, String mkey) {
         Jedis jedis = getJedis();
         String value = null;
         try {
@@ -697,25 +706,24 @@ public class JedisUtil {
     }
 
     /**
-     *
-     * @Description: redis  k-v 删除
      * @param key
+     * @Description: redis  k-v 删除
      * @Author: hurd
      * @Date: 2015年7月31日 下午2:03:55
      */
     public static void remove(String key) {
         Jedis jedis = getJedis();
-        try{
-        	jedis.del(key);
-        }catch(Exception e){
-        	returnBrokenJedis(jedis);
-        }finally {
+        try {
+            jedis.del(key);
+        } catch (Exception e) {
+            returnBrokenJedis(jedis);
+        } finally {
             returnJedis(jedis);
         }
 
     }
 
-    public  Set<String> hkeys(String key) {
+    public Set<String> hkeys(String key) {
         Jedis jedis = getJedis();
         try {
             return jedis.hkeys(key);
@@ -728,7 +736,7 @@ public class JedisUtil {
         }
     }
 
-    public  Set<String> keys(String key) {
+    public Set<String> keys(String key) {
         Jedis jedis = getJedis();
         try {
             return jedis.keys(key);
@@ -741,7 +749,7 @@ public class JedisUtil {
         }
     }
 
-    public  boolean exists(String key) {
+    public boolean exists(String key) {
         Jedis jedis = getJedis();
         try {
             return jedis.exists(key);
@@ -753,24 +761,24 @@ public class JedisUtil {
         }
     }
 
-    public  void hmset(String key,Map<String, String> hash){
-	    hmset(key, hash, 0, 0);
+    public void hmset(String key, Map<String, String> hash) {
+        hmset(key, hash, 0, 0);
     }
 
-	public  void hmset(String key,Map<String, String> hash,int expireTime){
-	    hmset(key, hash, expireTime, 0);
-	}
+    public void hmset(String key, Map<String, String> hash, int expireTime) {
+        hmset(key, hash, expireTime, 0);
+    }
 
-	public void hmset(String key,Map<String, String> hash,int expireTime,int failedNum){
-        if(failedNum < 3){
+    public void hmset(String key, Map<String, String> hash, int expireTime, int failedNum) {
+        if (failedNum < 3) {
             Jedis jedis = getJedis();
             try {
                 jedis.hmset(key, hash);
-                if(expireTime > 0){
+                if (expireTime > 0) {
                     jedis.expire(key, expireTime);
                 }
             } catch (Exception e) {
-                logger.error("hmset key["+key+"] to redis error["+failedNum+"] ", e);
+                logger.error("hmset key[" + key + "] to redis error[" + failedNum + "] ", e);
                 returnBrokenJedis(jedis);
                 hmset(key, hash, expireTime, ++failedNum);
             } finally {
@@ -779,369 +787,390 @@ public class JedisUtil {
         }
     }
 
-	public List<String> hmget(String key,long timeout,String... field){
-	    Jedis jedis = getJedis();
+    public List<String> hmget(String key, long timeout, String... field) {
+        Jedis jedis = getJedis();
         List<String> value = null;
         long t1 = System.currentTimeMillis();
         try {
             while (true) {
                 value = jedis.hmget(key, field);
-                if (value!=null&&value.size()>0){
+                if (value != null && value.size() > 0) {
                     break;
                 }
-                if (System.currentTimeMillis() - t1 > timeout){
+                if (System.currentTimeMillis() - t1 > timeout) {
                     break;
                 }
                 Thread.sleep(1);
             }
         } catch (Exception e) {
-            logger.error("hmget [field:" +"] value from redis error[key:"+key+"]", e);
+            logger.error("hmget [field:" + "] value from redis error[key:" + key + "]", e);
             returnBrokenJedis(jedis);
         } finally {
             returnJedis(jedis);
         }
         return value;
-	}
-	public Map<String,String> hgetAll(String key,long timeout ){
-	    Jedis jedis = getJedis();
-	    Map<String,String> result = null;
-        long t1 = System.currentTimeMillis();
-        try {
-            while (true) {
-            	result=jedis.hgetAll(key);
-                if (result!=null&&!result.isEmpty()){
-                    break;
-                }
-                if (System.currentTimeMillis() - t1 > timeout){
-                    break;
-                }
-                Thread.sleep(1000);
-            }
-        } catch (Exception e) {
-            logger.error("hgetAll [key:"+key +"] value from redis error ", e);
-            returnBrokenJedis(jedis);
-        } finally {
-            returnJedis(jedis);
-        }
-        return result;
-	}
+    }
 
-	public String hget(String key,String field, long timeout){
-	    Jedis jedis = getJedis();
-	    String result = null;
+    public Map<String, String> hgetAll(String key, long timeout) {
+        Jedis jedis = getJedis();
+        Map<String, String> result = null;
         long t1 = System.currentTimeMillis();
         try {
             while (true) {
-            	result=jedis.hget(key,field);
-                if (result!=null&&!result.isEmpty()){
+                result = jedis.hgetAll(key);
+                if (result != null && !result.isEmpty()) {
                     break;
                 }
-                if (System.currentTimeMillis() - t1 > timeout){
+                if (System.currentTimeMillis() - t1 > timeout) {
                     break;
                 }
                 Thread.sleep(1000);
             }
         } catch (Exception e) {
-            logger.error("hgetAll [key:"+key +"] value from redis error ", e);
+            logger.error("hgetAll [key:" + key + "] value from redis error ", e);
             returnBrokenJedis(jedis);
         } finally {
             returnJedis(jedis);
         }
         return result;
-	}
-	public boolean hExist(String key,String field){
-	    Jedis jedis = getJedis();
-	    try {
-	    	 return jedis.hexists(key, field);
-		} catch (Exception e) {
-			logger.error("hexist [field:"+ field.toString() +"] value from redis error[key:"+key+"]", e);
+    }
+
+    public String hget(String key, String field, long timeout) {
+        Jedis jedis = getJedis();
+        String result = null;
+        long t1 = System.currentTimeMillis();
+        try {
+            while (true) {
+                result = jedis.hget(key, field);
+                if (result != null && !result.isEmpty()) {
+                    break;
+                }
+                if (System.currentTimeMillis() - t1 > timeout) {
+                    break;
+                }
+                Thread.sleep(1000);
+            }
+        } catch (Exception e) {
+            logger.error("hgetAll [key:" + key + "] value from redis error ", e);
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+        return result;
+    }
+
+    public boolean hExist(String key, String field) {
+        Jedis jedis = getJedis();
+        try {
+            return jedis.hexists(key, field);
+        } catch (Exception e) {
+            logger.error("hexist [field:" + field.toString() + "] value from redis error[key:" + key + "]", e);
             returnBrokenJedis(jedis);
         } finally {
             returnJedis(jedis);
         }
         return false;
-	}
+    }
 
-    public void hset(String key,String field,String value){
-        Jedis jedis= getJedis();
+    public void hset(String key, String field, String value) {
+        Jedis jedis = getJedis();
         try {
-            jedis.hset(key,field,value);
+            jedis.hset(key, field, value);
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             returnJedis(jedis);
         }
     }
 
     /**
-     * @Description: 从hash表删除filed
      * @param key
      * @param field
+     * @Description: 从hash表删除filed
      * @Author: gongfp@hundsun.com
      * @Date: 2015年11月12日 下午3:02:56
      */
-    public void hdel(String key,String field){
-    	Jedis jedis= getJedis();
+    public void hdel(String key, String field) {
+        Jedis jedis = getJedis();
         try {
-            jedis.hdel(key,field);
+            jedis.hdel(key, field);
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             returnJedis(jedis);
         }
     }
+
     /**
-	 * redis 排序
-	 * @param key
-	 * @return
-	 */
-	public List<String> sort(String key){
-		Jedis jedis = getJedis();
-		List<String> sortList = new ArrayList<String>();
-		try {
-			sortList = jedis.sort(key);
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnBrokenJedis(jedis);
-		} finally {
-			returnJedis(jedis);
-		}
-		return sortList;
-	}
-	/**
-	 * 有序set添加
-	 * @param key
-	 * @param score
-	 * @param member
-	 */
-	public void zadd(String key,double score,String member){
-		Jedis jedis = getJedis();
-		try {
-			jedis.zadd(key, score, member);
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnBrokenJedis(jedis);
-		}finally {
-			returnJedis(jedis);
-		}
-	}
-	/**
-	 * 有序正向set集合
-	 * @param key
-	 * @return
-	 */
-	public Set<String> setSortForward(String key){
-		Jedis jedis = getJedis();
-		Set<String> setRecord=new  HashSet<String>();
-		try {
-			setRecord=jedis.zrange(key, 0, -1);
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnBrokenJedis(jedis);
-		}finally {
-			returnJedis(jedis);
-		}
-		return setRecord;
-	}
-	/**
-	 * 有序反向set集合
-	 * @param key
-	 * @return
-	 */
-	public Set<String> setSortBackward(String key){
-		Jedis jedis = getJedis();
-		Set<String> setRecord=new  HashSet<String>();
-		try {
-			setRecord =jedis.zrevrange(key, 0, -1);
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnBrokenJedis(jedis);
-		}finally {
-			returnJedis(jedis);
-		}
-		return setRecord;
-	}
-	/**
-	 *  有序set删除
-	 * @param key
-	 * @param member
-	 */
-	public void zdel(String key,String member){
-		Jedis jedis = getJedis();
-		try {
-			jedis.zrem(key, member);
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnBrokenJedis(jedis);
-		}finally {
-			returnJedis(jedis);
-		}
-	}
-	/**
-	 * set集合 index值（0，1，2，……）
-	 * @param key
-	 * @return
-	 */
-	public Long indexSet(String key,String member){
-		Jedis jedis = getJedis();
-		Long index=null;
-		try {
-			index= jedis.zrank(key, member);
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnBrokenJedis(jedis);
-		}finally {
-			returnJedis(jedis);
-		}
-		return index;
-	}
-	/**
-	 * set集合 第N的值（0，1，2，……）
-	 * @param key
-	 * @return
-	 */
-	public Set<String> getIndexSet(String key,Long endIndex){
-		Jedis jedis = getJedis();
-		Set<String> set=new HashSet<String>();
-		try {
-			set= jedis.zrange(key, 0, endIndex);
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnBrokenJedis(jedis);
-		}finally {
-			returnJedis(jedis);
-		}
-		return set;
-	}
+     * redis 排序
+     *
+     * @param key
+     * @return
+     */
+    public List<String> sort(String key) {
+        Jedis jedis = getJedis();
+        List<String> sortList = new ArrayList<String>();
+        try {
+            sortList = jedis.sort(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+        return sortList;
+    }
 
-	/**
-	 * set 获取分数满足表达式startScore < score <= endScore的成员
-	 * @param key
-	 * @param startScore
-	 * @param endScore
-	 * @return
-	 */
-	public Set<String> getByScoreSet(String key,Long startScore,Long endScore){
-		Jedis jedis = getJedis();
-		Set<String> set=new HashSet<String>();
-		try {
-			set= jedis.zrangeByScore(key, startScore, endScore);
-		} catch (Exception e) {
-			e.printStackTrace();
-			returnBrokenJedis(jedis);
-		}finally {
-			returnJedis(jedis);
-		}
-		return set;
-	}
+    /**
+     * 有序set添加
+     *
+     * @param key
+     * @param score
+     * @param member
+     */
+    public void zadd(String key, double score, String member) {
+        Jedis jedis = getJedis();
+        try {
+            jedis.zadd(key, score, member);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+    }
 
-	public void rpush(String key,String value){
-		Jedis jedis = getJedis();
-		try {
-			jedis.rpush(key, value);
-		} catch (Exception e) {
-			returnBrokenJedis(jedis);
-			e.printStackTrace();
-		} finally {
-			returnJedis(jedis);
-		}
-	}
-	public long llen(String key){
-		Jedis jedis = getJedis();
-		long value = 0;
-		try {
-			value = jedis.llen(key);
-		} catch (Exception e) {
-			logger.error("get value from redis error[key:"+key+"]", e);
-			returnBrokenJedis(jedis);
-		} finally {
-			returnJedis(jedis);
-		}
+    /**
+     * 有序正向set集合
+     *
+     * @param key
+     * @return
+     */
+    public Set<String> setSortForward(String key) {
+        Jedis jedis = getJedis();
+        Set<String> setRecord = new HashSet<String>();
+        try {
+            setRecord = jedis.zrange(key, 0, -1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+        return setRecord;
+    }
 
-		return value;
-	}
+    /**
+     * 有序反向set集合
+     *
+     * @param key
+     * @return
+     */
+    public Set<String> setSortBackward(String key) {
+        Jedis jedis = getJedis();
+        Set<String> setRecord = new HashSet<String>();
+        try {
+            setRecord = jedis.zrevrange(key, 0, -1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+        return setRecord;
+    }
 
-	public void listAddAfterLeft(String key, String ... value){
-		Jedis jedis = getJedis();
-		try {
-			jedis.lpush(key, value);
-		} catch (Exception e) {
-			returnBrokenJedis(jedis);
-			e.printStackTrace();
-		} finally {
-			returnJedis(jedis);
-		}
-	}
+    /**
+     * 有序set删除
+     *
+     * @param key
+     * @param member
+     */
+    public void zdel(String key, String member) {
+        Jedis jedis = getJedis();
+        try {
+            jedis.zrem(key, member);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+    }
 
-	public String blistPop(String key, int expireTime){
-		Jedis jedis = getJedis();
-		try {
-			List<String> list = jedis.blpop(expireTime,key);
-			if(list!=null&&list.size()==2){
-				return list.get(1);
-			}
-		} catch (Exception e) {
-			returnBrokenJedis(jedis);
-			e.printStackTrace();
-		} finally {
-			returnJedis(jedis);
-		}
-		return null;
-	}
+    /**
+     * set集合 index值（0，1，2，……）
+     *
+     * @param key
+     * @return
+     */
+    public Long indexSet(String key, String member) {
+        Jedis jedis = getJedis();
+        Long index = null;
+        try {
+            index = jedis.zrank(key, member);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+        return index;
+    }
 
-	public  void addExpireTime(String key, String value, int expireTime){
-		addExpire(key, value, expireTime, 0);
-	}
+    /**
+     * set集合 第N的值（0，1，2，……）
+     *
+     * @param key
+     * @return
+     */
+    public Set<String> getIndexSet(String key, Long endIndex) {
+        Jedis jedis = getJedis();
+        Set<String> set = new HashSet<String>();
+        try {
+            set = jedis.zrange(key, 0, endIndex);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+        return set;
+    }
 
-	public void addExpire(String key, String value, int expireTime, int failedNum){
-		if(failedNum < 3){
-			Jedis jedis = getJedis();
-			try {
-				jedis.set(key, value);
-				if(expireTime > 0){
+    /**
+     * set 获取分数满足表达式startScore < score <= endScore的成员
+     *
+     * @param key
+     * @param startScore
+     * @param endScore
+     * @return
+     */
+    public Set<String> getByScoreSet(String key, Long startScore, Long endScore) {
+        Jedis jedis = getJedis();
+        Set<String> set = new HashSet<String>();
+        try {
+            set = jedis.zrangeByScore(key, startScore, endScore);
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+        return set;
+    }
+
+    public void rpush(String key, String value) {
+        Jedis jedis = getJedis();
+        try {
+            jedis.rpush(key, value);
+        } catch (Exception e) {
+            returnBrokenJedis(jedis);
+            e.printStackTrace();
+        } finally {
+            returnJedis(jedis);
+        }
+    }
+
+    public long llen(String key) {
+        Jedis jedis = getJedis();
+        long value = 0;
+        try {
+            value = jedis.llen(key);
+        } catch (Exception e) {
+            logger.error("get value from redis error[key:" + key + "]", e);
+            returnBrokenJedis(jedis);
+        } finally {
+            returnJedis(jedis);
+        }
+
+        return value;
+    }
+
+    public void listAddAfterLeft(String key, String... value) {
+        Jedis jedis = getJedis();
+        try {
+            jedis.lpush(key, value);
+        } catch (Exception e) {
+            returnBrokenJedis(jedis);
+            e.printStackTrace();
+        } finally {
+            returnJedis(jedis);
+        }
+    }
+
+    public String blistPop(String key, int expireTime) {
+        Jedis jedis = getJedis();
+        try {
+            List<String> list = jedis.blpop(expireTime, key);
+            if (list != null && list.size() == 2) {
+                return list.get(1);
+            }
+        } catch (Exception e) {
+            returnBrokenJedis(jedis);
+            e.printStackTrace();
+        } finally {
+            returnJedis(jedis);
+        }
+        return null;
+    }
+
+    public void addExpireTime(String key, String value, int expireTime) {
+        addExpire(key, value, expireTime, 0);
+    }
+
+    public void addExpire(String key, String value, int expireTime, int failedNum) {
+        if (failedNum < 3) {
+            Jedis jedis = getJedis();
+            try {
+                jedis.set(key, value);
+                if (expireTime > 0) {
                     jedis.expire(key, expireTime);
                 }
-			} catch (Exception e) {
-				logger.error("add key["+key+"] to redis error["+failedNum+"] ", e);
-				returnBrokenJedis(jedis);
-				add(key, value, expireTime, ++failedNum);
-			} finally {
-				returnJedis(jedis);
-			}
-		}
-	}
-	/**
-	 * 获取map的key对应的value
-	 * @param key
-	 * @return
-	 */
-	public List<String> getAllMapValue(String key){
-		Jedis jedis = getJedis();
-		try {
-			List<String> list = jedis.hvals(key);
-			if(null != list){
-				return list;
-			}else{
-				return null;
-			}
-		} catch (Exception e) {
-			returnBrokenJedis(jedis);
-			e.printStackTrace();
-		} finally {
-			returnJedis(jedis);
-		}
-		return null;
-	}
+            } catch (Exception e) {
+                logger.error("add key[" + key + "] to redis error[" + failedNum + "] ", e);
+                returnBrokenJedis(jedis);
+                add(key, value, expireTime, ++failedNum);
+            } finally {
+                returnJedis(jedis);
+            }
+        }
+    }
+
+    /**
+     * 获取map的key对应的value
+     *
+     * @param key
+     * @return
+     */
+    public List<String> getAllMapValue(String key) {
+        Jedis jedis = getJedis();
+        try {
+            List<String> list = jedis.hvals(key);
+            if (null != list) {
+                return list;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            returnBrokenJedis(jedis);
+            e.printStackTrace();
+        } finally {
+            returnJedis(jedis);
+        }
+        return null;
+    }
 
     /**
      * 设置对象
+     *
      * @param key
      * @param obj
      */
-    public void setObject(String key ,Object obj){
+    public void setObject(String key, Object obj) {
         Jedis jedis = getJedis();
         try {
-            obj = obj == null ? new Object():obj;
+            obj = obj == null ? new Object() : obj;
             jedis.set(key, JSON.toJSONString(obj));
         } catch (Exception e) {
             returnBrokenJedis(jedis);
@@ -1153,18 +1182,19 @@ public class JedisUtil {
 
     /**
      * 获取对象
+     *
      * @param key
      * @return Object
      */
-    public Object getObject(String key){
+    public Object getObject(String key) {
         Jedis jedis = getJedis();
-       try {
-           if (jedis == null || !jedis.exists(key)) {
-               return null;
-           }
-           String data = jedis.get(key);
-           return JSON.parseObject(data);
-       } catch (Exception e) {
+        try {
+            if (jedis == null || !jedis.exists(key)) {
+                return null;
+            }
+            String data = jedis.get(key);
+            return JSON.parseObject(data);
+        } catch (Exception e) {
             returnBrokenJedis(jedis);
             e.printStackTrace();
         } finally {
@@ -1175,15 +1205,16 @@ public class JedisUtil {
 
     /**
      * 设置对象有效期
+     *
      * @param key
      * @param obj
      */
-    public void setObject(String key ,int seconds,Object obj){
+    public void setObject(String key, int seconds, Object obj) {
         Jedis jedis = getJedis();
         try {
-            obj = obj == null ? new Object():obj;
+            obj = obj == null ? new Object() : obj;
             jedis.set(key, JSON.toJSONString(obj));
-            jedis.setex(key,seconds, JSON.toJSONString(obj));
+            jedis.setex(key, seconds, JSON.toJSONString(obj));
         } catch (Exception e) {
             returnBrokenJedis(jedis);
             e.printStackTrace();
@@ -1194,15 +1225,16 @@ public class JedisUtil {
 
     /**
      * 设置List集合
+     *
      * @param key
      * @param list
      */
-    public void setList(String key ,List<?> list){
+    public void setList(String key, List<?> list) {
         Jedis jedis = getJedis();
         try {
-            if(list!=null){
+            if (list != null) {
                 jedis.set(key, JSONArray.toJSONString(list));
-            }else{//如果list为空,则设置一个空
+            } else {//如果list为空,则设置一个空
                 jedis.set(key.getBytes("utf-8"), "".getBytes("utf-8"));
             }
         } catch (Exception e) {
@@ -1215,10 +1247,11 @@ public class JedisUtil {
 
     /**
      * 获取List集合
+     *
      * @param key
      * @return
      */
-    public List<?> getList(String key){
+    public List<?> getList(String key) {
         Jedis jedis = getJedis();
         try {
             if (jedis == null || !jedis.exists(key)) {
@@ -1226,7 +1259,7 @@ public class JedisUtil {
             }
             byte[] data = jedis.get(key.getBytes("utf-8"));
             return (List<?>) JSONArray.toJSON(data);
-        }catch (Exception e) {
+        } catch (Exception e) {
             returnBrokenJedis(jedis);
             e.printStackTrace();
         } finally {

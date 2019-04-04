@@ -16,13 +16,15 @@
             <arg column="typeId" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="unpassReason" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="isPass" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isBeginNode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isEndNode" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
 
 
     <sql id="Base_Column_List">
         id, nodeCode, nodeName, nodeType, proId, nodeState, createdTime, updatedTime, nodeBranch,
-        currentHandlePersonId, typeId, unpassReason, isPass
+        currentHandlePersonId, typeId, unpassReason, isPass, isBeginNode, isEndNode
     </sql>
 
     <sql id="Base_Where_Case">
@@ -62,6 +64,12 @@
         <if test="isPass != null and isPass != '' ">
             and isPass = #{isPass}
         </if>
+        <if test="isBeginNode != null and isBeginNode != '' ">
+            and isBeginNode = #{isBeginNode}
+        </if>
+        <if test="isEndNode != null and isEndNode != '' ">
+            and isEndNode = #{isEndNode}
+        </if>
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -79,6 +87,39 @@
         <include refid="Base_Where_Case"/>
     </select>
 
+    <select id="isAllNodeHandle" parameterType="java.util.List" resultType="java.lang.Integer">
+        <if test="list != null">
+            select count(*) from p_node where
+        </if>
+        <foreach collection="list" item="item">
+            id = #{item} and nodeState = 1
+        </foreach>
+    </select>
+
+    <select id="isAllNodePassed" parameterType="java.util.List" resultType="java.lang.Integer">
+        <if test="list != null">
+            select count(*) from p_node where
+        </if>
+        <foreach collection="list" item="item">
+            typeId = #{item} and isPass = 1
+        </foreach>
+    </select>
+
+    <select id="selectUnHandleNodeByTypeIds" parameterType="java.util.List" resultType="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        <if test="list != null">
+            select <include refid="Base_Column_List"/>
+            from p_node where
+        </if>
+        <foreach collection="list" item="item">
+            typeId = #{item} and nodeState = 1
+        </foreach>
+    </select>
+    
+    <select id="isExitCurrentHandlePersonId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from p_node
+        where currentHandlePersonId = #{currentHandlePersonId,jdbcType=VARCHAR}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete from p_node
         where id = #{id,jdbcType=VARCHAR}
@@ -89,12 +130,13 @@
           nodeType, proId, nodeState,
           createdTime, nodeBranch,
           currentHandlePersonId,typeId,
-          unpassReason,isPass)
+          unpassReason,isPass,isBeginNode,isEndNode)
         values (#{id,jdbcType=VARCHAR}, #{nodeCode,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR},
           #{nodeType,jdbcType=TINYINT}, #{proId,jdbcType=VARCHAR}, #{nodeState,jdbcType=TINYINT},
           #{createdTime,jdbcType=TIMESTAMP}, #{nodeBranch,jdbcType=VARCHAR},
           #{currentHandlePersonId,jdbcType=VARCHAR},#{typeId,jdbcType=VARCHAR},
-          #{unpassReason,jdbcType=VARCHAR},#{isPass,jdbcType=VARCHAR})
+          #{unpassReason,jdbcType=VARCHAR},#{isPass,jdbcType=VARCHAR},
+          #{isBeginNode,jdbcType=VARCHAR},#{isEndNode,jdbcType=VARCHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode">
@@ -136,6 +178,12 @@
             <if test="isPass != null">
                 isPass,
             </if>
+            <if test="isBeginNode != null">
+                isBeginNode,
+            </if>
+            <if test="isEndNode != null">
+                isEndNode,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -174,6 +222,12 @@
             <if test="isPass != null">
                 #{isPass,jdbcType=VARCHAR},
             </if>
+            <if test="isBeginNode != null">
+                #{isBeginNode,jdbcType=VARCHAR},
+            </if>
+            <if test="isEndNode != null">
+                #{isEndNode,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
 
@@ -182,7 +236,7 @@
             insert into p_node(
             id,nodeCode,nodeName,nodeType,proId,nodeState,
             createdTime,nodeBranch,currentHandlePersonId,
-            typeId,unpassReason,isPass)
+            typeId,unpassReason,isPass,isBeginNode,isEndNode)
             values
         </if>
         <foreach collection="list" item="item" separator=",">
@@ -191,7 +245,8 @@
              #{item.proId,jdbcType=VARCHAR},#{item.nodeState,jdbcType=TINYINT},
              #{item.createdTime,jdbcType=TIMESTAMP},#{item.nodeBranch,jdbcType=VARCHAR},
              #{item.currentHandlePersonId,jdbcType=VARCHAR},#{item.typeId,jdbcType=VARCHAR},
-             #{item.unpassReason,jdbcType=VARCHAR},#{item.isPass,jdbcType=VARCHAR})
+             #{item.unpassReason,jdbcType=VARCHAR},#{item.isPass,jdbcType=VARCHAR},
+             #{item.isBeginNode,jdbcType=VARCHAR},#{item.isEndNode,jdbcType=VARCHAR})
         </foreach>
     </insert>
 
@@ -231,6 +286,12 @@
             <if test="isPass != null">
                 isPass = #{isPass,jdbcType=VARCHAR},
             </if>
+            <if test="isBeginNode != null">
+                isBeginNode = #{isBeginNode,jdbcType=VARCHAR},
+            </if>
+            <if test="isEndNode != null">
+                isEndNode = #{isEndNode,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
@@ -247,7 +308,9 @@
           currentHandlePersonId = #{currentHandlePersonId,jdbcType=VARCHAR},
           typeId = #{typeId,jdbcType=VARCHAR},
           unpassReason = #{unpassReason,jdbcType=VARCHAR},
-          isPass = #{isPass,jdbcType=VARCHAR}
+          isPass = #{isPass,jdbcType=VARCHAR},
+          isBeginNode = #{isBeginNode,jdbcType=VARCHAR},
+          isEndNode = #{isEndNode,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>

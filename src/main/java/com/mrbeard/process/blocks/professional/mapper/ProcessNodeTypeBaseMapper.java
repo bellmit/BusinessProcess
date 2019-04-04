@@ -32,4 +32,11 @@ public interface ProcessNodeTypeBaseMapper {
      * @return
      */
     ProcessNodeTypeBase selectByCondition(ProcessNodeTypeBase processNodeTypeBase);
+
+    /**
+     * 多项条件查询列表
+     * @param processNodeTypeBase
+     * @return
+     */
+    List<ProcessNodeTypeBase> selectListByCondition(ProcessNodeTypeBase processNodeTypeBase);
 }

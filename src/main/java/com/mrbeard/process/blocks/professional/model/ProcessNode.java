@@ -59,14 +59,24 @@ public class ProcessNode {
     private String unpassReason;
 
     /**
-     * 是否通过
+     * 是否通过 0-否 1-是
      */
     private String isPass;
+
+    /**
+     * 是否开始节点 0-否 1-是
+     */
+    private String isBeginNode;
+
+    /**
+     * 是否结束节点 0-否 1-是
+     */
+    private String isEndNode;
 
     public ProcessNode() {
     }
 
-    public ProcessNode(String id, String nodeCode, String nodeName, Byte nodeType, String proId, Byte nodeState, Date createdTime, Date updatedTime, String nodeBranch, String currentHandlePersonId, String typeId, String unpassReason, String isPass) {
+    public ProcessNode(String id, String nodeCode, String nodeName, Byte nodeType, String proId, Byte nodeState, Date createdTime, Date updatedTime, String nodeBranch, String currentHandlePersonId, String typeId, String unpassReason, String isPass, String isBeginNode, String isEndNode) {
         this.id = id;
         this.nodeCode = nodeCode;
         this.nodeName = nodeName;
@@ -80,6 +90,8 @@ public class ProcessNode {
         this.typeId = typeId;
         this.unpassReason = unpassReason;
         this.isPass = isPass;
+        this.isBeginNode = isBeginNode;
+        this.isEndNode = isEndNode;
     }
 
     public String getId() {
@@ -184,5 +196,21 @@ public class ProcessNode {
 
     public void setIsPass(String isPass) {
         this.isPass = isPass;
+    }
+
+    public String getIsBeginNode() {
+        return isBeginNode;
+    }
+
+    public void setIsBeginNode(String isBeginNode) {
+        this.isBeginNode = isBeginNode;
+    }
+
+    public String getIsEndNode() {
+        return isEndNode;
+    }
+
+    public void setIsEndNode(String isEndNode) {
+        this.isEndNode = isEndNode;
     }
 }

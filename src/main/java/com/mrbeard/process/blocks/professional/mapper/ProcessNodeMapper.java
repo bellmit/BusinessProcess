@@ -26,4 +26,32 @@ public interface ProcessNodeMapper {
      * @param nodeList
      */
     int insertBatch(List<ProcessNode> nodeList);
+
+    /**
+     * 判断节点是否都处理了
+     * @param typeIds
+     * @return
+     */
+    int isAllNodeHandle(List<String> typeIds);
+
+    /**
+     * 判断节点是否都通过了
+     * @param typeIds
+     * @return
+     */
+    int isAllNodePassed(List<String> typeIds);
+
+    /**
+     * 获取未处理节点信息
+     * @param typeIds
+     * @return
+     */
+    List<ProcessNode> selectUnHandleNodeByTypeIds(List<String> typeIds);
+
+    /**
+     * 判断是否已经有节点是下一个处理人未处理的数据
+     * @param currentHandlePersonId
+     * @return
+     */
+    int isExitCurrentHandlePersonId(String currentHandlePersonId);
 }

@@ -16,6 +16,7 @@ public interface Constant {
     String NOT_LOGIN_ERROR = "用户未登录";
     String FILE_UNEXIT = "文件不存在";
     String ERROR_IN_SUBMISSION_MODE = "提交方式出错";
+    String DATA_ERROR = "数据错误";
     /**
      * 用户状态：启用
      */
