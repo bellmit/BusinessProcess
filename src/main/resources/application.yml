@@ -44,6 +44,8 @@ mybatis:
 #  typeAliasesPackage: cn.biosan
 #  mapperLocations: classpath:com/mrbeard/zone/**/*.xml
 
-
+customproperty:
+  appid: 2XE0HuKwtR6l0o65pWVuVI+QfLbX7ChM # 腾讯云appid
+  appkey: 5Iph/iswVuLSZRuCxJj10SpR592iu1DzFEIyxfYtCxTEWU3xaa9N+C7RfBc/XrZR #腾讯云appkey
 
 
