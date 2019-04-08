@@ -156,16 +156,26 @@ public class ProcessServiceImpl implements ProcessService {
                     typeIds.add(parentsId[i]);
                 }
                 //判断是否父节点都处理了
-                if(isAllNodeHandle(typeIds)){
+                if(isAllNodeHandle(typeIds,processNode.getProId())){
                     //查询数据判断是否都通过
-                    if(isAllNodePassed(typeIds)){
+                    if(isAllNodePassed(typeIds,processNode.getProId())){
                         //都通过,更新父节点的状态
-                        List<ProcessNode> processNodes = processNodeDao.selectByTypeIds(typeIds);
+                        List<ProcessNode> processNodes = processNodeDao.selectByTypeIds(typeIds,processNode.getProId());
                         for (ProcessNode node : processNodes){
                             node.setNodeState((byte)1);
                         }
                         //批量更新
                         processNodeDao.updateByBatch(processNodes);
+                        //将合并节点的所有前节点更新状态
+                        ProcessNode conditionnew = new ProcessNode();
+                        conditionnew.setProId(processNode.getProId());
+                        conditionnew.setCurrentHandlePersonId(processNode.getCurrentHandlePersonId());
+                        List<ProcessNode> nodes = processNodeDao.selectListByCondition(conditionnew);
+                        for (ProcessNode node : nodes){
+                            node.setNodeState((byte)1);
+                        }
+                        //批量更新
+                        processNodeDao.updateByBatch(nodes);
                         break;
                     }else{
                         //有没有通过的
@@ -179,7 +189,7 @@ public class ProcessServiceImpl implements ProcessService {
                     }
                 }else{
                     //通知未处理的负责人去处理
-                    List<ProcessNode> nodes =  processNodeDao.selectUnHandleNodeByTypeIds(typeIds);
+                    List<ProcessNode> nodes =  processNodeDao.selectUnHandleNodeByTypeIds(typeIds,processNode.getProId());
                     nodes.forEach(node->{
                         noticeParentsHandle(node.getCurrentHandlePersonId());
                     });
@@ -200,6 +210,8 @@ public class ProcessServiceImpl implements ProcessService {
         /**
          * 更新节点信息
          */
+        processNode.setNodeState((byte)1);
+        processNodeDao.updateByPrimaryKeySelective(processNode);
         //获取下一个（多个）nodetypebase节点信息,并复制到下一个node信息
         List<ProcessNodeTypeBase> processNodeTypeBases = processNodeTypeBaseDao.selectByParentsId(processNode.getTypeId());
         if(CollectionUtils.isNotEmpty(processNodeTypeBases)){
@@ -217,6 +229,7 @@ public class ProcessServiceImpl implements ProcessService {
                     endingProcess(processNode);
                     //设置下一个节点为终节点
                     processNodeNew = setProcessNode(processNodeNew, "3");
+                    processNodeNew.setNodeState((byte)1);
                 }else{
                     //不是终节点
                     processNodeNew.setCurrentHandlePersonId(processNodeTypeBase.getCorrelationId());
@@ -236,10 +249,11 @@ public class ProcessServiceImpl implements ProcessService {
     /**
      * 判断节点是否都通过了
      * @param typeIds
+     * @param proId
      * @return
      */
-    private boolean isAllNodePassed(List<String> typeIds) {
-        int allNodePassed = processNodeDao.isAllNodePassed(typeIds);
+    private boolean isAllNodePassed(List<String> typeIds,String proId) {
+        int allNodePassed = processNodeDao.isAllNodePassed(typeIds,proId);
         if(allNodePassed != typeIds.size()){
             return false;
         }
@@ -249,10 +263,11 @@ public class ProcessServiceImpl implements ProcessService {
     /**
      * 判断节点是否都处理了
      * @param typeIds
+     * @param proId 流程id
      * @return
      */
-    private boolean isAllNodeHandle(List<String> typeIds) {
-        int allNodeHandle = processNodeDao.isAllNodeHandle(typeIds);
+    private boolean isAllNodeHandle(List<String> typeIds,String proId) {
+        int allNodeHandle = processNodeDao.isAllNodeHandle(typeIds,proId);
         if(allNodeHandle != typeIds.size()){
             return false;
         }

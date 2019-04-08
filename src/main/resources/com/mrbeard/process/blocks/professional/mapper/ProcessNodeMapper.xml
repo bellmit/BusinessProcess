@@ -87,51 +87,62 @@
         <include refid="Base_Where_Case"/>
     </select>
 
-    <select id="isAllNodeHandle" parameterType="java.util.List" resultType="java.lang.Integer">
-        <if test="list != null">
+    <select id="selectListByCondition" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from p_node
+        where 1=1
+        <include refid="Base_Where_Case"/>
+    </select>
+
+    <select id="isAllNodeHandle"  resultType="java.lang.Integer">
+        <if test="typeIds != null">
             select count(*) from p_node where (
         </if>
-        <foreach collection="list" item="item" separator=")or(">
-            typeId = #{item} and nodeState = 1
+        <foreach collection="typeIds" item="item" separator=")or(">
+            typeId = #{item} and nodeState = 1 and proId = #{proId}
         </foreach>
-        <if test="list != null">
+        <if test="typeIds != null">
             )
         </if>
     </select>
 
-    <select id="isAllNodePassed" parameterType="java.util.List" resultType="java.lang.Integer">
-        <if test="list != null">
+    <select id="isAllNodePassed"  resultType="java.lang.Integer">
+        <if test="typeIds != null">
             select count(*) from p_node where (
         </if>
-        <foreach collection="list" item="item" separator=")or(">
-            typeId = #{item} and isPass = 1
+        <foreach collection="typeIds" item="item" separator=")or(">
+            typeId = #{item} and isPass = 1 and proId = #{proId}
         </foreach>
-        <if test="list != null">
+        <if test="typeIds != null">
             )
         </if>
     </select>
 
-    <select id="selectUnHandleNodeByTypeIds" parameterType="java.util.List" resultType="com.mrbeard.process.blocks.professional.model.ProcessNode">
-        <if test="list != null">
+    <select id="selectUnHandleNodeByTypeIds"  resultType="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        <if test="typeIds != null">
             select <include refid="Base_Column_List"/>
             from p_node where (
         </if>
-        <foreach collection="list" item="item" separator=")or(">
-            typeId = #{item} and nodeState = 1
+        <foreach collection="typeIds" item="item" separator=")or(">
+            typeId = #{item} and nodeState = 1 and proId = #{proId}
         </foreach>
-        <if test="list != null">
+        <if test="typeIds != null">
             )
         </if>
     </select>
 
-    <select id="selectByTypeIds" parameterType="java.util.List" resultType="com.mrbeard.process.blocks.professional.model.ProcessNode">
-        <if test="list != null">
+    <select id="selectByTypeIds"  resultType="com.mrbeard.process.blocks.professional.model.ProcessNode">
+        <if test="typeIds != null">
             select <include refid="Base_Column_List"/>
-            from p_node where typeId in
+            from p_node where (
         </if>
-        <foreach collection="list" item="item" separator="," open="(" close=")">
-            #{item}
+        <foreach collection="typeIds" item="item" separator=")or(">
+            typeId = #{item} and proId = #{proId}
         </foreach>
+        <if test="typeIds != null">
+            )
+        </if>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
