@@ -45,7 +45,11 @@ mybatis:
 #  mapperLocations: classpath:com/mrbeard/zone/**/*.xml
 
 customproperty:
-  appid: 2XE0HuKwtR6l0o65pWVuVI+QfLbX7ChM # 腾讯云appid
-  appkey: 5Iph/iswVuLSZRuCxJj10SpR592iu1DzFEIyxfYtCxTEWU3xaa9N+C7RfBc/XrZR #腾讯云appkey
+  appid: ENC(2XE0HuKwtR6l0o65pWVuVI+QfLbX7ChM) # 腾讯云短信appid
+  appkey: ENC(5Iph/iswVuLSZRuCxJj10SpR592iu1DzFEIyxfYtCxTEWU3xaa9N+C7RfBc/XrZR) #腾讯云短信appkey
+  templateId : ENC(Ey4ZCb4o/uPRMXx1GFqXdQ==) #腾讯云短信模板id
+  smsSign: ENC(FBFygXxmxr9hcw9z5PvsbfYPwwOoF1x0) #腾讯云短信签名
+  nationCode: 86 #国家码
+
 
 

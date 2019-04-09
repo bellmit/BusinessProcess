@@ -1,5 +1,6 @@
 package com.mrbeard.process;
 
+import com.mrbeard.process.util.SendMessageUtil;
 import com.mrbeard.process.util.UUIDUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jasypt.encryption.StringEncryptor;
@@ -32,6 +33,14 @@ public class ProcessApplicationTests {
     }
 
     @Test
+    public void testSendMessage(){
+        String [] params = {"2311","3"};
+        SendMessageUtil sendMessageUtil = new SendMessageUtil();
+        String result = sendMessageUtil.sendMessage("15979807792", params);
+        logger.info(result);
+    }
+
+    @Test
     public void testIntegerWithInt(){
         Integer a = new Integer("12");
         int b = new Integer("13");
@@ -40,13 +49,16 @@ public class ProcessApplicationTests {
 
     @Test
     public void decodeMessage(){
+        //加密
         String encrypt = stringEncryptor.encrypt("");
         logger.info("appkey:"+encrypt);
     }
 
     @Test
     public void encodeMessage(){
-
+        //解密
+        String decrypt = stringEncryptor.decrypt("");
+        logger.info(decrypt);
     }
 }
 

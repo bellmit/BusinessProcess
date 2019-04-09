@@ -2,6 +2,8 @@ package com.mrbeard.process.util;
 
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * @ClassName SendMessageUtil
@@ -10,30 +12,36 @@ import com.github.qcloudsms.SmsSingleSenderResult;
  * @Date 2019/4/8 16:33
  * @Version 1.0
  **/
+@Component
 public class SendMessageUtil {
     /**
      * 短信应用SDK AppID  1400开头
      */
-    private static final int appid = 1400083813;
+    @Value("${customproperty.appid}")
+    private int appid;
 
     /**
      * 短信应用SDK AppKey
      */
-    private static final String appkey = "286d90d6064e6c736cf0a7b66abe2ecb";
+    @Value("${customproperty.appkey}")
+    private  String appkey;
 
     /**
      * 短信模板ID，需要在短信应用中申请
      */
-    private static final int templateId = 309730;
+    @Value("${customproperty.templateId}")
+    private  int templateId;
     /**
      * 签名
      */
-    private static final String smsSign = "胡子先生";
+    @Value("${customproperty.smsSign}")
+    private  String smsSign;
 
     /**
      * 国家码，如 86 为中国
      */
-    private static final String nationCode = "86";
+    @Value("${customproperty.nationCode}")
+    private  String nationCode;
 
     /**
      * 发送短信
@@ -42,7 +50,7 @@ public class SendMessageUtil {
      * @param params      固定大小为2的字符串数组 例如：{"5678", "4"},第一个字符串为验证码，第二个字符串为有效时间（可根据自己需要设置）
      * @return 返回样例： {"result":0,"errmsg":"OK","ext":"","sid":"18:972aeec1e71f4b05b69ab724ed4b8184","fee":1}
      */
-    public static String sendMessage(String phoneNumber, String[] params) {
+    public  String sendMessage(String phoneNumber, String[] params) {
         //返回结果
         String resultString = "";
         try {

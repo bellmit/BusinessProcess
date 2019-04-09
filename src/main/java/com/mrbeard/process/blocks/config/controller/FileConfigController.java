@@ -7,6 +7,7 @@ import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.FileUtil;
+import com.mrbeard.process.util.SendMessageUtil;
 import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.WebUtil;
 import net.sf.json.util.WebUtils;
@@ -34,6 +35,9 @@ import java.io.OutputStream;
 @RestController
 @RequestMapping("/api")
 public class FileConfigController {
+
+    @Autowired
+    SendMessageUtil sendMessageUtil;
 
     @Autowired
     FilePathConfigService filePathConfigService;
@@ -75,6 +79,14 @@ public class FileConfigController {
             throw new ProcessRuntimeException(e.getMessage());
         }
         return ResultGenerator.getSuccessResult("Success!");
+    }
+
+    @RequestMapping(value = "/sendMessage",method = RequestMethod.GET)
+    public Result sendMessage(){
+        String [] params = {"2311","3"};
+        String result = sendMessageUtil.sendMessage("15979807792", params);
+        logger.info(result);
+        return ResultGenerator.getSuccessResult(result);
     }
 
 }
