@@ -55,11 +55,11 @@ public class AuthorityServiceImpl implements AuthorityService {
     /**
      * 图片宽度
      */
-    private static int WIDTH = 60;
+    private static int WIDTH = 200;
     /**
      * 图片长度
      */
-    private static int HEIGHT = 20;
+    private static int HEIGHT = 50;
     /**
      * 登录常量
      */
@@ -217,11 +217,11 @@ public class AuthorityServiceImpl implements AuthorityService {
         int green = random.nextInt(50);
         int blue = random.nextInt(50);
         g.setColor(new Color(red, green, blue));
-        g.setFont(new Font(null, Font.ITALIC | Font.BOLD, 18));
-        g.drawString("" + rands[0], 1, 17);
-        g.drawString("" + rands[1], 16, 15);
-        g.drawString("" + rands[2], 31, 18);
-        g.drawString("" + rands[3], 46, 16);
+        g.setFont(new Font(null, Font.ITALIC | Font.BOLD, 30));
+        g.drawString("" + rands[0], 17, 37);
+        g.drawString("" + rands[1], 56, 42);
+        g.drawString("" + rands[2], 100, 49);
+        g.drawString("" + rands[3], 150, 39);
     }
 
     /**
