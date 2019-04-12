@@ -83,9 +83,15 @@ public class User  implements Serializable {
      */
     private String email;
 
+    /**
+     * 性别
+     */
+    private String sex;
+
     public User(String uid, String uname, Integer state, String nick, String password,
                 String loginIp, Integer loginPort, String deptid,String parentsid,
-                Date createdTime, Date updatedTime,String realName,String phoneNumber,String email) {
+                Date createdTime, Date updatedTime,String realName,String phoneNumber,
+                String email,String sex) {
         this.uid = uid;
         this.uname = uname;
         this.nick = nick;
@@ -100,6 +106,7 @@ public class User  implements Serializable {
         this.realName = realName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.sex = sex;
     }
 
     public User() {
@@ -233,5 +240,13 @@ public class User  implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }
