@@ -12,16 +12,18 @@
       <arg column="loginPort" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="deptid" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <arg column="parentsid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="realName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="phoneNumber" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    uid, uname, state, nick, password, loginIp, loginPort,deptid, parentsid, createdTime,updatedTime
+    uid, uname, state, nick, password, loginIp, loginPort,deptid, parentsid, createdTime,updatedTime,realName,phoneNumber
   </sql>
 
   <sql id="Base_User_List">
-    uid, uname, state, nick, createdTime, updatedTime
+    uid, uname, state, nick, createdTime, updatedTime,realName,phoneNumber
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -58,11 +60,12 @@
   <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.User">
     insert into qx_user (uid, uname, nick, 
       password, createdTime,updatedTime,
-      state, loginIp, loginPort, deptid, parentsid)
+      state, loginIp, loginPort, deptid, parentsid,realName,phoneNumber)
     values (#{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR},  #{createdTime,jdbcType=TIMESTAMP},#{state,jdbcType=INTEGER},
       #{loginIp,jdbcType=VARCHAR}, #{loginPort,jdbcType=INTEGER},
-      #{deptid,jdbcType=VARCHAR},#{parentsid,jdbcType=VARCHAR})
+      #{deptid,jdbcType=VARCHAR},#{parentsid,jdbcType=VARCHAR},
+      #{realName,jdbcType=VARCHAR},#{phoneNumber,jdbcType=VARCHAR})
   </insert>
 
   <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.authority.model.User">
@@ -75,7 +78,9 @@
       loginIp = #{loginIp,jdbcType=VARCHAR},
       loginPort = #{loginPort,jdbcType=INTEGER},
       deptid = #{deptid,jdbcType=VARCHAR},
-      parentsid = #{parentsid,jdbcType=VARCHAR}
+      parentsid = #{parentsid,jdbcType=VARCHAR},
+      realName = #{realName,jdbcType=VARCHAR},
+      phoneNumber = #{phoneNumber,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
 </mapper>

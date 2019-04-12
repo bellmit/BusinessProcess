@@ -68,7 +68,17 @@ public class User  implements Serializable {
      */
     private String parentsid;
 
-    public User(String uid, String uname, Integer state, String nick, String password, String loginIp, Integer loginPort, String deptid,String parentsid,Date createdTime, Date updatedTime) {
+    /**
+     * 真实姓名
+     */
+    private String realName;
+
+    /**
+     * 手机号码
+     */
+    private String phoneNumber;
+
+    public User(String uid, String uname, Integer state, String nick, String password, String loginIp, Integer loginPort, String deptid,String parentsid,Date createdTime, Date updatedTime,String realName,String phoneNumber) {
         this.uid = uid;
         this.uname = uname;
         this.nick = nick;
@@ -80,6 +90,8 @@ public class User  implements Serializable {
         this.loginPort = loginPort;
         this.deptid = deptid;
         this.parentsid = parentsid;
+        this.realName = realName;
+        this.phoneNumber = phoneNumber;
     }
 
     public User() {
@@ -189,5 +201,21 @@ public class User  implements Serializable {
 
     public void setParentsid(String parentsid) {
         this.parentsid = parentsid;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
