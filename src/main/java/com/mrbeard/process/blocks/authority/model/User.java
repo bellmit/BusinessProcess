@@ -78,7 +78,14 @@ public class User  implements Serializable {
      */
     private String phoneNumber;
 
-    public User(String uid, String uname, Integer state, String nick, String password, String loginIp, Integer loginPort, String deptid,String parentsid,Date createdTime, Date updatedTime,String realName,String phoneNumber) {
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    public User(String uid, String uname, Integer state, String nick, String password,
+                String loginIp, Integer loginPort, String deptid,String parentsid,
+                Date createdTime, Date updatedTime,String realName,String phoneNumber,String email) {
         this.uid = uid;
         this.uname = uname;
         this.nick = nick;
@@ -92,6 +99,7 @@ public class User  implements Serializable {
         this.parentsid = parentsid;
         this.realName = realName;
         this.phoneNumber = phoneNumber;
+        this.email = email;
     }
 
     public User() {
@@ -217,5 +225,13 @@ public class User  implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
