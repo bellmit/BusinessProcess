@@ -21,11 +21,11 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    uid, uname, state, nick, password, loginIp, loginPort,deptid, parentsid, createdTime,updatedTime,realName,phoneNumber,email,sex
+    uid, uname, state, nick, password, loginIp, loginPort,deptid, parentsid, realName,email,sex,phoneNumber,createdTime,updatedTime
   </sql>
 
   <sql id="Base_User_List">
-    uid, uname, state, nick, createdTime, updatedTime,realName,phoneNumber,email,sex
+    uid, uname, state, nick,realName,phoneNumber,email,sex,createdTime, updatedTime
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
