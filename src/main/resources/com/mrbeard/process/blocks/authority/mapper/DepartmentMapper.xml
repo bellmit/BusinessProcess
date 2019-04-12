@@ -15,19 +15,28 @@
       <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List">
     id, name, type, code, parentsid, leaderid, description, state, createdTime
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from qx_department
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="getDeptList" resultType="com.mrbeard.process.blocks.authority.dto.DeptmentDto">
+    select id as deptId, name as deptName
+    from qx_department
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from qx_department
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
   <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Department">
     insert into qx_department (id, name, type, 
       code, parentsid, leaderid, 
@@ -36,6 +45,7 @@
       #{code,jdbcType=VARCHAR}, #{parentsid,jdbcType=VARCHAR}, #{leaderid,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{createdtime,jdbcType=TIMESTAMP})
   </insert>
+
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.authority.model.Department">
     insert into qx_department
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -97,6 +107,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.authority.model.Department">
     update qx_department
     <set>
@@ -127,6 +138,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.authority.model.Department">
     update qx_department
     set name = #{name,jdbcType=VARCHAR},

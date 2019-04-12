@@ -52,4 +52,10 @@ public interface UserConfigService {
      * @throws ProcessRuntimeException
      */
     Result getUser(String uid) throws ProcessRuntimeException;
+
+    /**
+     * 获取部门列表
+     * @return
+     */
+    Result getDeptList();
 }

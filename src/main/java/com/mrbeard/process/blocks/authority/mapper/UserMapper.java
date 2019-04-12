@@ -1,5 +1,6 @@
 package com.mrbeard.process.blocks.authority.mapper;
 
+import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.authority.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -41,5 +42,5 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    List<User> selectUserList(User user);
+    List<UserDto> selectUserList(User user);
 }

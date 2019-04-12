@@ -25,7 +25,7 @@
   </sql>
 
   <sql id="Base_User_List">
-    uid, uname, state, nick,realName,phoneNumber,email,sex,createdTime, updatedTime
+    u.uid, u.uname, u.nick, u.createdTime, u.updatedTime ,u.state,u.loginIp,u.loginPort,r.rid as roleId, u.deptid as deptId, d.name as deptName, u.realName, u.phoneNumber, u.email, u.sex
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -42,13 +42,21 @@
     where uname = #{uname,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectUserList" parameterType="com.mrbeard.process.blocks.authority.model.User" resultType="com.mrbeard.process.blocks.authority.model.User">
+  <select id="selectUserList" parameterType="com.mrbeard.process.blocks.authority.model.User" resultType="com.mrbeard.process.blocks.authority.dto.UserDto">
     select
     <include refid="Base_User_List"/>
-    from qx_user
+    from qx_user u
+    left join  qx_userrole r on r.uid = u.uid
+    left join qx_department d on d.id = u.deptid
     <where>
       <if test="uname != null and uname != ''">
         uname like CONCAT(CONCAT('%', #{uname,jdbcType=VARCHAR}), '%')
+      </if>
+      <if test="state != null">
+        and state = #{state}
+      </if>
+      <if test="phoneNumber != null and phoneNumber != ''" >
+        and phoneNumber = #{phoneNumber}
       </if>
     </where>
     order by updatedTime desc

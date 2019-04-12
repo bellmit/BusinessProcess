@@ -1,5 +1,6 @@
 package com.mrbeard.process.blocks.authority.service.impl;
 
+import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.authority.mapper.UserLoginInfoMapper;
 import com.mrbeard.process.blocks.authority.mapper.UserMapper;
 import com.mrbeard.process.blocks.authority.model.User;
@@ -113,7 +114,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<User> selectUserList(User user) {
+    public List<UserDto> selectUserList(User user) {
         try {
             return userDao.selectUserList(user);
         } catch (Exception e) {

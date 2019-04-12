@@ -2,10 +2,12 @@ package com.mrbeard.process.blocks.config.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.authority.model.*;
 import com.mrbeard.process.blocks.authority.service.PermissionService;
 import com.mrbeard.process.blocks.authority.service.RoleService;
 import com.mrbeard.process.blocks.authority.service.UserService;
+import com.mrbeard.process.blocks.config.service.DeptService;
 import com.mrbeard.process.blocks.config.service.UserConfigService;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;
@@ -35,6 +37,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     RoleService roleService;
     @Autowired
     PermissionService permissionService;
+    @Autowired
+    DeptService deptService;
 
 
     /**
@@ -139,8 +143,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     @Override
     public Result getUserList(Integer pageNum, Integer pageSize, User user) throws ProcessRuntimeException {
         PageHelper.startPage(pageNum,pageSize);
-        List<User> userList = userService.selectUserList(user);
-        PageInfo<User> pageInfo = new PageInfo<User>(userList);
+        List<UserDto> userList = userService.selectUserList(user);
+        PageInfo<UserDto> pageInfo = new PageInfo<UserDto>(userList);
         return ResultGenerator.getSuccessResult(pageInfo);
     }
 
@@ -154,6 +158,15 @@ public class UserConfigServiceImpl implements UserConfigService {
     public Result getUser(String uid) throws ProcessRuntimeException {
         User user =  userService.getUser(uid);
         return ResultGenerator.getSuccessResult(user);
+    }
+
+    /**
+     * 获取部门列表
+     * @return
+     */
+    @Override
+    public Result getDeptList() {
+        return ResultGenerator.getSuccessResult(deptService.getDeptList());
     }
 
 

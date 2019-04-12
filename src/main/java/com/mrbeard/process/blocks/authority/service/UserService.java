@@ -1,6 +1,7 @@
 package com.mrbeard.process.blocks.authority.service;
 
 
+import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.authority.model.User;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 
@@ -57,7 +58,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    List<User> selectUserList(User user) throws ProcessRuntimeException;
+    List<UserDto> selectUserList(User user) throws ProcessRuntimeException;
 
     /**
      * 通过id获取用户信息
