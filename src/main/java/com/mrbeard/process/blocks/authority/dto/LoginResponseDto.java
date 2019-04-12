@@ -23,11 +23,17 @@ public class LoginResponseDto {
      */
     private String nick;
 
-    public LoginResponseDto(String usertoken, String uname, String uid, String nick) {
+    /**
+     * 角色
+     */
+    private String role;
+
+    public LoginResponseDto(String usertoken, String uname, String uid, String nick,String role) {
         this.usertoken = usertoken;
         this.uname = uname;
         this.uid = uid;
         this.nick = nick;
+        this.role = role;
     }
 
     public String getUsertoken() {
@@ -60,5 +66,13 @@ public class LoginResponseDto {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

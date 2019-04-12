@@ -134,7 +134,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         //登录成功，移除临时码
         JedisUtil.remove("browerToken_"+loginDto.getBrowerToken());
         //封装返回前端信息
-        LoginResponseDto loginResponseDto = new LoginResponseDto(usertoken,user.getUname(),user.getUid(),user.getNick());
+        LoginResponseDto loginResponseDto = new LoginResponseDto(usertoken,user.getUname(),user.getUid(),user.getNick(),user.getRole());
         logger.info("登录返回信息：==>loginResponseDto"+JSON.toJSONString(loginResponseDto));
         return ResultGenerator.getSuccessResult(loginResponseDto);
     }
