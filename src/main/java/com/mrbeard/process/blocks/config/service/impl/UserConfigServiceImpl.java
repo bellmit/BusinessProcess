@@ -46,10 +46,6 @@ public class UserConfigServiceImpl implements UserConfigService {
      */
     @Override
     public Result postUserRole(String userId, String roleId)  throws ProcessRuntimeException {
-        //判断是否有权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         //判断操作类型：新增、修改、删除
         //新增
         UserRole userRoleInData = roleService.selectUserRoleByUserId(userId);
@@ -84,10 +80,6 @@ public class UserConfigServiceImpl implements UserConfigService {
      */
     @Override
     public Result postUser(User user) throws ProcessRuntimeException {
-        //判断是否有修改权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         /**
          * 判断当前操作：增加、修改、删除
          */
@@ -146,10 +138,6 @@ public class UserConfigServiceImpl implements UserConfigService {
      */
     @Override
     public Result getUserList(Integer pageNum, Integer pageSize, User user) throws ProcessRuntimeException {
-        //判断是否有修改权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         PageHelper.startPage(pageNum,pageSize);
         List<User> userList = userService.selectUserList(user);
         PageInfo<User> pageInfo = new PageInfo<User>(userList);
@@ -164,10 +152,6 @@ public class UserConfigServiceImpl implements UserConfigService {
      */
     @Override
     public Result getUser(String uid) throws ProcessRuntimeException {
-        //判断是否有权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         User user =  userService.getUser(uid);
         return ResultGenerator.getSuccessResult(user);
     }

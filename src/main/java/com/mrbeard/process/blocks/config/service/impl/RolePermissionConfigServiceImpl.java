@@ -50,10 +50,6 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      */
     @Override
     public Result getRoleList(Integer pageNum,Integer pageSize) throws ProcessRuntimeException {
-        //判断是否有权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         PageHelper.startPage(pageNum,pageSize);
         List<Role> roleList = roleService.getRoleList();
         PageInfo<Role> pageInfo = new PageInfo<>(roleList);
@@ -68,10 +64,6 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      */
     @Override
     public Result getPermissionList(String rid) throws ProcessRuntimeException {
-        //判断是否有权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         List<Permission> permissionList = roleService.getPermissionList(rid);
         return ResultGenerator.getSuccessResult(permissionList);
     }
@@ -84,10 +76,6 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      */
     @Override
     public Result getRolePermission(String rid) throws ProcessRuntimeException{
-        //判断是否有权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         List<PermissionDto> permissionDtos = roleService.getRolePermission(rid);
         return ResultGenerator.getSuccessResult(permissionDtos);
     }
@@ -101,10 +89,6 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      */
     @Override
     public Result postRolePermissions(String roleId, String[] permissionIds) throws ProcessRuntimeException {
-        //判断是否有权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         //判断操作类型：新增、修改、删除
         //新增
         List<RolePermission> userPermissionListInData = permissionService.selectRolePermissionByRoleId(roleId);
@@ -142,10 +126,6 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      */
     @Override
     public Result postRole(PostRoleDto role) throws ProcessRuntimeException {
-        //判断是否有权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         /**
          *
          * 判断操作类型：新增、删除、修改
@@ -211,10 +191,6 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      */
     @Override
     public Result postPermission(Permission permission) throws ProcessRuntimeException {
-        //判断是否有修改权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         //判断是什么操作：新增、删除、修改
         if(ToolUtil.isNotEmpty(permission.getPid())){
             //所有数据都不存在
@@ -254,10 +230,6 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      */
     @Override
     public Result getRole(String rid) throws ProcessRuntimeException {
-        //判断是否有修改权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         Role role = roleService.getRole(rid);
         return ResultGenerator.getSuccessResult(role);
     }
@@ -271,10 +243,6 @@ public class RolePermissionConfigServiceImpl implements RolePermissionConfigServ
      */
     @Override
     public Result getPermissionPage(Integer pageNum, Integer pageSize) throws ProcessRuntimeException {
-        //判断是否有修改权限
-        if(!ToolUtil.isHasPermission(Thread.currentThread().getStackTrace()[1].getMethodName())){
-            return ResultGenerator.getErrorResult("权限不足！");
-        }
         PageHelper.startPage(pageNum,pageSize);
         List<Permission> list = roleService.getPermissionList(null);
         PageInfo<Permission> pageInfo = new PageInfo<>(list);
