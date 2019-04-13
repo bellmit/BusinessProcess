@@ -44,6 +44,20 @@ public class UserConfigController {
     }
 
     /**
+     * 修改用户状态
+     * @param uid
+     * @param state
+     * @return
+     */
+    @RequestMapping(value = "/updateUserState",method = RequestMethod.POST)
+    public Result updateUserState(String uid,Integer state){
+        if(ToolUtil.checkParamter(uid,state) != true){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
+        return userConfigService.updateUserState(uid,state);
+    }
+
+    /**
      * 配置用户角色
      *
      * @param userId 用户Id

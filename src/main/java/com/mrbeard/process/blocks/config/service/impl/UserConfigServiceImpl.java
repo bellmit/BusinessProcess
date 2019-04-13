@@ -207,5 +207,24 @@ public class UserConfigServiceImpl implements UserConfigService {
         return ResultGenerator.getSuccessResult("重置密码成功！");
     }
 
+    /**
+     * 修改用户状态
+     * @param uid
+     * @param state
+     * @return
+     */
+    @Override
+    public Result updateUserState(String uid, Integer state) {
+        try {
+            User user = userService.selectUserById(uid);
+            user.setState(state);
+            userService.updateById(user);
+        } catch (ProcessRuntimeException e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException("修改状态出错！");
+        }
+        return ResultGenerator.getSuccessResult("修改状态成功！");
+    }
+
 
 }

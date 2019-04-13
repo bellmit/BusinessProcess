@@ -213,6 +213,15 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     /**
+     * 检测是否过期
+     * @return
+     */
+    @Override
+    public Result isTokenTimeOut() {
+        return ResultGenerator.getSuccessResult("success");
+    }
+
+    /**
      * 绘制字体
      * @param g
      * @param rands

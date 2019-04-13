@@ -93,4 +93,13 @@ public class AuthorityController {
         return ResultGenerator.getNotLoginResult();
     }
 
+    /**
+     * 检测token是否过期
+     * @return
+     */
+    @GetMapping("/isTokenTimeOut")
+    public Result isTokenTimeOut(){
+        return authorityService.isTokenTimeOut();
+    }
+
 }

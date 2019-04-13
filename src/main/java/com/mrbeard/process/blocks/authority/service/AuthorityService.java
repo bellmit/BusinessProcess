@@ -33,4 +33,10 @@ public interface AuthorityService {
      * @throws IOException
      */
     void getRandomCode(String browerToken) throws IOException;
+
+    /**
+     * 是否过期
+     * @return
+     */
+    Result isTokenTimeOut();
 }

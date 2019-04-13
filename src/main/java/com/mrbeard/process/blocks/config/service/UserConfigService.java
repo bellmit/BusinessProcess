@@ -66,4 +66,12 @@ public interface UserConfigService {
      * @return
      */
     Result restPassword(String uid);
+
+    /**
+     * 修改用户状态
+     * @param uid
+     * @param state
+     * @return
+     */
+    Result updateUserState(String uid, Integer state);
 }
