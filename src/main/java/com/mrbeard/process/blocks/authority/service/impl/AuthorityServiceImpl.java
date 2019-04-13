@@ -16,6 +16,7 @@ import com.mrbeard.process.util.JedisUtil;
 import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.UUIDUtil;
 import com.mrbeard.process.util.WebUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -103,11 +105,15 @@ public class AuthorityServiceImpl implements AuthorityService {
         }
         //查询用户是否存在
         loginDto.setPassword(ToolUtil.Md5(loginDto.getPassword()));
-        User user = userService.selectUserByName(loginDto.getUsername());
+        List<User> userList = userService.selectUserByName(loginDto.getUsername());
         //未找到用户
-        if(user == null){
+        if(CollectionUtils.isEmpty(userList)){
             return ResultGenerator.getErrorResult(Constant.USER_NOT_EXIST);
         }
+        if(userList.size() > 1){
+            throw new ProcessRuntimeException("找到多个用户，请确认信息是否有误！");
+        }
+        User user = userList.get(0);
         //密码不正确
         if(loginDto.getPassword().equals(user.getPassword()) != true){
             return ResultGenerator.getErrorResult(Constant.ERROR_PASSWORD);

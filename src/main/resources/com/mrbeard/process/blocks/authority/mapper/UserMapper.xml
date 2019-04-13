@@ -69,7 +69,7 @@
 
   <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.User">
     insert into qx_user (uid, uname, nick, 
-      password, createdTime,updatedTime,
+      password, createdTime,
       state, loginIp, loginPort, deptid,
       parentsid,realName,phoneNumber,
       email,sex)
@@ -95,7 +95,7 @@
       realName = #{realName,jdbcType=VARCHAR},
       phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      sex = #{email,jdbcType=VARCHAR}
+      sex = #{sex,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -20,7 +20,7 @@ public interface UserService {
      * @return
      * @throws ProcessRuntimeException
      */
-     User selectUserByName(String uname) throws ProcessRuntimeException;
+     List<User> selectUserByName(String uname) throws ProcessRuntimeException;
 
     /**
      * 通过id查找用户

@@ -1,6 +1,7 @@
 package com.mrbeard.process.blocks.config.service;
 
 
+import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.User;
@@ -30,11 +31,11 @@ public interface UserConfigService {
 
     /**
      * 配置用户信息
-     * @param user
+     * @param userDto
      * @return
      * @throws ProcessRuntimeException
      */
-    Result postUser(User user) throws ProcessRuntimeException;
+    Result postUser(UserDto userDto) throws ProcessRuntimeException;
 
     /**
      * 获取用户列表

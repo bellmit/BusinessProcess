@@ -1,5 +1,6 @@
 package com.mrbeard.process.blocks.config.controller;
 
+import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.User;
@@ -34,12 +35,12 @@ public class UserConfigController {
 
     /**
      * 配置用户
-     * @param user
+     * @param userDto
      * @return
      */
     @RequestMapping(value = "/postUser",method = RequestMethod.POST)
-    public Result postUser(User user) throws ProcessRuntimeException {
-        return userConfigService.postUser(user);
+    public Result postUser(UserDto userDto) throws ProcessRuntimeException {
+        return userConfigService.postUser(userDto);
     }
 
     /**

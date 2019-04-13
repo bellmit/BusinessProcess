@@ -35,7 +35,7 @@ public interface UserMapper {
      * @param uname
      * @return
      */
-    User findUserByName(String uname);
+    List<User> findUserByName(String uname);
 
     /**
      * 通过条件查找用户列表

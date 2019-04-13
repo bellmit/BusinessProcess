@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User selectUserByName(String uname) throws ProcessRuntimeException {
+    public List<User> selectUserByName(String uname) throws ProcessRuntimeException {
         try {
             return userDao.findUserByName(uname);
         } catch (Exception e) {

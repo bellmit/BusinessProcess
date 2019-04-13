@@ -1,5 +1,7 @@
 package com.mrbeard.process.blocks.config.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
@@ -15,7 +17,9 @@ import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.UUIDUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -39,6 +43,11 @@ public class UserConfigServiceImpl implements UserConfigService {
     PermissionService permissionService;
     @Autowired
     DeptService deptService;
+
+    /**
+     * 默认初始密码
+     */
+    private final String initPassword = "123456";
 
 
     /**
@@ -83,15 +92,18 @@ public class UserConfigServiceImpl implements UserConfigService {
      * @return
      */
     @Override
-    public Result postUser(User user) throws ProcessRuntimeException {
+    public Result postUser(UserDto user) throws ProcessRuntimeException {
         /**
          * 判断当前操作：增加、修改、删除
          */
+        CopyOptions options = new CopyOptions();
+        options.setIgnoreNullValue(true);
         if (ToolUtil.isNotEmpty(user.getUid())) {
             //删除
-            boolean flag = ToolUtil.checkParamter(user.getUname(), user.getPassword(), user.getState());
+            boolean flag = ToolUtil.checkParamter(user.getUname(),user.getDeptId(),
+                    user.getRealName(),user.getRoleId(),user.getPhoneNumber());
             if (flag != true) {
-                //删除对应角色信息
+                //删除对应角色-用户关联信息
                 roleService.deleteUserRoleByUserId(user.getUid());
                 //删除用户信息
                 userService.deleteById(user.getUid());
@@ -100,34 +112,36 @@ public class UserConfigServiceImpl implements UserConfigService {
             //修改
             //设置数据
             User userInData = userService.selectUserById(user.getUid());
-            userInData.setUpdatedTime(new Date());
-            userInData.setUname(user.getUname());
-            userInData.setPassword(ToolUtil.Md5(user.getPassword()));
-            userInData.setState(user.getState());
-            userInData.setNick(user.getNick());
+            BeanUtil.copyProperties(user,userInData,options);
+            userInData.setDeptid(user.getDeptId());
             //更新
             userService.updateById(userInData);
             //更新角色用户信息
-            roleService.updateUserRoleByUserId(user.getUid(),user.getRole());
+            roleService.updateUserRoleByUserId(user.getUid(),user.getRoleId());
             return ResultGenerator.getSuccessResult("修改成功！");
         } else {
             //新增
             //参数判断
-            if (ToolUtil.checkParamter(user.getUname(), user.getPassword(),user.getState(),user.getRole()) != true) {
+            if (ToolUtil.checkParamter(user.getUname(),
+                    user.getRoleId(),user.getDeptId(), user.getPhoneNumber(),
+                    user.getEmail(),user.getSex()) != true) {
                 return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
             }
             //校验数据库中是否有一样的用户名
-            User userByName = userService.selectUserByName(user.getUname());
-            if(userByName != null ){
+            List<User> userByName = userService.selectUserByName(user.getUname());
+            if(CollectionUtils.isNotEmpty(userByName)){
                 return ResultGenerator.getErrorResult("该用户名已被注册!");
             }
-            user.setUid(UUIDUtil.getUUID());
-            user.setCreatedTime(new Date());
-            user.setUpdatedTime(new Date());
-            user.setPassword(ToolUtil.Md5(user.getPassword()));
-            userService.insert(user);
+            User insertUser = new User();
+            BeanUtil.copyProperties(user,insertUser,options);
+            insertUser.setUid(UUIDUtil.getUUID());
+            insertUser.setCreatedTime(new Date());
+            insertUser.setPassword(ToolUtil.Md5(initPassword));
+            insertUser.setDeptid(user.getDeptId());
+            insertUser.setState(1);
+            userService.insert(insertUser);
             //新增用户角色信息
-            UserRole userRole = new UserRole(user.getUid(),user.getRole());
+            UserRole userRole = new UserRole(insertUser.getUid(),user.getRoleId());
             roleService.insertUserRole(userRole);
             return ResultGenerator.getSuccessResult("新增用户信息成功！");
         }

@@ -1,6 +1,8 @@
 package com.mrbeard.process.interceptor;
 
+import cn.hutool.core.map.MapUtil;
 import com.mrbeard.process.common.Constant;
+import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.util.JedisUtil;
 import com.mrbeard.process.util.ToolUtil;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @Author 胡彬
@@ -41,9 +44,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             String servletPath = request.getServletPath();
             //去除servletPath
             requestUrl = requestUrl.replace(servletPath,"");
-            logger.error("{LoginInterceptor}====>usertoken为空，重定向到" + requestUrl + "/errorPage");
-            response.sendRedirect(requestUrl + "/errorPage");
-            return false;
+            logger.error("{LoginInterceptor}====>usertoken为空");
+            throw new ProcessRuntimeException("用户session已失效，请退出后重新登陆刷新！");
+//            response.sendRedirect(requestUrl + "/errorPage");
         }
         // redis中获取到了对应的值则重新刷新session有效时间
         if (ToolUtil.isNotEmpty(JedisUtil.get("usertoken_"+usertoken))) {
@@ -65,9 +68,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             String servletPath = request.getServletPath();
             //去除servletPath
             requestUrl = requestUrl.replace(servletPath,"");
-            logger.error("{LoginInterceptor}====>session为空，重定向到" + requestUrl + "/errorPage");
-            response.sendRedirect(requestUrl + "/errorPage");
-            return false;
+            logger.error("{LoginInterceptor}====>session为空");
+//            response.sendRedirect(requestUrl + "/errorPage");
+            throw new ProcessRuntimeException("用户session已失效，请退出后重新登陆刷新！");
         }
     }
 
