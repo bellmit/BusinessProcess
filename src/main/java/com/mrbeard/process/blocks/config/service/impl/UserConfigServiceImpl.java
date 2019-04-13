@@ -18,9 +18,12 @@ import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.UUIDUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -43,6 +46,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     PermissionService permissionService;
     @Autowired
     DeptService deptService;
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 默认初始密码
@@ -91,6 +96,7 @@ public class UserConfigServiceImpl implements UserConfigService {
      * @param user 用户信息
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Result postUser(UserDto user) throws ProcessRuntimeException {
         /**
@@ -181,6 +187,24 @@ public class UserConfigServiceImpl implements UserConfigService {
     @Override
     public Result getDeptList() {
         return ResultGenerator.getSuccessResult(deptService.getDeptList());
+    }
+
+    /**
+     * 重置密码
+     * @param uid
+     * @return
+     */
+    @Override
+    public Result restPassword(String uid) {
+        try {
+            User user = userService.selectUserById(uid);
+            user.setPassword(ToolUtil.Md5(initPassword));
+            userService.updateById(user);
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException("重置密码出错！");
+        }
+        return ResultGenerator.getSuccessResult("重置密码成功！");
     }
 
 

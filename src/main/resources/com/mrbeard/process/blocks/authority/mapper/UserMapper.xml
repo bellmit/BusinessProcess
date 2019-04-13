@@ -13,15 +13,15 @@
       <arg column="deptid" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <arg column="parentsid" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <arg column="realName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="phoneNumber" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="phoneNumber" javaType="java.lang.String" jdbcType="VARCHAR"/>
       <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    uid, uname, state, nick, password, loginIp, loginPort,deptid, parentsid, realName,email,sex,phoneNumber,createdTime,updatedTime
+    uid, uname, state, nick, password, loginIp, loginPort,deptid, parentsid, realName,phoneNumber,email,sex,createdTime,updatedTime
   </sql>
 
   <sql id="Base_User_List">

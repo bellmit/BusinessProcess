@@ -98,4 +98,17 @@ public class UserConfigController {
         return userConfigService.getDeptList();
     }
 
+    /**
+     * 重置用户密码
+     * @param uid
+     * @return
+     */
+    @RequestMapping(value = "/restPassword")
+    public Result restPassword(String uid){
+        if(ToolUtil.checkParamter(uid)!= true){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
+        return userConfigService.restPassword(uid);
+    }
+
 }

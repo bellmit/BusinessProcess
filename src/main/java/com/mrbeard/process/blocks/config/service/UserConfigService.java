@@ -59,4 +59,11 @@ public interface UserConfigService {
      * @return
      */
     Result getDeptList();
+
+    /**
+     * 重置密码
+     * @param uid
+     * @return
+     */
+    Result restPassword(String uid);
 }
