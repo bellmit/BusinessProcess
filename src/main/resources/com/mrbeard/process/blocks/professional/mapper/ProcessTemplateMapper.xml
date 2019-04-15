@@ -13,19 +13,30 @@
       <arg column="processType" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List">
     id, state, name, content, description, createdTime, updatedTime, processType
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from p_template
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByTypeId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from p_template
+    where processType = #{typeId,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from p_template
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
   <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.ProcessTemplate">
     insert into p_template (id, state, name, 
       content, description, createdTime, 
@@ -34,6 +45,7 @@
       #{content,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, 
       #{updatedtime,jdbcType=TIMESTAMP}, #{processtype,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessTemplate">
     insert into p_template
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -89,6 +101,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessTemplate">
     update p_template
     <set>
@@ -116,6 +129,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.ProcessTemplate">
     update p_template
     set state = #{state,jdbcType=TINYINT},

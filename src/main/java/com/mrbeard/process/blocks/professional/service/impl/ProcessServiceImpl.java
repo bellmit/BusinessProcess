@@ -49,6 +49,8 @@ public class ProcessServiceImpl implements ProcessService {
     @Resource
     private ProcessNodeMapper processNodeDao;
     @Resource
+    private ProcessTemplateMapper processTemplateDto;
+    @Resource
     private ProcessNodeBaseMapper processNodeBaseDao;
     @Resource
     private ProcessNodeTypeBaseMapper processNodeTypeBaseDao;
@@ -459,5 +461,18 @@ public class ProcessServiceImpl implements ProcessService {
         List<ProcessType> processTypes = processTypeDao.selectTypeList();
         return ResultGenerator.getSuccessResult(processTypes);
     }
+
+    /**
+     * 获取流程模板列表
+     * @param typeId
+     * @return
+     */
+    @Override
+    public Result getProcessTempList(String typeId) {
+        //获取模板列表
+        List<ProcessTemplate>  templates =  processTemplateDto.selectByTypeId(typeId);
+        return ResultGenerator.getSuccessResult(templates);
+    }
+
 
 }
