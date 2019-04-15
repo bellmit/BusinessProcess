@@ -62,6 +62,7 @@ public class UserConfigServiceImpl implements UserConfigService {
      * @param roleId 角色列表
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Result postUserRole(String userId, String roleId)  throws ProcessRuntimeException {
         //判断操作类型：新增、修改、删除
