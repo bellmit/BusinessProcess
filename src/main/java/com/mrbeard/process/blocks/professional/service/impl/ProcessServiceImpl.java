@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -409,6 +410,9 @@ public class ProcessServiceImpl implements ProcessService {
         BeanUtils.copyProperties(processDto,process);
         //获取当前用户信息
         User userInfo = SessionUtil.getUserInfo();
+        if(StringUtils.isEmpty(userInfo)){
+            throw new ProcessRuntimeException("获取用户信息失败，请重新登陆！");
+        }
         //设置创建用户id
         process.setcreatedId(userInfo.getUid());
         process.setCreatedTime(new Date());
@@ -418,6 +422,9 @@ public class ProcessServiceImpl implements ProcessService {
         String processId = UUIDUtil.getUUID();
         process.setId(processId);
         process.setState((byte)1);
+        //获取流程类型，并设置为标题
+        ProcessType processType = processTypeDao.selectByPrimaryKey(processDto.getTypeId());
+        process.setTitle(userInfo.getRealName()+"-"+processType.getTypename());
         return processId;
     }
 
