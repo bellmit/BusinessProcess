@@ -30,4 +30,10 @@ public interface ProcessService {
      * @return
      */
     Result postProcess(ProcessNodeDto processNodeDto);
+
+    /**
+     * 获取流程类型列表
+     * @return
+     */
+    Result getProcessTypeList();
 }

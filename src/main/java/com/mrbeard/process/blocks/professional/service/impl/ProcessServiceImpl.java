@@ -8,14 +8,9 @@ import com.mrbeard.process.blocks.authority.model.UserLoginInfo;
 import com.mrbeard.process.blocks.authority.service.UserService;
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
-import com.mrbeard.process.blocks.professional.mapper.ProcessMapper;
-import com.mrbeard.process.blocks.professional.mapper.ProcessNodeBaseMapper;
-import com.mrbeard.process.blocks.professional.mapper.ProcessNodeMapper;
-import com.mrbeard.process.blocks.professional.mapper.ProcessNodeTypeBaseMapper;
+import com.mrbeard.process.blocks.professional.mapper.*;
+import com.mrbeard.process.blocks.professional.model.*;
 import com.mrbeard.process.blocks.professional.model.Process;
-import com.mrbeard.process.blocks.professional.model.ProcessNode;
-import com.mrbeard.process.blocks.professional.model.ProcessNodeBase;
-import com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase;
 import com.mrbeard.process.blocks.professional.service.ProcessService;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.common.WebSocket;
@@ -60,6 +55,8 @@ public class ProcessServiceImpl implements ProcessService {
     private UserLoginInfoMapper userLoginInfoDao;
     @Resource
     private UserService userService;
+    @Resource
+    private ProcessTypeMapper processTypeDao;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -443,6 +440,17 @@ public class ProcessServiceImpl implements ProcessService {
         //通知负责人处理
         noticeHigherUps(node);
         return ResultGenerator.getSuccessResult("节点信息更新成功！");
+    }
+
+    /**
+     * 获取流程类型列表
+     * @return
+     */
+    @Override
+    public Result getProcessTypeList() {
+        //获取列表
+        List<ProcessType> processTypes = processTypeDao.selectTypeList();
+        return ResultGenerator.getSuccessResult(processTypes);
     }
 
 }

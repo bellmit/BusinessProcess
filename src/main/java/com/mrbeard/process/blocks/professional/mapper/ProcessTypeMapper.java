@@ -3,6 +3,8 @@ package com.mrbeard.process.blocks.professional.mapper;
 import com.mrbeard.process.blocks.professional.model.ProcessType;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ProcessTypeMapper {
     int deleteByPrimaryKey(String id);
@@ -16,4 +18,6 @@ public interface ProcessTypeMapper {
     int updateByPrimaryKeySelective(ProcessType record);
 
     int updateByPrimaryKey(ProcessType record);
+
+    List<ProcessType> selectTypeList();
 }

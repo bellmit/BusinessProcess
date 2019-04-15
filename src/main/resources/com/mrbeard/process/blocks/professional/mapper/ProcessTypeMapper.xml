@@ -12,12 +12,20 @@
   <sql id="Base_Column_List">
     id, typeName, description,code
   </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from p_process_type
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectTypeList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from p_process_type
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from p_process_type
     where id = #{id,jdbcType=VARCHAR}
@@ -28,6 +36,7 @@
     values (#{id,jdbcType=VARCHAR}, #{typename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}
       )
   </insert>
+  
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessType">
     insert into p_process_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -59,6 +68,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessType">
     update p_process_type
     <set>
@@ -74,6 +84,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.ProcessType">
     update p_process_type
     set typeName = #{typename,jdbcType=VARCHAR},

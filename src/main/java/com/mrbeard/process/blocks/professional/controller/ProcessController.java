@@ -10,6 +10,7 @@ import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +56,15 @@ public class ProcessController {
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
         return processService.postProcess(processNodeDto);
+    }
+
+    /**
+     * 获取流程类型列表
+     * @return
+     */
+    @GetMapping("/getProcessTypeList")
+    public Result getProcessTypeList(){
+        return processService.getProcessTypeList();
     }
 
 }
