@@ -43,4 +43,10 @@ public interface ProcessService {
      * @return
      */
     Result getProcessTempList(String typeId);
+
+    /**
+     * 获取流程节点类型列表
+     * @return
+     */
+    Result getProcessNodeTypeList();
 }

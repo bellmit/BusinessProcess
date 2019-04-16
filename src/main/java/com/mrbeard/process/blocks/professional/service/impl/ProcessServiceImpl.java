@@ -399,6 +399,7 @@ public class ProcessServiceImpl implements ProcessService {
         processNode.setNodeState((byte)0);
         processNode.setProId(processId);
         processNode.setTypeId(processDto.getNodeTypeId());
+        processNode.setNodeBranch("0");
         return processNode;
     }
 
@@ -472,6 +473,17 @@ public class ProcessServiceImpl implements ProcessService {
         //获取模板列表
         List<ProcessTemplate>  templates =  processTemplateDto.selectByTypeId(typeId);
         return ResultGenerator.getSuccessResult(templates);
+    }
+
+    /**
+     * 获取流程节点类型列表
+     * @return
+     */
+    @Override
+    public Result getProcessNodeTypeList() {
+        //获取所有开始节点列表
+        List<ProcessNodeTypeBase> nodeTypes = processNodeTypeBaseDao.selectBeginNodeList();
+        return ResultGenerator.getSuccessResult(nodeTypes);
     }
 
 

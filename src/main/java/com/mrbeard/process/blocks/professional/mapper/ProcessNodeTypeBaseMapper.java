@@ -39,4 +39,10 @@ public interface ProcessNodeTypeBaseMapper {
      * @return
      */
     List<ProcessNodeTypeBase> selectListByCondition(ProcessNodeTypeBase processNodeTypeBase);
+
+    /**
+     * 获取所有开始节点列表
+     * @return
+     */
+    List<ProcessNodeTypeBase> selectBeginNodeList();
 }

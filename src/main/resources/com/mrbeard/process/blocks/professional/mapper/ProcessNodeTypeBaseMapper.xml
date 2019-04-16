@@ -65,6 +65,13 @@
     <include refid="Base_Where_Clouse"/>
   </select>
 
+  <select id="selectBeginNodeList" resultType="com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase">
+    select
+    <include refid="Base_Column_List"/>
+    from p_node_type_base
+    where isBeginNode = 1
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from p_node_type_base
     where id = #{id,jdbcType=VARCHAR}

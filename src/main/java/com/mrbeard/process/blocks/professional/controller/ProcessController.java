@@ -78,4 +78,13 @@ public class ProcessController {
         return processService.getProcessTempList(typeId);
     }
 
+    /**
+     * 获取流程节点类型列表
+     * @return
+     */
+    @GetMapping("/getProcessNodeTypeList")
+    public Result getProcessNodeTypeList(){
+        return processService.getProcessNodeTypeList();
+    }
+
 }
