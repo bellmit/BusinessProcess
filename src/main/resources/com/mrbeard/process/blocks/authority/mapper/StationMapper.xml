@@ -23,6 +23,9 @@
       <if test="name != null and name != ''">
         and s.name = #{name,jdbcType=VARCHAR}
       </if>
+      <if test="uname != null and uname != ''">
+        and u.realName = #{uname,jdbcType=VARCHAR}
+      </if>
       <if test="uid != null and uid != ''">
         and s.uid = #{uid,jdbcType=VARCHAR}
       </if>

@@ -267,7 +267,7 @@ public class UserConfigServiceImpl implements UserConfigService {
         }else{
             //修改、删除
             //修改
-            if(flagOthers != true){
+            if(flagOthers == true){
                 Station station = new Station();
                 BeanUtil.copyProperties(stationDto,station);
                 stationDao.updateByPrimaryKeySelective(station);
