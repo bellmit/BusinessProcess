@@ -1,8 +1,7 @@
 package com.mrbeard.process.blocks.config.controller;
 
+import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
-import com.mrbeard.process.blocks.authority.model.Permission;
-import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.User;
 import com.mrbeard.process.blocks.config.service.UserConfigService;
 import com.mrbeard.process.common.Constant;
@@ -123,6 +122,29 @@ public class UserConfigController {
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
         return userConfigService.restPassword(uid);
+    }
+
+    /**
+     * 配置岗位信息
+     * @param stationDto
+     * @return
+     */
+    @RequestMapping(value = "/postStation",method = RequestMethod.POST)
+    public Result postStation(StationDto stationDto){
+        return userConfigService.postStation(stationDto);
+    }
+
+
+    /**
+     * 获取岗位列表
+     * @param pageNum
+     * @param pageSize
+     * @param stationDto
+     * @return
+     */
+    @GetMapping("/getStationList")
+    public Result getStationList(Integer pageNum, Integer pageSize, StationDto stationDto){
+        return userConfigService.getStationList(pageNum,pageSize,stationDto);
     }
 
 }

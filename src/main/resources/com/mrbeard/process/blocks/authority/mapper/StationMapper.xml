@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mrbeard.process.blocks.authority.mapper.StationMapper">
+  <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.authority.model.Station">
+    <constructor>
+      <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="deptId" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, uid, deptId, createdTime, updatedTime
+  </sql>
+
+  <sql id="Where_Cluse">
+    <where>
+      <if test="id != null and id != ''">
+        and s.id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null and name != ''">
+        and s.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="uid != null and uid != ''">
+        and s.uid = #{uid,jdbcType=VARCHAR}
+      </if>
+      <if test="deptid != null and deptid != ''">
+        and s.deptId = #{deptid,jdbcType=VARCHAR}
+      </if>
+      <if test="createdtime != null">
+        and s.createdTime = #{createdtime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from qx_station
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByCondition" parameterType="Object" resultType="com.mrbeard.process.blocks.authority.dto.StationDto">
+    select
+    s.id,s.name,s.uid,s.deptId, s.createdTime, s.updatedTime,
+    u.realName as uname, d.name as deptName
+    from qx_station s
+    left join qx_user u on u.uid = s.uid
+    left join qx_department d on s.deptId = d.id
+    <include refid="Where_Cluse"/>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from qx_station
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Station">
+    insert into qx_station (id, name, uid, 
+      deptId, createdTime
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
+      #{deptid,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.authority.model.Station">
+    insert into qx_station
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="deptid != null">
+        deptId,
+      </if>
+      <if test="createdtime != null">
+        createdTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null">
+        #{deptid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdtime != null">
+        #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.authority.model.Station">
+    update qx_station
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null">
+        deptId = #{deptid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdtime != null">
+        createdTime = #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.authority.model.Station">
+    update qx_station
+    set name = #{name,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      deptId = #{deptid,jdbcType=VARCHAR},
+      createdTime = #{createdtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

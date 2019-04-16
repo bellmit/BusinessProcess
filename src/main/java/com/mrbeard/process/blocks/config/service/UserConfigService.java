@@ -1,6 +1,7 @@
 package com.mrbeard.process.blocks.config.service;
 
 
+import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
@@ -74,4 +75,20 @@ public interface UserConfigService {
      * @return
      */
     Result updateUserState(String uid, Integer state);
+
+    /**
+     * 配置岗位信息
+     * @param stationDto
+     * @return
+     */
+    Result postStation(StationDto stationDto);
+
+    /**
+     * 获取岗位列表
+     * @param pageNum
+     * @param pageSize
+     * @param stationDto
+     * @return
+     */
+    Result getStationList(Integer pageNum, Integer pageSize, StationDto stationDto);
 }

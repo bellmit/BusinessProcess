@@ -65,12 +65,12 @@
         </javaClientGenerator>
 
 
-        <table tableName="qx_menu" domainObjectName="Menu"
+        <table tableName="qx_station" domainObjectName="Station"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
              <!--当字段为text的时候可以通过columnOverride转为varchaar -->
-            <columnOverride column="data" javaType="java.lang.String" jdbcType="VARCHAR" />
+<!--            <columnOverride column="data" javaType="java.lang.String" jdbcType="VARCHAR" />-->
             <!--<columnOverride column="title" javaType="java.lang.String" jdbcType="VARCHAR" />-->
         </table>
     </context>

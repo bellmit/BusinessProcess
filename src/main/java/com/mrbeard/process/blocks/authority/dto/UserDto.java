@@ -82,6 +82,11 @@ public class UserDto {
      */
     private String sex;
 
+    /**
+     * 用户岗位id
+     */
+    private String stationId;
+
     public String getUid() {
         return uid;
     }
@@ -200,5 +205,13 @@ public class UserDto {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
     }
 }

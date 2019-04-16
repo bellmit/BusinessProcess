@@ -4,7 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
+import com.mrbeard.process.blocks.authority.mapper.StationMapper;
 import com.mrbeard.process.blocks.authority.model.*;
 import com.mrbeard.process.blocks.authority.service.PermissionService;
 import com.mrbeard.process.blocks.authority.service.RoleService;
@@ -21,10 +23,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +48,8 @@ public class UserConfigServiceImpl implements UserConfigService {
     PermissionService permissionService;
     @Autowired
     DeptService deptService;
+    @Resource
+    StationMapper stationDao;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -108,7 +112,7 @@ public class UserConfigServiceImpl implements UserConfigService {
         if (ToolUtil.isNotEmpty(user.getUid())) {
             //删除
             boolean flag = ToolUtil.checkParamter(user.getUname(),user.getDeptId(),
-                    user.getRealName(),user.getRoleId(),user.getPhoneNumber());
+                    user.getRealName(),user.getRoleId(),user.getPhoneNumber(),user.getStationId());
             if (flag != true) {
                 //删除对应角色-用户关联信息
                 roleService.deleteUserRoleByUserId(user.getUid());
@@ -125,13 +129,19 @@ public class UserConfigServiceImpl implements UserConfigService {
             userService.updateById(userInData);
             //更新角色用户信息
             roleService.updateUserRoleByUserId(user.getUid(),user.getRoleId());
+            //更新岗位
+            if(!user.getStationId().equals("none")){
+                Station station = stationDao.selectByPrimaryKey(user.getStationId());
+                station.setUid(userInData.getUid());
+                stationDao.updateByPrimaryKeySelective(station);
+            }
             return ResultGenerator.getSuccessResult("修改成功！");
         } else {
             //新增
             //参数判断
             if (ToolUtil.checkParamter(user.getUname(),
                     user.getRoleId(),user.getDeptId(), user.getPhoneNumber(),
-                    user.getEmail(),user.getSex()) != true) {
+                    user.getEmail(),user.getSex(),user.getStationId()) != true) {
                 return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
             }
             //校验数据库中是否有一样的用户名
@@ -150,6 +160,12 @@ public class UserConfigServiceImpl implements UserConfigService {
             //新增用户角色信息
             UserRole userRole = new UserRole(insertUser.getUid(),user.getRoleId());
             roleService.insertUserRole(userRole);
+            //设置用户岗位
+            if(!user.getStationId().equals("none")){
+                Station station = stationDao.selectByPrimaryKey(user.getStationId());
+                station.setUid(insertUser.getUid());
+                stationDao.updateByPrimaryKeySelective(station);
+            }
             return ResultGenerator.getSuccessResult("新增用户信息成功！");
         }
     }
@@ -227,5 +243,56 @@ public class UserConfigServiceImpl implements UserConfigService {
         return ResultGenerator.getSuccessResult("修改状态成功！");
     }
 
+    /**
+     * 配置岗位信息
+     * @param stationDto
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Result postStation(StationDto stationDto) {
+        boolean flagId = ToolUtil.checkParamter(stationDto.getId());
+        boolean flagOthers = ToolUtil.checkParamter(stationDto.getDeptid(),stationDto.getName(),stationDto.getUid());
+        //新增
+        if(flagId != true){
+            if(flagOthers != true){
+                return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+            }
+            Station station = new Station();
+            BeanUtil.copyProperties(stationDto,station);
+            station.setId(UUIDUtil.getUUID());
+            station.setCreatedtime(new Date());
+            stationDao.insertSelective(station);
+            return ResultGenerator.getSuccessResult("新增岗位成功！");
+        }else{
+            //修改、删除
+            //修改
+            if(flagOthers != true){
+                Station station = new Station();
+                BeanUtil.copyProperties(stationDto,station);
+                stationDao.updateByPrimaryKeySelective(station);
+                return ResultGenerator.getSuccessResult("修改岗位成功！");
+            }else{
+                //删除
+                stationDao.deleteByPrimaryKey(stationDto.getId());
+                return ResultGenerator.getSuccessResult("删除岗位成功！");
+            }
+        }
+    }
+
+    /**
+     * 获取岗位列表
+     * @param pageNum
+     * @param pageSize
+     * @param stationDto
+     * @return
+     */
+    @Override
+    public Result getStationList(Integer pageNum, Integer pageSize, StationDto stationDto) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<StationDto> stationDtos =  stationDao.selectByCondition(stationDto);
+        PageInfo<StationDto> stationPageInfo = new PageInfo<>(stationDtos);
+        return ResultGenerator.getSuccessResult(stationPageInfo);
+    }
 
 }
