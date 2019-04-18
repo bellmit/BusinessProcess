@@ -9,10 +9,11 @@
       <arg column="isBeginNode" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="isEndNode" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="correlationId" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="processTypeId" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, parentsId, isBeginNode, isEndNode, correlationId
+    id, name, parentsId, isBeginNode, isEndNode, correlationId, processTypeId
   </sql>
 
   <sql id="Base_Where_Clouse">
@@ -34,6 +35,9 @@
     </if>
     <if test="correlationId != null and correlationId != ''">
        and correlationId = #{correlationId}
+    </if>
+    <if test="processTypeId != null and processTypeId != ''">
+       and processTypeId = #{processTypeId}
     </if>
   </sql>
 
@@ -79,9 +83,10 @@
 
   <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase">
     insert into p_node_type_base (id, name, parentsId, 
-      isBeginNode, isendnode, correlationId)
+      isBeginNode, isendnode, correlationId, processTypeId)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentsid,jdbcType=VARCHAR}, 
-      #{isbeginnode,jdbcType=TINYINT},#{isendnode,jdbcType=TINYINT}, #{correlationid,jdbcType=VARCHAR})
+      #{isbeginnode,jdbcType=TINYINT},#{isendnode,jdbcType=TINYINT},
+      #{correlationid,jdbcType=VARCHAR},#{processTypeId,jdbcType=VARCHAR})
   </insert>
 
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase">
@@ -105,6 +110,9 @@
       <if test="correlationid != null">
         correlationId,
       </if>
+      <if test="processTypeId != null">
+        processTypeId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -124,6 +132,9 @@
       </if>
       <if test="correlationid != null">
         #{correlationid,jdbcType=VARCHAR},
+      </if>
+      <if test="processTypeId != null">
+        #{processTypeId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -146,6 +157,9 @@
       <if test="correlationid != null">
         correlationId = #{correlationid,jdbcType=VARCHAR},
       </if>
+      <if test="processTypeId != null">
+        processTypeId = #{processTypeId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -156,7 +170,8 @@
       parentsId = #{parentsid,jdbcType=VARCHAR},
       isBeginNode = #{isbeginnode,jdbcType=TINYINT},
       isEndNode = #{isendnode,jdbcType=TINYINT},
-      correlationId = #{correlationid,jdbcType=VARCHAR}
+      correlationId = #{correlationid,jdbcType=VARCHAR},
+      processTypeId = #{processTypeId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

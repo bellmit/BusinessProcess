@@ -2,6 +2,7 @@ package com.mrbeard.process.blocks.professional.service;
 
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
 import com.mrbeard.process.blocks.professional.model.ProcessNode;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
@@ -44,9 +45,4 @@ public interface ProcessService {
      */
     Result getProcessTempList(String typeId);
 
-    /**
-     * 获取流程节点类型列表
-     * @return
-     */
-    Result getProcessNodeTypeList();
 }

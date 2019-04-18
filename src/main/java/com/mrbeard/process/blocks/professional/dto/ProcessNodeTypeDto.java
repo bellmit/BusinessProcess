@@ -1,6 +1,14 @@
-package com.mrbeard.process.blocks.professional.model;
+package com.mrbeard.process.blocks.professional.dto;
 
-public class ProcessNodeTypeBase {
+/**
+ * @ClassName ProcessNodeTypeDto
+ * @Description 流程节点类型Dto
+ * @Author Mrbeard
+ * @Date 2019/4/18 11:51
+ * @Version 1.0
+ **/
+public class ProcessNodeTypeDto {
+
     private String id;
 
     private String name;
@@ -15,7 +23,7 @@ public class ProcessNodeTypeBase {
 
     private String processTypeId;
 
-    public ProcessNodeTypeBase(String id, String name, String parentsId, Byte isBeginNode, Byte isEndNode, String correlationId,String processTypeId) {
+    public ProcessNodeTypeDto(String id, String name, String parentsId, Byte isBeginNode, Byte isEndNode, String correlationId,String processTypeId) {
         this.id = id;
         this.name = name;
         this.parentsId = parentsId;
@@ -25,7 +33,7 @@ public class ProcessNodeTypeBase {
         this.processTypeId = processTypeId;
     }
 
-    public ProcessNodeTypeBase() {
+    public ProcessNodeTypeDto() {
         super();
     }
 

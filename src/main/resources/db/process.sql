@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 17/04/2019 17:32:12
+ Date: 18/04/2019 11:47:02
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `log_interactive`  (
   `exception_message` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求服务发生异常的信息',
   `interactive_spend` int(11) NOT NULL COMMENT '请求响应耗时',
   PRIMARY KEY (`log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2197 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2221 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of log_interactive
@@ -2169,6 +2169,30 @@ INSERT INTO `log_interactive` VALUES (2193, '管理员', 'admin', '2019-04-16 21
 INSERT INTO `log_interactive` VALUES (2194, '管理员', 'admin', '2019-04-16 21:09:27', '127.0.0.1:2529', 'arg0:1 | arg1:1000 | arg2:{\"permissions\":[]} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getUserList', 'com.mrbeard.process.result.Result@70146661', NULL, 110);
 INSERT INTO `log_interactive` VALUES (2195, '管理员', 'admin', '2019-04-16 21:09:56', '127.0.0.1:2529', 'arg0:1 | arg1:10 | arg2:{\"permissions\":[],\"phoneNumber\":\"\",\"uname\":\"\"} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getUserList', 'com.mrbeard.process.result.Result@5800e93f', NULL, 80);
 INSERT INTO `log_interactive` VALUES (2196, '管理员', 'admin', '2019-04-16 21:09:56', '127.0.0.1:2529', '', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getDeptList', 'com.mrbeard.process.result.Result@386adc14', NULL, 47);
+INSERT INTO `log_interactive` VALUES (2197, NULL, NULL, '2019-04-18 10:18:25', 'null:null', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'getBrowerToken', 'com.mrbeard.process.result.Result@6566a8dd', NULL, 199);
+INSERT INTO `log_interactive` VALUES (2198, NULL, NULL, '2019-04-18 10:18:26', 'null:null', 'arg0:\"3d76883865634e2581dc3b780fde9452\" | ', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'getRandomCode', '', NULL, 270);
+INSERT INTO `log_interactive` VALUES (2199, NULL, NULL, '2019-04-18 10:19:47', 'null:null', 'arg0:{\"browerToken\":\"3d76883865634e2581dc3b780fde9452\",\"password\":\"e10adc3949ba59abbe56e057f20f883e\",\"randomCode\":\"ndfu\",\"username\":\"admin\"} | ', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'login', 'com.mrbeard.process.result.Result@5419a9ab', NULL, 277);
+INSERT INTO `log_interactive` VALUES (2200, '管理员', 'admin', '2019-04-18 10:19:48', '127.0.0.1:4042', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'isTokenTimeOut', 'com.mrbeard.process.result.Result@633c3207', NULL, 43);
+INSERT INTO `log_interactive` VALUES (2201, '管理员', 'admin', '2019-04-18 10:19:48', '127.0.0.1:4042', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'isTokenTimeOut', 'com.mrbeard.process.result.Result@5f3421d8', NULL, 36);
+INSERT INTO `log_interactive` VALUES (2202, '管理员', 'admin', '2019-04-18 10:19:53', '127.0.0.1:4042', 'arg0:1 | arg1:10 | arg2:{\"name\":\"\"} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getStationList', 'com.mrbeard.process.result.Result@23c403c6', NULL, 126);
+INSERT INTO `log_interactive` VALUES (2203, '管理员', 'admin', '2019-04-18 10:19:53', '127.0.0.1:4042', 'arg0:1 | arg1:1000 | arg2:{\"permissions\":[]} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getUserList', 'com.mrbeard.process.result.Result@2b36e571', NULL, 50);
+INSERT INTO `log_interactive` VALUES (2204, '管理员', 'admin', '2019-04-18 10:19:53', '127.0.0.1:4042', '', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getDeptList', 'com.mrbeard.process.result.Result@3f2566e6', NULL, 47);
+INSERT INTO `log_interactive` VALUES (2205, NULL, NULL, '2019-04-18 10:55:30', 'null:null', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'getBrowerToken', 'com.mrbeard.process.result.Result@a9881d1', NULL, 203);
+INSERT INTO `log_interactive` VALUES (2206, NULL, NULL, '2019-04-18 10:55:30', 'null:null', 'arg0:\"f9d04ebec25f4359bf7c1fe22aab562d\" | ', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'getRandomCode', '', NULL, 260);
+INSERT INTO `log_interactive` VALUES (2207, NULL, NULL, '2019-04-18 10:55:34', 'null:null', 'arg0:{\"browerToken\":\"f9d04ebec25f4359bf7c1fe22aab562d\",\"password\":\"e10adc3949ba59abbe56e057f20f883e\",\"randomCode\":\"hegy\",\"username\":\"admin\"} | ', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'login', 'com.mrbeard.process.result.Result@708eccc3', NULL, 240);
+INSERT INTO `log_interactive` VALUES (2208, '管理员', 'admin', '2019-04-18 10:55:36', '127.0.0.1:1908', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'isTokenTimeOut', 'com.mrbeard.process.result.Result@33228b77', NULL, 74);
+INSERT INTO `log_interactive` VALUES (2209, '管理员', 'admin', '2019-04-18 10:55:36', '127.0.0.1:1908', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'isTokenTimeOut', 'com.mrbeard.process.result.Result@268325f0', NULL, 32);
+INSERT INTO `log_interactive` VALUES (2210, '管理员', 'admin', '2019-04-18 10:55:39', '127.0.0.1:1908', 'arg0:1 | arg1:10 | arg2:{\"name\":\"\"} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getStationList', 'com.mrbeard.process.result.Result@6def054e', NULL, 136);
+INSERT INTO `log_interactive` VALUES (2211, '管理员', 'admin', '2019-04-18 10:55:39', '127.0.0.1:1908', '', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getDeptList', 'com.mrbeard.process.result.Result@290dfa2d', NULL, 41);
+INSERT INTO `log_interactive` VALUES (2212, '管理员', 'admin', '2019-04-18 10:55:39', '127.0.0.1:1908', 'arg0:1 | arg1:1000 | arg2:{\"permissions\":[]} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getUserList', 'com.mrbeard.process.result.Result@55a6bddf', NULL, 55);
+INSERT INTO `log_interactive` VALUES (2213, '管理员', 'admin', '2019-04-18 10:55:51', '127.0.0.1:1908', 'arg0:{\"deptid\":\"e2d66b1761144f17b8d6b4d30730a274\",\"id\":\"ab97a7bde3ee488abbbc88801841f41b\",\"name\":\"后端组长e\",\"uid\":\"48745b75db7e4e11b3d6f35030920c27\"} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'postStation', 'com.mrbeard.process.result.Result@37a885bd', NULL, 160);
+INSERT INTO `log_interactive` VALUES (2214, '管理员', 'admin', '2019-04-18 10:55:52', '127.0.0.1:1908', 'arg0:1 | arg1:10 | arg2:{\"name\":\"\"} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getStationList', 'com.mrbeard.process.result.Result@6acb455b', NULL, 49);
+INSERT INTO `log_interactive` VALUES (2215, '管理员', 'admin', '2019-04-18 11:14:16', '127.0.0.1:1908', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'isTokenTimeOut', 'com.mrbeard.process.result.Result@4f0f89be', NULL, 36);
+INSERT INTO `log_interactive` VALUES (2216, '管理员', 'admin', '2019-04-18 11:14:16', '127.0.0.1:1908', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'isTokenTimeOut', 'com.mrbeard.process.result.Result@277e1a83', NULL, 37);
+INSERT INTO `log_interactive` VALUES (2217, '管理员', 'admin', '2019-04-18 11:14:17', '127.0.0.1:1908', '', 'com.mrbeard.process.blocks.authority.controller.AuthorityController', 'isTokenTimeOut', 'com.mrbeard.process.result.Result@1a7bf115', NULL, 38);
+INSERT INTO `log_interactive` VALUES (2218, '管理员', 'admin', '2019-04-18 11:14:23', '127.0.0.1:1908', 'arg0:1 | arg1:1000 | arg2:{\"permissions\":[]} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getUserList', 'com.mrbeard.process.result.Result@4971d0e8', NULL, 68);
+INSERT INTO `log_interactive` VALUES (2219, '管理员', 'admin', '2019-04-18 11:14:23', '127.0.0.1:1908', 'arg0:1 | arg1:10 | arg2:{\"name\":\"\"} | ', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getStationList', 'com.mrbeard.process.result.Result@5bd3f649', NULL, 50);
+INSERT INTO `log_interactive` VALUES (2220, '管理员', 'admin', '2019-04-18 11:14:23', '127.0.0.1:1908', '', 'com.mrbeard.process.blocks.config.controller.UserConfigController', 'getDeptList', 'com.mrbeard.process.result.Result@4cfb7d73', NULL, 50);
 
 -- ----------------------------
 -- Table structure for p_node
@@ -2257,20 +2281,21 @@ CREATE TABLE `p_node_type_base`  (
   `isBeginNode` tinyint(4) NULL DEFAULT NULL COMMENT '是否是为开始节点 0-否 1-是',
   `isEndNode` tinyint(4) NULL DEFAULT NULL COMMENT '是否未结束节点 0-否 1-是',
   `correlationId` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对应的用户id(可配置)',
+  `processTypeId` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程类型id',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_node_type_base
 -- ----------------------------
-INSERT INTO `p_node_type_base` VALUES ('20f20c1b6b44479bbce413a13f5fa3ec', '会计审核', '7d2f749280d34e53bee36c4e194565e2,694654e6a96243dba3b19e9358991152', 0, 0, '6081266f83c94e6eabedca7b5a67504f');
-INSERT INTO `p_node_type_base` VALUES ('2263c7326542484da6fb33010ed0e680', '出账', '20f20c1b6b44479bbce413a13f5fa3ec', 0, 1, NULL);
-INSERT INTO `p_node_type_base` VALUES ('434efceea2ba4664a57ae149f8eeb396', '费用报销开始节点', NULL, 1, 0, NULL);
-INSERT INTO `p_node_type_base` VALUES ('694654e6a96243dba3b19e9358991152', '总裁审核', 'f3fc62a2ba384475aa0609e7cbf39eca', 0, 0, 'f8956a6aab064236b40b600e5ae304d2');
-INSERT INTO `p_node_type_base` VALUES ('7d2f749280d34e53bee36c4e194565e2', '行政负责人审核', 'a9ff75fc01f244afbac8620c4045a0bc', 0, 0, 'cd80868be0bc472893f6b9d0485c210c');
-INSERT INTO `p_node_type_base` VALUES ('a9ff75fc01f244afbac8620c4045a0bc', '部门负责人审核', '434efceea2ba4664a57ae149f8eeb396', 0, 0, '039313e60435430f9605a87c7cf792b6');
-INSERT INTO `p_node_type_base` VALUES ('e86ef284e968435bbbbb0d7aa5b5a0a3', '中心负责人审核', 'a9ff75fc01f244afbac8620c4045a0bc', 0, 0, '1177dcb0781b49a9a6b794d36df575a3');
-INSERT INTO `p_node_type_base` VALUES ('f3fc62a2ba384475aa0609e7cbf39eca', '财务审核', 'e86ef284e968435bbbbb0d7aa5b5a0a3', 0, 0, 'd6fc331f7fe248eb9df5569de70ba2f4');
+INSERT INTO `p_node_type_base` VALUES ('20f20c1b6b44479bbce413a13f5fa3ec', '会计审核', '7d2f749280d34e53bee36c4e194565e2,694654e6a96243dba3b19e9358991152', 0, 0, '6081266f83c94e6eabedca7b5a67504f', NULL);
+INSERT INTO `p_node_type_base` VALUES ('2263c7326542484da6fb33010ed0e680', '出账', '20f20c1b6b44479bbce413a13f5fa3ec', 0, 1, NULL, NULL);
+INSERT INTO `p_node_type_base` VALUES ('434efceea2ba4664a57ae149f8eeb396', '费用报销开始节点', NULL, 1, 0, NULL, NULL);
+INSERT INTO `p_node_type_base` VALUES ('694654e6a96243dba3b19e9358991152', '总裁审核', 'f3fc62a2ba384475aa0609e7cbf39eca', 0, 0, 'f8956a6aab064236b40b600e5ae304d2', NULL);
+INSERT INTO `p_node_type_base` VALUES ('7d2f749280d34e53bee36c4e194565e2', '行政负责人审核', 'a9ff75fc01f244afbac8620c4045a0bc', 0, 0, 'cd80868be0bc472893f6b9d0485c210c', NULL);
+INSERT INTO `p_node_type_base` VALUES ('a9ff75fc01f244afbac8620c4045a0bc', '部门负责人审核', '434efceea2ba4664a57ae149f8eeb396', 0, 0, '039313e60435430f9605a87c7cf792b6', NULL);
+INSERT INTO `p_node_type_base` VALUES ('e86ef284e968435bbbbb0d7aa5b5a0a3', '中心负责人审核', 'a9ff75fc01f244afbac8620c4045a0bc', 0, 0, '1177dcb0781b49a9a6b794d36df575a3', NULL);
+INSERT INTO `p_node_type_base` VALUES ('f3fc62a2ba384475aa0609e7cbf39eca', '财务审核', 'e86ef284e968435bbbbb0d7aa5b5a0a3', 0, 0, 'd6fc331f7fe248eb9df5569de70ba2f4', NULL);
 
 -- ----------------------------
 -- Table structure for p_process
@@ -2508,7 +2533,7 @@ CREATE TABLE `qx_station`  (
 -- ----------------------------
 -- Records of qx_station
 -- ----------------------------
-INSERT INTO `qx_station` VALUES ('ab97a7bde3ee488abbbc88801841f41b', '后端组长', '48745b75db7e4e11b3d6f35030920c27', 'e2d66b1761144f17b8d6b4d30730a274', '2019-04-16 20:53:24', '2019-04-16 20:53:52');
+INSERT INTO `qx_station` VALUES ('ab97a7bde3ee488abbbc88801841f41b', '后端组长e', '48745b75db7e4e11b3d6f35030920c27', 'e2d66b1761144f17b8d6b4d30730a274', '2019-04-16 20:53:24', '2019-04-18 10:55:51');
 
 -- ----------------------------
 -- Table structure for qx_user
@@ -2545,7 +2570,7 @@ INSERT INTO `qx_user` VALUES ('cc0ce7e40eb64ad389f66a558276b109', 'qianduan', '�
 INSERT INTO `qx_user` VALUES ('cd80868be0bc472893f6b9d0485c210c', 'xinzheng', '行政中心总监', 'e10adc3949ba59abbe56e057f20f883e', '2019-03-25 16:54:36', '2019-04-13 12:46:48', 1, '127.0.0.1', '8568', 'fc8057836bba467187a3c1b35a098e84', 'f8956a6aab064236b40b600e5ae304d2', '上官洪', '15979807798', 'test@email.com', '女');
 INSERT INTO `qx_user` VALUES ('d6fc331f7fe248eb9df5569de70ba2f4', 'caiwu', '财务中心总监', 'e10adc3949ba59abbe56e057f20f883e', '2019-03-25 17:27:39', '2019-04-12 18:19:30', 1, '127.0.0.1', '8568', '41cc3dba9bc642ccb29828e3bba90c9c', 'f8956a6aab064236b40b600e5ae304d2', '黄求翁', '15979807799', 'test@email.com', '女');
 INSERT INTO `qx_user` VALUES ('f8956a6aab064236b40b600e5ae304d2', 'zongcai', '公司总裁', 'e10adc3949ba59abbe56e057f20f883e', '2019-03-08 14:33:16', '2019-04-12 18:19:31', 1, '127.0.0.1', '8568', 'fb562dbb6220444c901c17595d49a49a', NULL, '李大刘', '15979807892', 'test@email.com', '男');
-INSERT INTO `qx_user` VALUES ('ffa20ac2933c4cc68ea51f08b9fe6277', 'admin', '管理员', 'e10adc3949ba59abbe56e057f20f883e', '2018-11-07 08:21:22', '2019-04-16 20:35:42', 1, '127.0.0.1', '2529', 'fb562dbb6220444c901c17595d49a49a', NULL, 'admin', '15979807790', 'admin@eamil.com', '男');
+INSERT INTO `qx_user` VALUES ('ffa20ac2933c4cc68ea51f08b9fe6277', 'admin', '管理员', 'e10adc3949ba59abbe56e057f20f883e', '2018-11-07 08:21:22', '2019-04-18 10:55:34', 1, '127.0.0.1', '1908', 'fb562dbb6220444c901c17595d49a49a', NULL, 'admin', '15979807790', 'admin@eamil.com', '男');
 
 -- ----------------------------
 -- Table structure for qx_user_online_info

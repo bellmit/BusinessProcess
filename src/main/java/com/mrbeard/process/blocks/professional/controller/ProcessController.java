@@ -2,6 +2,7 @@ package com.mrbeard.process.blocks.professional.controller;
 
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
 import com.mrbeard.process.blocks.professional.model.Process;
 import com.mrbeard.process.blocks.professional.model.ProcessNode;
 import com.mrbeard.process.blocks.professional.service.ProcessService;
@@ -10,10 +11,7 @@ import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName ProcessController
@@ -78,13 +76,5 @@ public class ProcessController {
         return processService.getProcessTempList(typeId);
     }
 
-    /**
-     * 获取流程节点类型列表
-     * @return
-     */
-    @GetMapping("/getProcessNodeTypeList")
-    public Result getProcessNodeTypeList(){
-        return processService.getProcessNodeTypeList();
-    }
 
 }

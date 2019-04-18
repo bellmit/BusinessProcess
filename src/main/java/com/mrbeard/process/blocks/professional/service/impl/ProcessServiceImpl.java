@@ -8,6 +8,7 @@ import com.mrbeard.process.blocks.authority.model.UserLoginInfo;
 import com.mrbeard.process.blocks.authority.service.UserService;
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
 import com.mrbeard.process.blocks.professional.mapper.*;
 import com.mrbeard.process.blocks.professional.model.*;
 import com.mrbeard.process.blocks.professional.model.Process;
@@ -18,6 +19,7 @@ import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.SessionUtil;
+import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.UUIDUtil;
 import com.mrbeard.process.util.WebUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -29,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.tools.Tool;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -149,7 +152,7 @@ public class ProcessServiceImpl implements ProcessService {
                 ProcessNodeTypeBase condition = new ProcessNodeTypeBase();
                 condition.setId(processNode.getTypeId());
                 ProcessNodeTypeBase processNodeTypeBases = processNodeTypeBaseDao.selectByCondition(condition);
-                //获取所有上级ypeId
+                //获取所有上级typeId
                 List<String> typeIds = new ArrayList<>();
                 String [] parentsId = processNodeTypeBases.getParentsId().split(",");
                 for(int i = 0; i < parentsId.length; i++){
@@ -474,17 +477,5 @@ public class ProcessServiceImpl implements ProcessService {
         List<ProcessTemplate>  templates =  processTemplateDto.selectByTypeId(typeId);
         return ResultGenerator.getSuccessResult(templates);
     }
-
-    /**
-     * 获取流程节点类型列表
-     * @return
-     */
-    @Override
-    public Result getProcessNodeTypeList() {
-        //获取所有开始节点列表
-        List<ProcessNodeTypeBase> nodeTypes = processNodeTypeBaseDao.selectBeginNodeList();
-        return ResultGenerator.getSuccessResult(nodeTypes);
-    }
-
 
 }
