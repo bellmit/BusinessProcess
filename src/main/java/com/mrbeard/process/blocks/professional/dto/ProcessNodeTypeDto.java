@@ -1,5 +1,7 @@
 package com.mrbeard.process.blocks.professional.dto;
 
+import java.util.Date;
+
 /**
  * @ClassName ProcessNodeTypeDto
  * @Description 流程节点类型Dto
@@ -15,23 +17,28 @@ public class ProcessNodeTypeDto {
 
     private String parentsId;
 
+    private String parentsName;
+
     private Byte isBeginNode;
 
     private Byte isEndNode;
 
     private String correlationId;
 
+    private String correlationName;
+
     private String processTypeId;
 
-    public ProcessNodeTypeDto(String id, String name, String parentsId, Byte isBeginNode, Byte isEndNode, String correlationId,String processTypeId) {
-        this.id = id;
-        this.name = name;
-        this.parentsId = parentsId;
-        this.isBeginNode = isBeginNode;
-        this.isEndNode = isEndNode;
-        this.correlationId = correlationId;
-        this.processTypeId = processTypeId;
-    }
+    private String nodeTypeQueue;
+
+    private Date createdTime;
+
+    private Date updatedTime;
+
+    private String sortName;
+
+    private String sortCase;
+
 
     public ProcessNodeTypeDto() {
         super();
@@ -91,5 +98,61 @@ public class ProcessNodeTypeDto {
 
     public void setProcessTypeId(String processTypeId) {
         this.processTypeId = processTypeId;
+    }
+
+    public String getNodeTypeQueue() {
+        return nodeTypeQueue;
+    }
+
+    public void setNodeTypeQueue(String nodeTypeQueue) {
+        this.nodeTypeQueue = nodeTypeQueue;
+    }
+
+    public String getParentsName() {
+        return parentsName;
+    }
+
+    public void setParentsName(String parentsName) {
+        this.parentsName = parentsName;
+    }
+
+    public String getCorrelationName() {
+        return correlationName;
+    }
+
+    public void setCorrelationName(String correlationName) {
+        this.correlationName = correlationName;
+    }
+
+    public String getSortName() {
+        return sortName;
+    }
+
+    public void setSortName(String sortName) {
+        this.sortName = sortName;
+    }
+
+    public String getSortCase() {
+        return sortCase;
+    }
+
+    public void setSortCase(String sortCase) {
+        this.sortCase = sortCase;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

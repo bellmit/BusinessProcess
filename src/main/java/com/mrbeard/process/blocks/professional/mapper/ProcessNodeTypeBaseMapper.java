@@ -1,5 +1,6 @@
 package com.mrbeard.process.blocks.professional.mapper;
 
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
 import com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -35,14 +36,9 @@ public interface ProcessNodeTypeBaseMapper {
 
     /**
      * 多项条件查询列表
-     * @param processNodeTypeBase
+     * @param ob
      * @return
      */
-    List<ProcessNodeTypeBase> selectListByCondition(ProcessNodeTypeBase processNodeTypeBase);
+    List<ProcessNodeTypeBase> selectListByCondition(Object ob);
 
-    /**
-     * 获取所有开始节点列表
-     * @return
-     */
-    List<ProcessNodeTypeBase> selectBeginNodeList();
 }

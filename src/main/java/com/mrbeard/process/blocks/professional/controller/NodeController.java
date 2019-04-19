@@ -2,7 +2,10 @@ package com.mrbeard.process.blocks.professional.controller;
 
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
 import com.mrbeard.process.blocks.professional.service.NodeService;
+import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.result.Result;
+import com.mrbeard.process.result.ResultGenerator;
+import com.mrbeard.process.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,15 +25,6 @@ public class NodeController {
 
     @Autowired
     private NodeService nodeService;
-    /**
-     * 获取流程节点类型列表
-     * @return
-     */
-    @GetMapping("/getProcessNodeTypeList")
-    public Result getProcessNodeTypeList(){
-        return nodeService.getProcessNodeTypeList();
-    }
-
 
     /**
      * 配置节点类型
@@ -43,7 +37,7 @@ public class NodeController {
     }
 
     /**
-     * 获取流程节点类型列表
+     * 根据typeId 、 isBegin = 1 获取流程节点类型列表
      * @param processTypeId
      * @param pageNum
      * @param pageSize
@@ -53,5 +47,21 @@ public class NodeController {
     public Result getProcessNodeTypeList(String processTypeId,Integer pageNum, Integer pageSize){
         return nodeService.getProcessNodeTypeList(processTypeId,pageNum,pageSize);
     }
+
+    /**
+     * 根据nodeTypeQueue获取 nodeTypeList
+     * @param nodeTypeQueue
+     * @return
+     */
+    @GetMapping("/getNodeTypeListByQueue")
+    public Result getNodeTypeListByQueue(String nodeTypeQueue){
+        if(!ToolUtil.checkParamter(nodeTypeQueue)){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
+        return nodeService.getNodeTypeListByQueue(nodeTypeQueue);
+
+    }
+
+
 
 }

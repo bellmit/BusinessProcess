@@ -50,10 +50,10 @@
     left join qx_department d on d.id = u.deptid
     <where>
       <if test="uname != null and uname != ''">
-        uname like CONCAT(CONCAT('%', #{uname,jdbcType=VARCHAR}), '%')
+        u.uname like CONCAT(CONCAT('%', #{uname,jdbcType=VARCHAR}), '%')
       </if>
       <if test="state != null">
-        and state = #{state}
+        and u.state = #{state}
       </if>
       <if test="phoneNumber != null and phoneNumber != ''" >
         and phoneNumber = #{phoneNumber}

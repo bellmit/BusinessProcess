@@ -1,5 +1,7 @@
 package com.mrbeard.process.blocks.professional.model;
 
+import java.util.Date;
+
 public class ProcessNodeTypeBase {
     private String id;
 
@@ -7,15 +9,28 @@ public class ProcessNodeTypeBase {
 
     private String parentsId;
 
+    private String parentsName;
+
     private Byte isBeginNode;
 
     private Byte isEndNode;
 
     private String correlationId;
 
+    private String correlationName;
+
     private String processTypeId;
 
-    public ProcessNodeTypeBase(String id, String name, String parentsId, Byte isBeginNode, Byte isEndNode, String correlationId,String processTypeId) {
+    private String nodeTypeQueue;
+
+    private Date createdTime;
+
+    private Date updatedTime;
+
+    public ProcessNodeTypeBase(String id, String name, String parentsId, Byte isBeginNode,
+                               Byte isEndNode, String correlationId,String processTypeId,
+                               String nodeTypeQueue,String parentsName,String correlationName,
+                               Date createdTime, Date updatedTime) {
         this.id = id;
         this.name = name;
         this.parentsId = parentsId;
@@ -23,6 +38,11 @@ public class ProcessNodeTypeBase {
         this.isEndNode = isEndNode;
         this.correlationId = correlationId;
         this.processTypeId = processTypeId;
+        this.nodeTypeQueue = nodeTypeQueue;
+        this.parentsName = parentsName;
+        this.correlationName = correlationName;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public ProcessNodeTypeBase() {
@@ -83,5 +103,45 @@ public class ProcessNodeTypeBase {
 
     public void setProcessTypeId(String processTypeId) {
         this.processTypeId = processTypeId;
+    }
+
+    public String getNodeTypeQueue() {
+        return nodeTypeQueue;
+    }
+
+    public void setNodeTypeQueue(String nodeTypeQueue) {
+        this.nodeTypeQueue = nodeTypeQueue;
+    }
+
+    public String getParentsName() {
+        return parentsName;
+    }
+
+    public void setParentsName(String parentsName) {
+        this.parentsName = parentsName;
+    }
+
+    public String getCorrelationName() {
+        return correlationName;
+    }
+
+    public void setCorrelationName(String correlationName) {
+        this.correlationName = correlationName;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

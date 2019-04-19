@@ -13,12 +13,6 @@ import com.mrbeard.process.result.Result;
 public interface NodeService {
 
     /**
-     * 获取流程节点类型列表
-     * @return
-     */
-    Result getProcessNodeTypeList();
-
-    /**
      * 配置节点类型
      * @param nodeTypeDto
      * @return
@@ -30,4 +24,11 @@ public interface NodeService {
      * @return
      */
     Result getProcessNodeTypeList(String processTypeId,Integer pageNum, Integer pageSize);
+
+    /**
+     * 根据nodeTypeQueue获取nodeTypeList
+     * @param nodeTypeQueue
+     * @return
+     */
+    Result getNodeTypeListByQueue(String nodeTypeQueue);
 }

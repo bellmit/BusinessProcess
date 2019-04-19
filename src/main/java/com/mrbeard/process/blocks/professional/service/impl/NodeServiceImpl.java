@@ -15,6 +15,7 @@ import com.mrbeard.process.util.UUIDUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,18 +30,6 @@ public class NodeServiceImpl  implements NodeService {
 
     @Resource
     ProcessNodeTypeBaseMapper processNodeTypeBaseDao;
-
-    /**
-     * 获取流程节点类型列表
-     * @return
-     */
-    @Override
-    public Result getProcessNodeTypeList() {
-        //获取所有开始节点列表
-        List<ProcessNodeTypeBase> nodeTypes = processNodeTypeBaseDao.selectBeginNodeList();
-        return ResultGenerator.getSuccessResult(nodeTypes);
-    }
-
     /**
      * 配置节点类型
      * @param nodeTypeDto
@@ -58,16 +47,33 @@ public class NodeServiceImpl  implements NodeService {
                 return ResultGenerator.getSuccessResult("修改节点类型成功！");
             }else{
                 //删除
+                //判断是否有下一个节点使用，如有则不允许删除
+                List<ProcessNodeTypeBase> bases = processNodeTypeBaseDao.selectByParentsId(nodeTypeDto.getId());
+                if(bases != null && bases.size() > 0){
+                    return ResultGenerator.getErrorResult("该节点已被作为父节点，请先删除所有子节点后重试！");
+                }
                 processNodeTypeBaseDao.deleteByPrimaryKey(nodeTypeDto.getId());
                 return ResultGenerator.getSuccessResult("删除节点类型成功！");
             }
         }else{
             //新增
-            if(!ToolUtil.checkParamter(nodeTypeDto.getName(),nodeTypeDto.getCorrelationId(),
-                    nodeTypeDto.getIsBeginNode(),nodeTypeDto.getIsEndNode(),nodeTypeDto.getProcessTypeId())){
+
+            if(!ToolUtil.checkParamter(nodeTypeDto.getName(), nodeTypeDto.getIsBeginNode(),
+                    nodeTypeDto.getIsEndNode(),nodeTypeDto.getProcessTypeId())){
                 return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
             }
+            nodeTypeBase.setNodeTypeQueue(UUIDUtil.getUUID());
             nodeTypeBase.setId(UUIDUtil.getUUID());
+            if(!ToolUtil.checkParamter(nodeTypeDto.getParentsId())){
+                //通过parentsId获取parentsName并设置
+                //TODO
+            }
+            if(!ToolUtil.checkParamter(nodeTypeDto.getCorrelationId())){
+                //通过correlationId获取correlationName并设置
+                //TODO
+
+            }
+            nodeTypeBase.setCreatedTime(new Date());
             int flag = processNodeTypeBaseDao.insertSelective(nodeTypeBase);
             return ResultGenerator.getSuccessResult("新增节点类型成功！");
         }
@@ -80,12 +86,29 @@ public class NodeServiceImpl  implements NodeService {
      */
     @Override
     public Result getProcessNodeTypeList(String processTypeId,Integer pageNum,Integer pageSize) {
-        ProcessNodeTypeBase nodeTypeBase = new ProcessNodeTypeBase();
+        ProcessNodeTypeDto nodeTypeBase = new ProcessNodeTypeDto();
         nodeTypeBase.setProcessTypeId(processTypeId);
         nodeTypeBase.setIsBeginNode((byte)1);
+        nodeTypeBase.setSortName("createdTime");
+        nodeTypeBase.setSortCase("desc");
         PageHelper.startPage(pageNum,pageSize);
         List<ProcessNodeTypeBase> nodeTypeBaseList = processNodeTypeBaseDao.selectListByCondition(nodeTypeBase);
         PageInfo<ProcessNodeTypeBase> pageInfo = new PageInfo<>(nodeTypeBaseList);
         return ResultGenerator.getSuccessResult(pageInfo);
+    }
+
+    /**
+     * 根据nodeTypeQueue获取nodeTypeList
+     * @param nodeTypeQueue
+     * @return
+     */
+    @Override
+    public Result getNodeTypeListByQueue(String nodeTypeQueue) {
+        ProcessNodeTypeDto nodeTypeDto = new ProcessNodeTypeDto();
+        nodeTypeDto.setNodeTypeQueue(nodeTypeQueue);
+        nodeTypeDto.setSortName("isBeginNode");
+        nodeTypeDto.setSortCase("desc");
+        List<ProcessNodeTypeBase> nodeTypeBaseList = processNodeTypeBaseDao.selectListByCondition(nodeTypeDto);
+        return ResultGenerator.getSuccessResult(nodeTypeBaseList);
     }
 }
