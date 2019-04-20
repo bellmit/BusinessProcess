@@ -68,6 +68,52 @@
     </if>
   </sql>
 
+  <sql id="Base_Where_List_Clouse">
+    where
+    <if test="list != null and list.size() > 0"> ( </if>
+    <foreach collection="list" item="item" separator=")or(">
+      <trim prefixOverrides="and">
+        <if test="item.id != null and item.id != ''">
+          and id = #{item.id}
+        </if>
+        <if test="item.name != null and item.name != ''">
+          and name = #{item.name}
+        </if>
+        <if test="item.parentsId != null and item.parentsId != ''">
+          and parentsId = #{item.parentsId}
+        </if>
+        <if test="item.isBeginNode != null and item.isBeginNode != ''">
+          and isBeginNode = #{item.isBeginNode}
+        </if>
+        <if test="item.isEndNode != null and item.isEndNode != ''">
+          and isEndNode = #{item.isEndNode}
+        </if>
+        <if test="item.correlationId != null and item.correlationId != ''">
+          and correlationId = #{item.correlationId}
+        </if>
+        <if test="item.processTypeId != null and item.processTypeId != ''">
+          and processTypeId = #{item.processTypeId}
+        </if>
+        <if test="item.nodeTypeQueue != null and item.nodeTypeQueue != ''">
+          and nodeTypeQueue = #{item.nodeTypeQueue}
+        </if>
+        <if test="item.parentsName != null and item.parentsName != ''">
+          and parentsName = #{item.parentsName}
+        </if>
+        <if test="item.correlationName != null and item.correlationName != ''">
+          and correlationName = #{item.correlationName}
+        </if>
+        <if test="item.createdTime != null ">
+          and createdTime = #{item.createdTime}
+        </if>
+        <if test="item.updatedTime != null ">
+          and updatedTime = #{item.updatedTime}
+        </if>
+      </trim>
+    </foreach>
+    <if test="list != null and list.size() > 0">)</if>
+  </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -94,6 +140,13 @@
     <include refid="Base_Column_List"/>
     from p_node_type_base
     <include refid="Base_Where_Clouse"/>
+  </select>
+
+  <select id="selectListByConditionList" parameterType="Object" resultType="com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase">
+    select
+    <include refid="Base_Column_List"/>
+    from p_node_type_base
+    <include refid="Base_Where_List_Clouse"/>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

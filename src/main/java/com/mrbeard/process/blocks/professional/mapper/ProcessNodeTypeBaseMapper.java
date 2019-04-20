@@ -36,9 +36,16 @@ public interface ProcessNodeTypeBaseMapper {
 
     /**
      * 多项条件查询列表
-     * @param ob
+     * @param object
      * @return
      */
-    List<ProcessNodeTypeBase> selectListByCondition(Object ob);
+    List<ProcessNodeTypeBase> selectListByCondition(Object object);
+
+    /**
+     * 多项条件查询列表
+     * @param object
+     * @return
+     */
+    List<ProcessNodeTypeBase> selectListByConditionList(Object object);
 
 }
