@@ -17,40 +17,25 @@ public class PageController {
         try{
             SessionUtil.getUserInfo();
         }catch (Exception e){
-            return "redirect:/static/login.html";
+            return "redirect:/static/index.html";
         }
         return "index";
     }
 
     @GetMapping("/login")
     public String login(){
-        return "redirect:/static/login.html";
+        return "redirect:/static/index.html";
     }
 
     @GetMapping("/errorPage")
     public String error(){
         String s = "";
-        return "redirect:/static/login.html";
+        return "redirect:/static/index.html";
     }
 
     @GetMapping("/index")
     public String index(){
         return "index";
-    }
-
-    @GetMapping("/user-manager")
-    public String userManager(){
-        return "user-manager";
-    }
-
-    @GetMapping("/role-manager")
-    public String roleManager(){
-        return "role-manager";
-    }
-
-    @GetMapping("/permission-manager")
-    public String permissionManager(){
-        return "permission-manager";
     }
 
 

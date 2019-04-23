@@ -45,8 +45,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             //去除servletPath
             requestUrl = requestUrl.replace(servletPath,"");
             logger.error("{LoginInterceptor}====>usertoken为空");
+            response.sendRedirect(requestUrl + "/errorPage");
             throw new ProcessRuntimeException("用户session已失效，请退出后重新登陆刷新！");
-//            response.sendRedirect(requestUrl + "/errorPage");
         }
         // redis中获取到了对应的值则重新刷新session有效时间
         if (ToolUtil.isNotEmpty(JedisUtil.get("usertoken_"+usertoken))) {
@@ -69,7 +69,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             //去除servletPath
             requestUrl = requestUrl.replace(servletPath,"");
             logger.error("{LoginInterceptor}====>session为空");
-//            response.sendRedirect(requestUrl + "/errorPage");
+            response.sendRedirect(requestUrl + "/errorPage");
             throw new ProcessRuntimeException("用户session已失效，请退出后重新登陆刷新！");
         }
     }
