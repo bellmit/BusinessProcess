@@ -3,9 +3,7 @@ package com.mrbeard.process.blocks.config.service;
 
 import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
-import com.mrbeard.process.blocks.authority.model.Permission;
-import com.mrbeard.process.blocks.authority.model.Role;
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 
@@ -91,4 +89,12 @@ public interface UserConfigService {
      * @return
      */
     Result getStationList(Integer pageNum, Integer pageSize, StationDto stationDto);
+
+    /**
+     * 获取部门列表，带有分页
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    Result getDeptListWithPage(Integer pageNum, Integer pageSize);
 }

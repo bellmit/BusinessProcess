@@ -3,19 +3,13 @@ package com.mrbeard.process.common;
 
 import cn.hutool.core.util.StrUtil;
 import com.mrbeard.process.blocks.authority.mapper.UserLoginInfoMapper;
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.model.UserLoginInfo;
 import com.mrbeard.process.blocks.authority.service.UserService;
-import com.mrbeard.process.blocks.authority.service.impl.UserServiceImpl;
 import com.mrbeard.process.exception.ProcessRuntimeException;
-import com.mrbeard.process.util.SessionUtil;
-import com.mrbeard.process.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.ContextLoader;
 
 import javax.annotation.Resource;
 import javax.websocket.*;

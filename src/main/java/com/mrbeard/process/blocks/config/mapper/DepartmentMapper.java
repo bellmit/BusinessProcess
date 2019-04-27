@@ -1,7 +1,7 @@
-package com.mrbeard.process.blocks.authority.mapper;
+package com.mrbeard.process.blocks.config.mapper;
 
 import com.mrbeard.process.blocks.authority.dto.DeptmentDto;
-import com.mrbeard.process.blocks.authority.model.Department;
+import com.mrbeard.process.blocks.config.model.Department;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -21,4 +21,6 @@ public interface DepartmentMapper {
     int updateByPrimaryKey(Department record);
 
     List<DeptmentDto> getDeptList();
+
+    List<DeptmentDto> getDeptListWithPage();
 }

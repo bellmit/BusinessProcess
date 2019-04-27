@@ -2,7 +2,7 @@ package com.mrbeard.process.blocks.authority.service;
 
 
 import com.mrbeard.process.blocks.authority.dto.UserDto;
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 
 import java.util.List;

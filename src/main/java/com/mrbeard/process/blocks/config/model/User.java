@@ -1,4 +1,4 @@
-package com.mrbeard.process.blocks.authority.model;
+package com.mrbeard.process.blocks.config.model;
 
 import java.io.Serializable;
 import java.util.Date;

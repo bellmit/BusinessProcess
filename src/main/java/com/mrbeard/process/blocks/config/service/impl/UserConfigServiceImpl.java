@@ -4,13 +4,16 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mrbeard.process.blocks.authority.dto.DeptmentDto;
 import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
-import com.mrbeard.process.blocks.authority.mapper.StationMapper;
+import com.mrbeard.process.blocks.config.mapper.StationMapper;
 import com.mrbeard.process.blocks.authority.model.*;
 import com.mrbeard.process.blocks.authority.service.PermissionService;
 import com.mrbeard.process.blocks.authority.service.RoleService;
 import com.mrbeard.process.blocks.authority.service.UserService;
+import com.mrbeard.process.blocks.config.model.Station;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.config.service.DeptService;
 import com.mrbeard.process.blocks.config.service.UserConfigService;
 import com.mrbeard.process.common.Constant;
@@ -293,6 +296,18 @@ public class UserConfigServiceImpl implements UserConfigService {
         List<StationDto> stationDtos =  stationDao.selectByCondition(stationDto);
         PageInfo<StationDto> stationPageInfo = new PageInfo<>(stationDtos);
         return ResultGenerator.getSuccessResult(stationPageInfo);
+    }
+
+    /**
+     * 获取部门列表，带有分页
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public Result getDeptListWithPage(Integer pageNum, Integer pageSize) {
+        PageInfo<DeptmentDto> pageInfo = deptService.getDeptListWithPage(pageNum, pageSize);
+        return ResultGenerator.getSuccessResult(pageInfo);
     }
 
 }

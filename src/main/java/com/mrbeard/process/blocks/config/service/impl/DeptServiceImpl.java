@@ -1,8 +1,9 @@
 package com.mrbeard.process.blocks.config.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.authority.dto.DeptmentDto;
-import com.mrbeard.process.blocks.authority.mapper.DepartmentMapper;
-import com.mrbeard.process.blocks.authority.model.Department;
+import com.mrbeard.process.blocks.config.mapper.DepartmentMapper;
 import com.mrbeard.process.blocks.config.service.DeptService;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import org.slf4j.Logger;
@@ -37,6 +38,19 @@ public class DeptServiceImpl implements DeptService {
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             throw new ProcessRuntimeException("获取部门列表失败");
+        }
+    }
+
+    @Override
+    public PageInfo<DeptmentDto> getDeptListWithPage(Integer pageNum, Integer pageSize) {
+        try {
+            PageHelper.startPage(pageNum,pageSize);
+            List<DeptmentDto> list = departmentDao.getDeptListWithPage();
+            PageInfo<DeptmentDto> pageInfo = new PageInfo<>(list);
+            return pageInfo;
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException("获取部门信息失败！");
         }
     }
 }

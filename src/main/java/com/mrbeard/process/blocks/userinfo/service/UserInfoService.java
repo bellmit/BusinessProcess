@@ -1,6 +1,6 @@
 package com.mrbeard.process.blocks.userinfo.service;
 
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import org.springframework.web.multipart.MultipartFile;

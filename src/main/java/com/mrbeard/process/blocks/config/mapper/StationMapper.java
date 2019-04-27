@@ -1,7 +1,7 @@
-package com.mrbeard.process.blocks.authority.mapper;
+package com.mrbeard.process.blocks.config.mapper;
 
 import com.mrbeard.process.blocks.authority.dto.StationDto;
-import com.mrbeard.process.blocks.authority.model.Station;
+import com.mrbeard.process.blocks.config.model.Station;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mrbeard.process.blocks.authority.mapper.StationMapper">
-  <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.authority.model.Station">
+<mapper namespace="com.mrbeard.process.blocks.config.mapper.StationMapper">
+  <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.config.model.Station">
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -60,7 +60,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
 
-  <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Station">
+  <insert id="insert" parameterType="com.mrbeard.process.blocks.config.model.Station">
     insert into qx_station (id, name, uid, 
       deptId, createdTime
       )
@@ -69,7 +69,7 @@
       )
   </insert>
 
-  <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.authority.model.Station">
+  <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.config.model.Station">
     insert into qx_station
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -107,7 +107,7 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.authority.model.Station">
+  <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.config.model.Station">
     update qx_station
     <set>
       <if test="name != null">
@@ -126,7 +126,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.authority.model.Station">
+  <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.config.model.Station">
     update qx_station
     set name = #{name,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=VARCHAR},

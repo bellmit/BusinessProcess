@@ -1,7 +1,7 @@
 package com.mrbeard.process.blocks.config.service;
 
+import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.authority.dto.DeptmentDto;
-import com.mrbeard.process.blocks.authority.model.Department;
 
 import java.util.List;
 
@@ -19,4 +19,13 @@ public interface DeptService {
      * @return
      */
     List<DeptmentDto> getDeptList();
+
+
+    /**
+     * 获取部门列表，分页
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageInfo<DeptmentDto> getDeptListWithPage(Integer pageNum, Integer pageSize);
 }

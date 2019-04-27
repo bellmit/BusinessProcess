@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mrbeard.process.blocks.authority.mapper.DepartmentMapper">
-  <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.authority.model.Department">
+<mapper namespace="com.mrbeard.process.blocks.config.mapper.DepartmentMapper">
+  <resultMap id="BaseResultMap" type="com.mrbeard.process.blocks.config.model.Department">
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -32,12 +32,17 @@
     from qx_department
   </select>
 
+  <select id="getDeptListWithPage" resultType="com.mrbeard.process.blocks.authority.dto.DeptmentDto">
+    select id as deptId, name as deptName,
+    from qx_department
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from qx_department
     where id = #{id,jdbcType=VARCHAR}
   </delete>
 
-  <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Department">
+  <insert id="insert" parameterType="com.mrbeard.process.blocks.config.model.Department">
     insert into qx_department (id, name, type, 
       code, parentsid, leaderid, 
       description, state, createdTime)
@@ -46,7 +51,7 @@
       #{description,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{createdtime,jdbcType=TIMESTAMP})
   </insert>
 
-  <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.authority.model.Department">
+  <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.config.model.Department">
     insert into qx_department
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -108,7 +113,7 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.authority.model.Department">
+  <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.config.model.Department">
     update qx_department
     <set>
       <if test="name != null">
@@ -139,7 +144,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.authority.model.Department">
+  <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.config.model.Department">
     update qx_department
     set name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT},

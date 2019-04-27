@@ -1,7 +1,7 @@
 package com.mrbeard.process.blocks.userinfo.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.service.UserService;
 import com.mrbeard.process.blocks.userinfo.service.UserInfoService;
 import com.mrbeard.process.common.Constant;

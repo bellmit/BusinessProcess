@@ -1,10 +1,9 @@
 package com.mrbeard.process.blocks.professional.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.service.UserService;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
 import com.mrbeard.process.blocks.professional.mapper.ProcessNodeTypeBaseMapper;

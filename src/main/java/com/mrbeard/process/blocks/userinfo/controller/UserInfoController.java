@@ -1,6 +1,6 @@
 package com.mrbeard.process.blocks.userinfo.controller;
 
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.userinfo.service.UserInfoService;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;

@@ -2,7 +2,7 @@ package com.mrbeard.process.blocks.config.controller;
 
 import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.config.service.UserConfigService;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;
@@ -109,6 +109,15 @@ public class UserConfigController {
     @GetMapping("/getDeptList")
     public Result getDeptList(){
         return userConfigService.getDeptList();
+    }
+
+    /**
+     * 获取部门列表
+     * @return
+     */
+    @GetMapping("/getDeptListWithPage")
+    public Result getDeptList(Integer pageNum, Integer pageSize){
+        return userConfigService.getDeptListWithPage(pageNum,pageSize);
     }
 
     /**

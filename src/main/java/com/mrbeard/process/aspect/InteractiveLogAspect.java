@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.mrbeard.process.aspect.mapper.InteractiveLogMapper;
 import com.mrbeard.process.aspect.model.InteractiveLog;
 import com.mrbeard.process.blocks.authority.controller.AuthorityController;
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.util.SessionUtil;
 import com.mrbeard.process.util.ToolUtil;

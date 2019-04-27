@@ -1,8 +1,7 @@
 package com.mrbeard.process.blocks.authority.controller;
 
 import com.mrbeard.process.blocks.authority.dto.LoginDto;
-import com.mrbeard.process.blocks.authority.mapper.DepartmentMapper;
-import com.mrbeard.process.blocks.authority.model.Department;
+import com.mrbeard.process.blocks.config.mapper.DepartmentMapper;
 import com.mrbeard.process.blocks.authority.service.AuthorityService;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * @Author 胡彬

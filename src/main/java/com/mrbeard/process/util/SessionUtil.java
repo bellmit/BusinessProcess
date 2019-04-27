@@ -2,14 +2,12 @@ package com.mrbeard.process.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.mrbeard.process.blocks.authority.model.User;
-import com.mrbeard.process.blocks.page.controller.PageController;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.Session;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;

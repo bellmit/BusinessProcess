@@ -3,7 +3,7 @@ package com.mrbeard.process.blocks.authority.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.mrbeard.process.blocks.authority.dto.LoginDto;
 import com.mrbeard.process.blocks.authority.dto.LoginResponseDto;
-import com.mrbeard.process.blocks.authority.model.User;
+import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.service.AuthorityService;
 import com.mrbeard.process.blocks.authority.service.PermissionService;
 import com.mrbeard.process.blocks.authority.service.RoleService;
