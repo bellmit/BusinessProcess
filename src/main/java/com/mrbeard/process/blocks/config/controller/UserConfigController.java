@@ -1,5 +1,6 @@
 package com.mrbeard.process.blocks.config.controller;
 
+import com.mrbeard.process.blocks.authority.dto.DeptmentDto;
 import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.config.model.User;
@@ -118,6 +119,16 @@ public class UserConfigController {
     @GetMapping("/getDeptListWithPage")
     public Result getDeptList(Integer pageNum, Integer pageSize){
         return userConfigService.getDeptListWithPage(pageNum,pageSize);
+    }
+
+    /**
+     * 配置部门信息
+     * @param deptmentDto
+     * @return
+     */
+    @RequestMapping(value = "/postDept",method = RequestMethod.POST)
+    public Result postDept(DeptmentDto deptmentDto){
+        return userConfigService.postDept(deptmentDto);
     }
 
     /**

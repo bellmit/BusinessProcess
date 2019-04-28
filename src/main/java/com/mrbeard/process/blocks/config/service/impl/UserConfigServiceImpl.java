@@ -2,6 +2,7 @@ package com.mrbeard.process.blocks.config.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.authority.dto.DeptmentDto;
@@ -305,6 +306,29 @@ public class UserConfigServiceImpl implements UserConfigService {
     public Result getDeptListWithPage(Integer pageNum, Integer pageSize) {
         PageInfo<DeptmentDto> pageInfo = deptService.getDeptListWithPage(pageNum, pageSize);
         return ResultGenerator.getSuccessResult(pageInfo);
+    }
+
+    /**
+     * 配置部门信息
+     * @param deptmentDto
+     * @return
+     */
+    @Override
+    public Result postDept(DeptmentDto deptmentDto) {
+        //删除，修改
+        if(StrUtil.isNotEmpty(deptmentDto.getDeptId())){
+            //修改
+            if(ToolUtil.checkParamter(deptmentDto.getType(),deptmentDto.getCode())){
+
+            }else{
+                //删除
+
+            }
+
+        }else{
+            //新增
+        }
+        return null;
     }
 
 }

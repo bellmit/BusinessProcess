@@ -19,6 +19,15 @@ public class DeptmentDto {
      */
     private String deptName;
     /**
+     * 部门code
+     */
+    private String code;
+
+    /**
+     * 类型
+     */
+    private String type;
+    /**
      * 上级部门id
      */
     private String parentsId;
@@ -55,6 +64,22 @@ public class DeptmentDto {
 
     public void setDeptName(String deptName) {
         this.deptName = deptName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getParentsId() {

@@ -33,8 +33,11 @@
   </select>
 
   <select id="getDeptListWithPage" resultType="com.mrbeard.process.blocks.authority.dto.DeptmentDto">
-    select id as deptId, name as deptName,
-    from qx_department
+    select d.id as deptId, d.name as deptName, d.parentsId, d.code, d.type,
+        d.leaderId, d.state, d.createdtime, d.updatedtime, u.realName
+    from qx_department d
+    left join qx_user u on u.uid = d.leaderId
+    where d.state = 1
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

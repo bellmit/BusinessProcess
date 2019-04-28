@@ -28,4 +28,18 @@ public interface DeptService {
      * @return
      */
     PageInfo<DeptmentDto> getDeptListWithPage(Integer pageNum, Integer pageSize);
+
+    /**
+     * 删除
+     * @param deptmentDto
+     * @return
+     */
+    int deleteSelective(DeptmentDto deptmentDto);
+
+    /**
+     * 更新
+     * @param deptmentDto
+     * @return
+     */
+    int updateSelective(DeptmentDto deptmentDto);
 }

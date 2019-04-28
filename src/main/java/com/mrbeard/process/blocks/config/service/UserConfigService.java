@@ -1,6 +1,7 @@
 package com.mrbeard.process.blocks.config.service;
 
 
+import com.mrbeard.process.blocks.authority.dto.DeptmentDto;
 import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.config.model.User;
@@ -97,4 +98,11 @@ public interface UserConfigService {
      * @return
      */
     Result getDeptListWithPage(Integer pageNum, Integer pageSize);
+
+    /**
+     * 配置部门信息
+     * @param deptmentDto
+     * @return
+     */
+    Result postDept(DeptmentDto deptmentDto);
 }

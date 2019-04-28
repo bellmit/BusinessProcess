@@ -1,6 +1,5 @@
 package com.mrbeard.process.interceptor;
 
-import cn.hutool.core.map.MapUtil;
 import com.mrbeard.process.common.Constant;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.util.JedisUtil;
@@ -12,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * @Author 胡彬
