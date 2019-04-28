@@ -65,16 +65,4 @@ public class ProcessController {
         return processService.getProcessTypeList();
     }
 
-
-    /**
-     * 获取流程模板列表
-     * @param typeId
-     * @return
-     */
-    @GetMapping("/getProcessTempList")
-    public Result getProcessTempList(String typeId){
-        return processService.getProcessTempList(typeId);
-    }
-
-
 }

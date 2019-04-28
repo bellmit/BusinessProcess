@@ -1,5 +1,7 @@
 package com.mrbeard.process.blocks.authority.model;
 
+import java.util.Date;
+
 public class UserLoginInfo {
     private String uid;
 
@@ -11,12 +13,19 @@ public class UserLoginInfo {
 
     private Integer someThingToDo;
 
-    public UserLoginInfo(String uid, String ip, String isonline, String uname,Integer someThingToDo) {
+    private Date createdTime;
+
+    private Date updatedTime;
+
+    public UserLoginInfo(String uid, String ip, String isonline, String uname,
+                         Integer someThingToDo, Date createdTime, Date updatedTime) {
         this.uid = uid;
         this.ip = ip;
         this.isonline = isonline;
         this.uname = uname;
         this.someThingToDo = someThingToDo;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public UserLoginInfo() {
@@ -61,5 +70,21 @@ public class UserLoginInfo {
 
     public void setSomeThingToDo(Integer someThingToDo) {
         this.someThingToDo = someThingToDo;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

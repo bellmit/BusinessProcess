@@ -1,11 +1,8 @@
 package com.mrbeard.process.blocks.authority.mapper;
 
-import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.UserRole;
-import com.mrbeard.process.blocks.config.dto.PermissionDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -74,10 +71,4 @@ public interface RoleMapper {
      */
     List<Role> getRoleList();
 
-    /**
-     * 获取权限列表
-     * @param roleId
-     * @return
-     */
-    List<Permission> getPermissionList(@Param("roleId") String roleId);
 }

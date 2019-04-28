@@ -9,7 +9,6 @@ import com.mrbeard.process.blocks.authority.dto.StationDto;
 import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.config.mapper.StationMapper;
 import com.mrbeard.process.blocks.authority.model.*;
-import com.mrbeard.process.blocks.authority.service.PermissionService;
 import com.mrbeard.process.blocks.authority.service.RoleService;
 import com.mrbeard.process.blocks.authority.service.UserService;
 import com.mrbeard.process.blocks.config.model.Station;
@@ -47,8 +46,6 @@ public class UserConfigServiceImpl implements UserConfigService {
     UserService userService;
     @Autowired
     RoleService roleService;
-    @Autowired
-    PermissionService permissionService;
     @Autowired
     DeptService deptService;
     @Resource
@@ -91,7 +88,7 @@ public class UserConfigServiceImpl implements UserConfigService {
             return ResultGenerator.getErrorResult("请选择角色！");
         }
         //设置数据
-        UserRole userRole = new UserRole(userId,roleId);
+        UserRole userRole = new UserRole(userId,roleId,new Date(),new Date());
         //插入
         roleService.insertUserRole(userRole);
         return ResultGenerator.getSuccessResult("新增成功！");
@@ -161,7 +158,7 @@ public class UserConfigServiceImpl implements UserConfigService {
             insertUser.setState(1);
             userService.insert(insertUser);
             //新增用户角色信息
-            UserRole userRole = new UserRole(insertUser.getUid(),user.getRoleId());
+            UserRole userRole = new UserRole(insertUser.getUid(),user.getRoleId(),new Date(),new Date());
             roleService.insertUserRole(userRole);
             //设置用户岗位
             if(!user.getStationId().equals("none")){

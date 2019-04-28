@@ -16,7 +16,7 @@
     </sql>
 
     <sql id="UserRole_Column_List">
-        uid,rid
+        uid,rid,createdTime,updatedTime
     </sql>
 
     <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.Role">
@@ -26,8 +26,9 @@
     </insert>
 
     <insert id="insertUserRole" parameterType="com.mrbeard.process.blocks.authority.model.UserRole">
-        insert into qx_userrole (uid,rid)
-        values(#{uid,jdbcType=VARCHAR},#{rid,jdbcType=VARCHAR})
+        insert into qx_userrole (uid,rid,createdTime,updatedTime)
+        values(#{uid,jdbcType=VARCHAR},#{rid,jdbcType=VARCHAR},
+        #{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
     </insert>
 
     <select id="getRoleByUserId" parameterType="java.lang.String" resultType="java.lang.String">
@@ -56,19 +57,6 @@
         select
         <include refid="Base_Column_List"/>
         from qx_role
-    </select>
-
-    <select id="getPermissionList" resultType="com.mrbeard.process.blocks.authority.model.Permission" parameterType="java.lang.String">
-        select
-        p.pid,p.pname,p.pvalue,p.createdTime,p.updatedTime
-        from qx_permission p
-        <if test="roleId != null and roleId != ''">
-            left join qx_rolepermission rp on rp.pid = p.pid
-        </if>
-        where 1 = 1
-        <if test="roleId != null and roleId != ''">
-           and rp.rid = #{roleId,jdbcType=VARCHAR}
-        </if>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.String">

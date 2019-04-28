@@ -8,10 +8,12 @@
       <arg column="isOnline" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="uname" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="someThingToDo" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    uid, ip, isOnline, uname, someThingToDo
+    uid, ip, isOnline, uname, someThingToDo, createdTime, updatedTime
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -34,9 +36,10 @@
 
   <insert id="insert" parameterType="com.mrbeard.process.blocks.authority.model.UserLoginInfo">
     insert into qx_user_online_info (uid, ip, isOnline, 
-      uname,someThingToDo)
+      uname,someThingToDo,createdTime, updatedTime)
     values (#{uid,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{isonline,jdbcType=VARCHAR}, 
-      #{uname,jdbcType=VARCHAR},#{someThingToDo,jdbcType=INTEGER})
+      #{uname,jdbcType=VARCHAR},#{someThingToDo,jdbcType=INTEGER},
+      #{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
   </insert>
 
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.authority.model.UserLoginInfo">
@@ -53,6 +56,12 @@
       </if>
       <if test="uname != null">
         uname,
+      </if>
+      <if test="createdTime != null">
+        createdTime,
+      </if>
+      <if test="updatedTime != null">
+        updatedTime,
       </if>
       <if test="someThingToDo != null">
         someThingToDo,
@@ -74,6 +83,12 @@
       <if test="someThingToDo != null">
         #{someThingToDo,jdbcType=INTEGER},
       </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
 
@@ -92,6 +107,12 @@
       <if test="someThingToDo != null">
         someThingToDo = #{someThingToDo,jdbcType=INTEGER},
       </if>
+      <if test="createdTime != null">
+        createdTime = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updatedTime = #{updatedTime,jdbcType=INTEGER},
+      </if>
     </set>
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
@@ -101,7 +122,9 @@
     set ip = #{ip,jdbcType=VARCHAR},
       isOnline = #{isonline,jdbcType=VARCHAR},
       uname = #{uname,jdbcType=VARCHAR},
-      someThingToDo = #{uname,jdbcType=INTEGER}
+      someThingToDo = #{uname,jdbcType=INTEGER},
+      createdTime = #{createdTime,jdbcType=TIMESTAMP},
+      updatedTime = #{updatedTime,jdbcType=TIMESTAMP}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
 </mapper>

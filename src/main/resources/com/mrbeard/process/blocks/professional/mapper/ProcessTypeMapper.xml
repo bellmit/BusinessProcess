@@ -7,10 +7,12 @@
       <arg column="typeName" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updatedTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, typeName, description,code
+    id, typeName, description, code, createdTime, updatedTime
   </sql>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -31,10 +33,9 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.ProcessType">
-    insert into p_process_type (id, typeName, description, code
-      )
-    values (#{id,jdbcType=VARCHAR}, #{typename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}
-      )
+    insert into p_process_type (id, typeName, description, code, createdTime, updatedTime)
+    values (#{id,jdbcType=VARCHAR}, #{typename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},
+    #{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
   </insert>
   
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.ProcessType">
@@ -52,6 +53,12 @@
       <if test="code != null">
         code,
       </if>
+      <if test="createdTime != null">
+        createdTime,
+      </if>
+      <if test="updatedTime != null">
+        updatedTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -65,6 +72,12 @@
       </if>
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -81,6 +94,12 @@
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
       </if>
+      <if test="createdTime != null">
+        createdTime = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updatedTime = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -89,7 +108,9 @@
     update p_process_type
     set typeName = #{typename,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR}
+      code = #{code,jdbcType=VARCHAR},
+      createdTime = #{createdTime,jdbcType=TIMESTAMP},
+      updatedTime = #{updatedTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

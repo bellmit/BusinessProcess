@@ -5,7 +5,6 @@ import com.mrbeard.process.blocks.authority.dto.LoginDto;
 import com.mrbeard.process.blocks.authority.dto.LoginResponseDto;
 import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.service.AuthorityService;
-import com.mrbeard.process.blocks.authority.service.PermissionService;
 import com.mrbeard.process.blocks.authority.service.RoleService;
 import com.mrbeard.process.blocks.authority.service.UserService;
 import com.mrbeard.process.common.Constant;
@@ -50,8 +49,6 @@ public class AuthorityServiceImpl implements AuthorityService {
     UserService userService;
     @Autowired
     RoleService roleService;
-    @Autowired
-    PermissionService permissionService;
 
 
     /**
@@ -130,7 +127,6 @@ public class AuthorityServiceImpl implements AuthorityService {
         userService.updateById(user);
         //获取到用户角色权限
         user.setRole(roleService.getRoleByUserId(user.getUid()));
-        user.setPermissions(permissionService.getPermsByUserId(user.getUid()));
         //将用户信息放入userInfo
         Map<String, Object> userInfoMap = new HashMap<>();
         userInfoMap.put("userInfo",user);

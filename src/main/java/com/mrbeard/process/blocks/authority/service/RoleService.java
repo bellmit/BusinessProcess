@@ -1,12 +1,9 @@
 package com.mrbeard.process.blocks.authority.service;
 
 
-import com.mrbeard.process.blocks.authority.model.Permission;
 import com.mrbeard.process.blocks.authority.model.Role;
 import com.mrbeard.process.blocks.authority.model.UserRole;
-import com.mrbeard.process.blocks.config.dto.PermissionDto;
 import com.mrbeard.process.exception.ProcessRuntimeException;
-import com.mrbeard.process.result.Result;
 
 import java.util.List;
 
@@ -92,20 +89,6 @@ public interface RoleService {
      */
     List<Role> getRoleList() throws ProcessRuntimeException;
 
-    /**
-     * 获取权限列表
-     * @param rid
-     * @return
-     */
-    List<Permission> getPermissionList(String rid) throws ProcessRuntimeException;
-
-    /**
-     * 获取所有权限，如果Role有该权限的话添加标志位
-     * @param rid
-     * @return
-     * @throws ProcessRuntimeException
-     */
-    List<PermissionDto> getRolePermission(String rid) throws ProcessRuntimeException;
 
     /**
      * 通过id获取角色信息
