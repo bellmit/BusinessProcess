@@ -69,6 +69,6 @@ public interface RoleMapper {
      * 获取角色列表
      * @return
      */
-    List<Role> getRoleList();
+    List<Role> getRoleList(Role role);
 
 }

@@ -4,6 +4,7 @@ import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.config.mapper.UserMapper;
 import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.service.UserService;
+import com.mrbeard.process.blocks.professional.model.Process;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,4 +133,21 @@ public class UserServiceImpl implements UserService {
             throw new ProcessRuntimeException(e.getMessage());
         }
     }
+
+    /**
+     * 通过id集合查找
+     * @param processes
+     * @return
+     */
+    @Override
+    public List<User> selectListByIds(List<Process> processes) {
+        try {
+            return userDao.selectListByIds(processes);
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException(e.getMessage());
+        }
+    }
+
+
 }

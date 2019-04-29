@@ -1,5 +1,7 @@
 package com.mrbeard.process.blocks.professional.model;
 
+import java.util.Date;
+
 public class ProcessType {
     private String id;
 
@@ -9,11 +11,17 @@ public class ProcessType {
 
     private String code;
 
-    public ProcessType(String id, String typename, String description,String code) {
+    private Date createdTime;
+
+    private Date updatedTime;
+
+    public ProcessType(String id, String typename, String description,String code,Date createdTime,Date updatedTime) {
         this.id = id;
         this.typename = typename;
         this.description = description;
         this.code = code;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public ProcessType() {
@@ -50,5 +58,21 @@ public class ProcessType {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

@@ -21,10 +21,6 @@ public class Process {
      */
     private String typeId;
 
-    /**
-     * 模板id
-     */
-    private String tempId;
 
     /**
      * 紧急程度 1-正常 2-重要 3-紧急
@@ -61,11 +57,10 @@ public class Process {
      */
     private Byte state;
 
-    public Process(String id, String title, String typeId, String tempId, Byte level, String createdId, Date createdTime, Date updatedTime, Byte handleState, Byte fileState, Byte state) {
+    public Process(String id, String title, String typeId, Byte level, String createdId, Date createdTime, Date updatedTime, Byte handleState, Byte fileState, Byte state) {
         this.id = id;
         this.title = title;
         this.typeId = typeId;
-        this.tempId = tempId;
         this.level = level;
         this.createdId = createdId;
         this.createdTime = createdTime;
@@ -101,14 +96,6 @@ public class Process {
 
     public void settypeId(String typeId) {
         this.typeId = typeId == null ? null : typeId.trim();
-    }
-
-    public String gettempId() {
-        return tempId;
-    }
-
-    public void settempId(String tempId) {
-        this.tempId = tempId == null ? null : tempId.trim();
     }
 
     public Byte getLevel() {

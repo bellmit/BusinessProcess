@@ -57,6 +57,10 @@
         select
         <include refid="Base_Column_List"/>
         from qx_role
+        where 1= 1
+        <if test="rname != null and rname !=''">
+            and rname = #{rname}
+        </if>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.String">

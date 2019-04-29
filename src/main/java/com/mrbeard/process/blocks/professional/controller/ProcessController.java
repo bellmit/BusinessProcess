@@ -65,4 +65,18 @@ public class ProcessController {
         return processService.getProcessTypeList();
     }
 
+
+    /**
+     * 获取对应用户未办事宜
+     * @param uid
+     * @return
+     */
+    @GetMapping("/getTodoList")
+    public Result getTodoList(Integer pageNum, Integer pageSize, String uid){
+        if(!ToolUtil.checkParamter(pageNum,pageSize,uid)){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
+        return processService.getTodoList(pageNum,pageSize,uid);
+    }
+
 }

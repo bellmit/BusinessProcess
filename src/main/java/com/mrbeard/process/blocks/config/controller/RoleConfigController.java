@@ -47,11 +47,11 @@ public class RoleConfigController {
      * @return
      */
     @RequestMapping(value = "/getRoleList",method = RequestMethod.GET)
-    public Result getRoleList(Integer pageNum,Integer pageSize) throws ProcessRuntimeException {
+    public Result getRoleList(Integer pageNum,Integer pageSize,String rname) throws ProcessRuntimeException {
         if(ToolUtil.checkParamter(pageNum,pageSize) != true){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
-        return roleConfigService.getRoleList(pageNum,pageSize);
+        return roleConfigService.getRoleList(pageNum,pageSize,rname);
     }
 
 

@@ -17,7 +17,7 @@ public interface RoleConfigService {
      * 获取角色列表
      * @return
      */
-    Result getRoleList(Integer pageNum,Integer pageSize) throws ProcessRuntimeException;
+    Result getRoleList(Integer pageNum,Integer pageSize,String rname) throws ProcessRuntimeException;
 
 
 

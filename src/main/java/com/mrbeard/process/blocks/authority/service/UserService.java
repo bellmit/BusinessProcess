@@ -3,6 +3,7 @@ package com.mrbeard.process.blocks.authority.service;
 
 import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.config.model.User;
+import com.mrbeard.process.blocks.professional.model.Process;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 
 import java.util.List;
@@ -66,4 +67,11 @@ public interface UserService {
      * @return
      */
     User getUser(String uid) throws ProcessRuntimeException;
+
+    /**
+     * 通过id集合查找
+     * @param processes
+     * @return
+     */
+    List<User> selectListByIds(List<Process> processes);
 }

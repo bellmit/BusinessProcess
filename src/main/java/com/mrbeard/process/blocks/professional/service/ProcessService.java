@@ -39,4 +39,10 @@ public interface ProcessService {
     Result getProcessTypeList();
 
 
+    /**
+     * 获取对应用户未办事宜
+     * @param uid
+     * @return
+     */
+    Result getTodoList(Integer pageNum, Integer pageSize, String uid);
 }

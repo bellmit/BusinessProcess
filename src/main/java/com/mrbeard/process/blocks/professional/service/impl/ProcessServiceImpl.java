@@ -2,12 +2,16 @@ package com.mrbeard.process.blocks.professional.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.collection.CollectionUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.authority.mapper.UserLoginInfoMapper;
 import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.model.UserLoginInfo;
 import com.mrbeard.process.blocks.authority.service.UserService;
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeInfoDto;
 import com.mrbeard.process.blocks.professional.mapper.*;
 import com.mrbeard.process.blocks.professional.model.*;
 import com.mrbeard.process.blocks.professional.model.Process;
@@ -459,6 +463,53 @@ public class ProcessServiceImpl implements ProcessService {
         //获取列表
         List<ProcessType> processTypes = processTypeDao.selectTypeList();
         return ResultGenerator.getSuccessResult(processTypes);
+    }
+
+    /**
+     * 获取对应用户未办事宜
+     * @param uid
+     * @return
+     */
+    @Override
+    public Result getTodoList(Integer pageNum, Integer pageSize, String uid) {
+        ProcessNode node = new ProcessNode();
+        node.setCurrentHandlePersonId(uid);
+        node.setNodeState((byte)0);
+        PageHelper.startPage(pageNum,pageSize);
+        //查询到节点信息
+        List<ProcessNode> processNodes = processNodeDao.selectListByCondition(node);
+        //根据流程id查询流程信息并绑定到processNodeInfoDto
+        List<Process> processes = processDao.selectListByIds(processNodes);
+        List<ProcessNodeInfoDto> infoDtos = new ArrayList<>();
+        //绑定节点信息
+        for(ProcessNode processNode : processNodes){
+            ProcessNodeInfoDto nodeInfoDto = new ProcessNodeInfoDto();
+            BeanUtil.copyProperties(processNode,nodeInfoDto);
+            nodeInfoDto.setNodeId(processNode.getId());
+            infoDtos.add(nodeInfoDto);
+        }
+        //绑定流程信息
+        for(ProcessNodeInfoDto processNodeInfoDto: infoDtos){
+            processes.forEach(process -> {
+                if(process.getId().equals(processNodeInfoDto.getProId())){
+                    processNodeInfoDto.setTitle(process.getTitle());
+                    processNodeInfoDto.setLevel(process.getLevel());
+                    processNodeInfoDto.setCreatedTime(process.getCreatedTime());
+                    processNodeInfoDto.setCreatedId(process.getcreatedId());
+                }
+            });
+        }
+        //绑定创建人
+        List<User> users = userService.selectListByIds(processes);
+        for(User user : users){
+            infoDtos.forEach(infoDto ->{
+                if(infoDto.getCreatedId().equals(user.getUid())){
+                    infoDto.setCreatedName(user.getRealName());
+                }
+            });
+        }
+        PageInfo<ProcessNodeInfoDto> info = new PageInfo<>(infoDtos);
+        return ResultGenerator.getSuccessResult(info);
     }
 
 

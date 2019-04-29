@@ -87,7 +87,7 @@ public interface RoleService {
      * @return
      * @throws ProcessRuntimeException
      */
-    List<Role> getRoleList() throws ProcessRuntimeException;
+    List<Role> getRoleList(Role role) throws ProcessRuntimeException;
 
 
     /**

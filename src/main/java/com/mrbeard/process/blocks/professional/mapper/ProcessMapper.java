@@ -1,7 +1,10 @@
 package com.mrbeard.process.blocks.professional.mapper;
 
 import com.mrbeard.process.blocks.professional.model.Process;
+import com.mrbeard.process.blocks.professional.model.ProcessNode;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author Mrbeard
@@ -19,4 +22,6 @@ public interface ProcessMapper {
     int updateByPrimaryKeySelective(Process record);
 
     int updateByPrimaryKey(Process record);
+
+    List<Process> selectListByIds(List<ProcessNode> processNodes);
 }

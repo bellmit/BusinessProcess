@@ -43,7 +43,7 @@
         <if test="proId != null and proId != ''">
             and proId = #{proId}
         </if>
-        <if test="nodeState != null and nodeState != ''">
+        <if test="nodeState != null">
             and nodeState = #{nodeState}
         </if>
         <if test="createdTime != null ">

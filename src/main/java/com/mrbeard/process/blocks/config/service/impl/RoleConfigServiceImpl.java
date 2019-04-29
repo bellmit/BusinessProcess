@@ -41,9 +41,11 @@ public class RoleConfigServiceImpl implements RoleConfigService {
      * @return
      */
     @Override
-    public Result getRoleList(Integer pageNum,Integer pageSize) throws ProcessRuntimeException {
+    public Result getRoleList(Integer pageNum,Integer pageSize,String rname) throws ProcessRuntimeException {
         PageHelper.startPage(pageNum,pageSize);
-        List<Role> roleList = roleService.getRoleList();
+        Role role = new Role();
+        role.setRname(rname);
+        List<Role> roleList = roleService.getRoleList(role);
         PageInfo<Role> pageInfo = new PageInfo<>(roleList);
         return ResultGenerator.getSuccessResult(pageInfo);
     }

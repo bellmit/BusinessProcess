@@ -2,6 +2,7 @@ package com.mrbeard.process.blocks.config.mapper;
 
 import com.mrbeard.process.blocks.authority.dto.UserDto;
 import com.mrbeard.process.blocks.config.model.User;
+import com.mrbeard.process.blocks.professional.model.Process;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -43,4 +44,11 @@ public interface UserMapper {
      * @return
      */
     List<UserDto> selectUserList(User user);
+
+    /**
+     * 通过id集合查找
+     * @param processes
+     * @return
+     */
+    List<User> selectListByIds(List<Process> processes);
 }

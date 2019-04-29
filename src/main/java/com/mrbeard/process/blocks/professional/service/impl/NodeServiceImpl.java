@@ -1,6 +1,7 @@
 package com.mrbeard.process.blocks.professional.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.config.model.User;
@@ -155,6 +156,12 @@ public class NodeServiceImpl  implements NodeService {
         nodeTypeBase.setSortCase("desc");
         PageHelper.startPage(pageNum,pageSize);
         List<ProcessNodeTypeBase> nodeTypeBaseList = processNodeTypeBaseDao.selectListByCondition(nodeTypeBase);
+        nodeTypeBaseList.forEach(node ->{
+            if(node.getParentsId() != null && node.getParentsId().split(",").length > 1){
+                String[] parentsIdArray = node.getParentsId().split(",");
+                node.setParentsId(parentsIdArray.toString());
+            }
+        });
         PageInfo<ProcessNodeTypeBase> pageInfo = new PageInfo<>(nodeTypeBaseList);
         return ResultGenerator.getSuccessResult(pageInfo);
     }
@@ -171,6 +178,12 @@ public class NodeServiceImpl  implements NodeService {
         nodeTypeDto.setSortName("isBeginNode");
         nodeTypeDto.setSortCase("desc");
         List<ProcessNodeTypeBase> nodeTypeBaseList = processNodeTypeBaseDao.selectListByCondition(nodeTypeDto);
+        nodeTypeBaseList.forEach(nodeType ->{
+            if(nodeType.getParentsId() != null && nodeType.getParentsId().split(",").length > 1){
+                String[] parentsIdArray = nodeType.getParentsId().split(",");
+                nodeType.setParentsId(parentsIdArray.toString());
+            }
+        });
         return ResultGenerator.getSuccessResult(nodeTypeBaseList);
     }
 }

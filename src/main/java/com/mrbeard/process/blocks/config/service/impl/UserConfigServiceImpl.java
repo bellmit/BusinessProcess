@@ -113,7 +113,7 @@ public class UserConfigServiceImpl implements UserConfigService {
         if (ToolUtil.isNotEmpty(user.getUid())) {
             //删除
             boolean flag = ToolUtil.checkParamter(user.getUname(),user.getDeptId(),
-                    user.getRealName(),user.getRoleId(),user.getPhoneNumber(),user.getStationId());
+                    user.getRealName(),user.getRoleId(),user.getPhoneNumber());
             if (flag != true) {
                 //删除对应角色-用户关联信息
                 roleService.deleteUserRoleByUserId(user.getUid());
@@ -142,7 +142,7 @@ public class UserConfigServiceImpl implements UserConfigService {
             //参数判断
             if (ToolUtil.checkParamter(user.getUname(),
                     user.getRoleId(),user.getDeptId(), user.getPhoneNumber(),
-                    user.getEmail(),user.getSex(),user.getStationId()) != true) {
+                    user.getEmail(),user.getSex()) != true) {
                 return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
             }
             //校验数据库中是否有一样的用户名
@@ -162,10 +162,12 @@ public class UserConfigServiceImpl implements UserConfigService {
             UserRole userRole = new UserRole(insertUser.getUid(),user.getRoleId(),new Date(),new Date());
             roleService.insertUserRole(userRole);
             //设置用户岗位
-            if(!user.getStationId().equals("none")){
-                Station station = stationDao.selectByPrimaryKey(user.getStationId());
-                station.setUid(insertUser.getUid());
-                stationDao.updateByPrimaryKeySelective(station);
+            if(user.getStationId() != null){
+                if(!user.getStationId().equals("none")){
+                    Station station = stationDao.selectByPrimaryKey(user.getStationId());
+                    station.setUid(insertUser.getUid());
+                    stationDao.updateByPrimaryKeySelective(station);
+                }
             }
             return ResultGenerator.getSuccessResult("新增用户信息成功！");
         }

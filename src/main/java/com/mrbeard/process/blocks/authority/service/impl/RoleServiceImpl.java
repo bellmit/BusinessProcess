@@ -172,9 +172,9 @@ public class RoleServiceImpl  implements RoleService {
      * @throws ProcessRuntimeException
      */
     @Override
-    public List<Role> getRoleList() throws ProcessRuntimeException {
+    public List<Role> getRoleList(Role role) throws ProcessRuntimeException {
         try {
-            return roleDao.getRoleList();
+            return roleDao.getRoleList(role);
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             throw new ProcessRuntimeException(e.getMessage());

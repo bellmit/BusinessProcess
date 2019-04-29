@@ -6,7 +6,6 @@
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="typeId" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="tempId" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="level" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="createdId" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -16,30 +15,52 @@
       <arg column="state" javaType="java.lang.Byte" jdbcType="TINYINT" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List">
-    id, title, typeId, tempId, level, createdId, createdTime, updatedTime, handleState, 
+    id, title, typeId,  level, createdId, createdTime, updatedTime, handleState,
     fileState, state
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from p_process
     where id = #{id,jdbcType=VARCHAR} and state = 1
   </select>
+
+  <select id="selectListByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+      select
+      <include refid="Base_Column_List" />
+      from p_process
+      <choose>
+        <when test="list != null and list.size() > 0">
+          where id in
+          <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.proId}
+          </foreach>
+        </when>
+        <otherwise>
+          where 1 =2
+        </otherwise>
+      </choose>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from p_process
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
   <insert id="insert" parameterType="com.mrbeard.process.blocks.professional.model.Process">
     insert into p_process (id, title, typeId, 
-      tempId, level, createdId, 
+      level, createdId,
       createdTime, updatedTime, handleState, 
       fileState, state)
-    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, 
-      #{tempId,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, #{createdId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR},
+      #{level,jdbcType=TINYINT}, #{createdId,jdbcType=VARCHAR},
       #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{handleState,jdbcType=TINYINT}, 
       #{fileState,jdbcType=TINYINT}, #{state,jdbcType=TINYINT})
   </insert>
+
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.Process">
     insert into p_process
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -51,9 +72,6 @@
       </if>
       <if test="typeId != null">
         typeId,
-      </if>
-      <if test="tempId != null">
-        tempId,
       </if>
       <if test="level != null">
         level,
@@ -87,9 +105,6 @@
       <if test="typeId != null">
         #{typeId,jdbcType=VARCHAR},
       </if>
-      <if test="tempId != null">
-        #{tempId,jdbcType=VARCHAR},
-      </if>
       <if test="level != null">
         #{level,jdbcType=TINYINT},
       </if>
@@ -113,6 +128,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.mrbeard.process.blocks.professional.model.Process">
     update p_process
     <set>
@@ -121,9 +137,6 @@
       </if>
       <if test="typeId != null">
         typeId = #{typeId,jdbcType=VARCHAR},
-      </if>
-      <if test="tempId != null">
-        tempId = #{tempId,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
         level = #{level,jdbcType=TINYINT},
@@ -149,11 +162,11 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.mrbeard.process.blocks.professional.model.Process">
     update p_process
     set title = #{title,jdbcType=VARCHAR},
       typeId = #{typeId,jdbcType=VARCHAR},
-      tempId = #{tempId,jdbcType=VARCHAR},
       level = #{level,jdbcType=TINYINT},
       createdId = #{createdId,jdbcType=VARCHAR},
       createdTime = #{createdTime,jdbcType=TIMESTAMP},
@@ -163,4 +176,5 @@
       state = #{state,jdbcType=TINYINT}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
 </mapper>

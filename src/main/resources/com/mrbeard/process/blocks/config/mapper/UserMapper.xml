@@ -42,6 +42,23 @@
     where uname = #{uname,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectListByIds" parameterType="Object" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from qx_user
+    <choose>
+      <when test="list != null and list.size() > 0">
+        where uid in
+        <foreach collection="list" item="item"  open="(" separator="," close=")">
+          #{item.createdId}
+        </foreach>
+      </when>
+      <otherwise>
+          where 1 = 2
+      </otherwise>
+    </choose>
+  </select>
+
   <select id="selectUserList" parameterType="com.mrbeard.process.blocks.config.model.User" resultType="com.mrbeard.process.blocks.authority.dto.UserDto">
     select
     <include refid="Base_User_List"/>
