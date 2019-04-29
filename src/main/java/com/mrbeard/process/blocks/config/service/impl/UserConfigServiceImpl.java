@@ -300,11 +300,13 @@ public class UserConfigServiceImpl implements UserConfigService {
      * 获取部门列表，带有分页
      * @param pageNum
      * @param pageSize
+     * @param name
+     * @param code
      * @return
      */
     @Override
-    public Result getDeptListWithPage(Integer pageNum, Integer pageSize) {
-        PageInfo<DeptmentDto> pageInfo = deptService.getDeptListWithPage(pageNum, pageSize);
+    public Result getDeptListWithPage(Integer pageNum, Integer pageSize,String name,String code) {
+        PageInfo<DeptmentDto> pageInfo = deptService.getDeptListWithPage(pageNum, pageSize,name,code);
         return ResultGenerator.getSuccessResult(pageInfo);
     }
 
@@ -316,19 +318,27 @@ public class UserConfigServiceImpl implements UserConfigService {
     @Override
     public Result postDept(DeptmentDto deptmentDto) {
         //删除，修改
-        if(StrUtil.isNotEmpty(deptmentDto.getDeptId())){
-            //修改
-            if(ToolUtil.checkParamter(deptmentDto.getType(),deptmentDto.getCode())){
-
+        try {
+            if(StrUtil.isNotEmpty(deptmentDto.getId())){
+                //修改
+                if(ToolUtil.checkParamter(deptmentDto.getType(),deptmentDto.getCode())){
+                    deptService.updateSelective(deptmentDto);
+                    return ResultGenerator.getSuccessResult("修改部门信息成功！");
+                }else{
+                    //删除
+                    deptService.deleteSelective(deptmentDto);
+                    return ResultGenerator.getSuccessResult("删除部门信息成功！");
+                }
             }else{
-                //删除
-
+                //新增
+                deptmentDto.setId(UUIDUtil.getUUID());
+                deptService.insertSelective(deptmentDto);
+                return ResultGenerator.getSuccessResult("新增部门信息成功！");
             }
-
-        }else{
-            //新增
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException("部门信息更新出错，请稍后重试！");
         }
-        return null;
     }
 
 }

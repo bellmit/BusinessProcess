@@ -22,5 +22,6 @@ public interface DepartmentMapper {
 
     List<DeptmentDto> getDeptList();
 
-    List<DeptmentDto> getDeptListWithPage();
+    List<DeptmentDto> getDeptListWithPage(Department record);
+
 }

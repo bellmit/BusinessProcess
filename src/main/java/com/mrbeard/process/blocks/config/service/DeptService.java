@@ -27,7 +27,7 @@ public interface DeptService {
      * @param pageSize
      * @return
      */
-    PageInfo<DeptmentDto> getDeptListWithPage(Integer pageNum, Integer pageSize);
+    PageInfo<DeptmentDto> getDeptListWithPage(Integer pageNum, Integer pageSize,String name, String code);
 
     /**
      * 删除
@@ -35,6 +35,14 @@ public interface DeptService {
      * @return
      */
     int deleteSelective(DeptmentDto deptmentDto);
+
+
+    /**
+     * 插入
+     * @param deptmentDto
+     * @return
+     */
+    int insertSelective(DeptmentDto deptmentDto);
 
     /**
      * 更新

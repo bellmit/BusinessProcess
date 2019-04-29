@@ -97,7 +97,7 @@ public interface UserConfigService {
      * @param pageSize
      * @return
      */
-    Result getDeptListWithPage(Integer pageNum, Integer pageSize);
+    Result getDeptListWithPage(Integer pageNum, Integer pageSize,String name,String code);
 
     /**
      * 配置部门信息

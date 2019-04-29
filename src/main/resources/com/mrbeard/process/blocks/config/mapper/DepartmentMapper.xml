@@ -7,8 +7,8 @@
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="type" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="code" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="parentsid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="leaderid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="parentsId" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="leaderId" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="state" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="createdTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
@@ -17,7 +17,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, name, type, code, parentsid, leaderid, description, state, createdTime
+    id, name, type, code, parentsId, leaderId, description, state, createdTime, updatedTime
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -28,16 +28,22 @@
   </select>
 
   <select id="getDeptList" resultType="com.mrbeard.process.blocks.authority.dto.DeptmentDto">
-    select id as deptId, name as deptName
+    select id , name
     from qx_department
   </select>
 
   <select id="getDeptListWithPage" resultType="com.mrbeard.process.blocks.authority.dto.DeptmentDto">
-    select d.id as deptId, d.name as deptName, d.parentsId, d.code, d.type,
-        d.leaderId, d.state, d.createdtime, d.updatedtime, u.realName
+    select d.id, d.name, d.parentsId, d.code, d.type, d.description,
+        d.leaderId, d.state, d.createdTime, d.updatedTime, u.realName as leaderName
     from qx_department d
     left join qx_user u on u.uid = d.leaderId
     where d.state = 1
+    <if test="name != null and name != ''">
+      and name like CONCAT('%',#{name},'%')
+    </if>
+    <if test="code != null and code != ''">
+      and code = #{code}
+    </if>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -47,11 +53,12 @@
 
   <insert id="insert" parameterType="com.mrbeard.process.blocks.config.model.Department">
     insert into qx_department (id, name, type, 
-      code, parentsid, leaderid, 
-      description, state, createdTime)
+      code, parentsId, leaderId, 
+      description, state, createdTime,updatedTime)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
-      #{code,jdbcType=VARCHAR}, #{parentsid,jdbcType=VARCHAR}, #{leaderid,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{createdtime,jdbcType=TIMESTAMP})
+      #{code,jdbcType=VARCHAR}, #{parentsId,jdbcType=VARCHAR}, #{leaderId,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP},
+      #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
 
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.config.model.Department">
@@ -69,11 +76,11 @@
       <if test="code != null">
         code,
       </if>
-      <if test="parentsid != null">
-        parentsid,
+      <if test="parentsId != null">
+        parentsId,
       </if>
-      <if test="leaderid != null">
-        leaderid,
+      <if test="leaderId != null">
+        leaderId,
       </if>
       <if test="description != null">
         description,
@@ -81,8 +88,11 @@
       <if test="state != null">
         state,
       </if>
-      <if test="createdtime != null">
+      <if test="createdTime != null">
         createdTime,
+      </if>
+      <if test="updatedTime != null">
+        updatedTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -98,11 +108,11 @@
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="parentsid != null">
-        #{parentsid,jdbcType=VARCHAR},
+      <if test="parentsId != null">
+        #{parentsId,jdbcType=VARCHAR},
       </if>
-      <if test="leaderid != null">
-        #{leaderid,jdbcType=VARCHAR},
+      <if test="leaderId != null">
+        #{leaderId,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -110,8 +120,11 @@
       <if test="state != null">
         #{state,jdbcType=TINYINT},
       </if>
-      <if test="createdtime != null">
-        #{createdtime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -128,11 +141,11 @@
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
       </if>
-      <if test="parentsid != null">
-        parentsid = #{parentsid,jdbcType=VARCHAR},
+      <if test="parentsId != null">
+        parentsId = #{parentsId,jdbcType=VARCHAR},
       </if>
-      <if test="leaderid != null">
-        leaderid = #{leaderid,jdbcType=VARCHAR},
+      <if test="leaderId != null">
+        leaderId = #{leaderId,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
@@ -140,8 +153,8 @@
       <if test="state != null">
         state = #{state,jdbcType=TINYINT},
       </if>
-      <if test="createdtime != null">
-        createdTime = #{createdtime,jdbcType=TIMESTAMP},
+      <if test="createdTime != null">
+        createdTime = #{createdTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -152,11 +165,11 @@
     set name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT},
       code = #{code,jdbcType=VARCHAR},
-      parentsid = #{parentsid,jdbcType=VARCHAR},
-      leaderid = #{leaderid,jdbcType=VARCHAR},
+      parentsId = #{parentsId,jdbcType=VARCHAR},
+      leaderId = #{leaderId,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       state = #{state,jdbcType=TINYINT},
-      createdTime = #{createdtime,jdbcType=TIMESTAMP}
+      createdTime = #{createdTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

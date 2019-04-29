@@ -1,6 +1,9 @@
 package com.mrbeard.process.blocks.config.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.authority.dto.DeptmentDto;
@@ -8,12 +11,13 @@ import com.mrbeard.process.blocks.config.mapper.DepartmentMapper;
 import com.mrbeard.process.blocks.config.model.Department;
 import com.mrbeard.process.blocks.config.service.DeptService;
 import com.mrbeard.process.exception.ProcessRuntimeException;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName DeptServiceImpl
@@ -44,18 +48,31 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public PageInfo<DeptmentDto> getDeptListWithPage(Integer pageNum, Integer pageSize) {
+    public PageInfo<DeptmentDto> getDeptListWithPage(Integer pageNum, Integer pageSize,String name,String code) {
         try {
             PageHelper.startPage(pageNum,pageSize);
-            List<DeptmentDto> list = departmentDao.getDeptListWithPage();
+            Department department = new Department();
+            department.setName(name);
+            department.setCode(code);
+            List<DeptmentDto> list = departmentDao.getDeptListWithPage(department);
+            List<DeptmentDto> copyList = new ArrayList<>();
             //将type转换
             list.forEach(deptmentDto -> {
                 switch (deptmentDto.getType()){
-                    case "1": deptmentDto.setType("一级");break;
-                    case "2": deptmentDto.setType("二级");break;
-                    case "3": deptmentDto.setType("三级");break;
-                    case "4": deptmentDto.setType("四级");break;
+                    case 1: deptmentDto.setTypeString("一级");break;
+                    case 2: deptmentDto.setTypeString("二级");break;
+                    case 3: deptmentDto.setTypeString("三级");break;
+                    case 4: deptmentDto.setTypeString("四级");break;
                 }
+                copyList.add(deptmentDto);
+            });
+            //将parentsName设置
+            copyList.forEach(copy ->{
+                list.forEach(dto ->{
+                    if(dto.getParentsId() != null && dto.getParentsId().equals(copy.getId())){
+                        dto.setParentsName(copy.getName());
+                    }
+                });
             });
             PageInfo<DeptmentDto> pageInfo = new PageInfo<>(list);
             return pageInfo;
@@ -67,15 +84,16 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public int deleteSelective(DeptmentDto deptmentDto) {
-        return departmentDao.deleteByPrimaryKey(deptmentDto.getDeptId());
+        return departmentDao.deleteByPrimaryKey(deptmentDto.getId());
+    }
+
+    @Override
+    public int insertSelective(DeptmentDto deptmentDto) {
+        return departmentDao.insertSelective(deptmentDto);
     }
 
     @Override
     public int updateSelective(DeptmentDto deptmentDto) {
-        Department department = new Department();
-        BeanUtil.copyProperties(deptmentDto,department);
-        department.setId(deptmentDto.getDeptId());
-        department.setName(deptmentDto.getDeptName());
-        return departmentDao.updateByPrimaryKeySelective(department);
+        return departmentDao.updateByPrimaryKeySelective(deptmentDto);
     }
 }

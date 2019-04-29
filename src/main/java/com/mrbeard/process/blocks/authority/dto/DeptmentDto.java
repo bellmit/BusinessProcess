@@ -1,5 +1,8 @@
 package com.mrbeard.process.blocks.authority.dto;
 
+import com.mrbeard.process.blocks.config.model.Department;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,85 +12,40 @@ import java.util.Date;
  * @Date 2019/4/13 0:36
  * @Version 1.0
  **/
-public class DeptmentDto {
-    /**
-     * 部门id
-     */
-    private String deptId;
-    /**
-     * 部门name
-     */
-    private String deptName;
-    /**
-     * 部门code
-     */
+public class DeptmentDto  extends Department implements Serializable {
+
+    private String id;
+
+    private String name;
+
+    private Byte type;
+
     private String code;
 
-    /**
-     * 类型
-     */
-    private String type;
-    /**
-     * 上级部门id
-     */
     private String parentsId;
-    /**
-     * 上级部门name
-     */
-    private String parentsName;
-    /**
-     * 部门主管id
-     */
+
     private String leaderId;
-    /**
-     * 部门主管name
-     */
-    private String leaderName;
-    /**
-     * 部门状态 0-禁用 1-启用
-     */
+
+    private String description;
+
     private Byte state;
-    private Date createdtime;
-    private Date updatedtime;
 
-    public String getDeptId() {
-        return deptId;
+    private Date createdTime;
+
+    private Date updatedTime;
+
+    private String leaderName;
+
+    private String parentsName;
+
+    private String typeString;
+
+    public String getTypeString() {
+        return typeString;
     }
 
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getParentsId() {
-        return parentsId;
-    }
-
-    public void setParentsId(String parentsId) {
-        this.parentsId = parentsId;
+    public void setTypeString(String typeString) {
+        this.typeString = typeString;
     }
 
     public String getParentsName() {
@@ -98,14 +56,6 @@ public class DeptmentDto {
         this.parentsName = parentsName;
     }
 
-    public String getLeaderId() {
-        return leaderId;
-    }
-
-    public void setLeaderId(String leaderId) {
-        this.leaderId = leaderId;
-    }
-
     public String getLeaderName() {
         return leaderName;
     }
@@ -114,27 +64,103 @@ public class DeptmentDto {
         this.leaderName = leaderName;
     }
 
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Byte getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String getParentsId() {
+        return parentsId;
+    }
+
+    @Override
+    public void setParentsId(String parentsId) {
+        this.parentsId = parentsId;
+    }
+
+    @Override
+    public String getLeaderId() {
+        return leaderId;
+    }
+
+    @Override
+    public void setLeaderId(String leaderId) {
+        this.leaderId = leaderId;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
     public Byte getState() {
         return state;
     }
 
+    @Override
     public void setState(Byte state) {
         this.state = state;
     }
 
-    public Date getCreatedtime() {
-        return createdtime;
+    @Override
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreatedtime(Date createdtime) {
-        this.createdtime = createdtime;
+    @Override
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Date getUpdatedtime() {
-        return updatedtime;
+    @Override
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdatedtime(Date updatedtime) {
-        this.updatedtime = updatedtime;
+    @Override
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

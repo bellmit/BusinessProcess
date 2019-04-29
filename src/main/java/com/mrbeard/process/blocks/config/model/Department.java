@@ -14,33 +14,32 @@ public class Department {
 
     private String code;
 
-    private String parentsid;
+    private String parentsId;
 
-    private String leaderid;
+    private String leaderId;
 
     private String description;
 
     private Byte state;
 
-    private Date createdtime;
+    private Date createdTime;
 
-    private Date updatedtime;
+    private Date updatedTime;
 
-    public Department(String id, String name, Byte type, String code, String parentsid, String leaderid, String description, Byte state, Date createdtime, Date updatedtime) {
+    public Department(){
+    }
+
+    public Department(String id, String name, Byte type, String code, String parentsId, String leaderId, String description, Byte state, Date createdTime, Date updatedTime) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.code = code;
-        this.parentsid = parentsid;
-        this.leaderid = leaderid;
+        this.parentsId = parentsId;
+        this.leaderId = leaderId;
         this.description = description;
         this.state = state;
-        this.createdtime = createdtime;
-        this.updatedtime = updatedtime;
-    }
-
-    public Department() {
-        super();
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public String getId() {
@@ -48,7 +47,7 @@ public class Department {
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
     public String getName() {
@@ -56,7 +55,7 @@ public class Department {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public Byte getType() {
@@ -72,23 +71,23 @@ public class Department {
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+        this.code = code;
     }
 
-    public String getParentsid() {
-        return parentsid;
+    public String getParentsId() {
+        return parentsId;
     }
 
-    public void setParentsid(String parentsid) {
-        this.parentsid = parentsid == null ? null : parentsid.trim();
+    public void setParentsId(String parentsId) {
+        this.parentsId = parentsId;
     }
 
-    public String getLeaderid() {
-        return leaderid;
+    public String getLeaderId() {
+        return leaderId;
     }
 
-    public void setLeaderid(String leaderid) {
-        this.leaderid = leaderid == null ? null : leaderid.trim();
+    public void setLeaderId(String leaderId) {
+        this.leaderId = leaderId;
     }
 
     public String getDescription() {
@@ -96,7 +95,7 @@ public class Department {
     }
 
     public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+        this.description = description;
     }
 
     public Byte getState() {
@@ -107,19 +106,19 @@ public class Department {
         this.state = state;
     }
 
-    public Date getCreatedtime() {
-        return createdtime;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreatedtime(Date createdtime) {
-        this.createdtime = createdtime;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Date getUpdatedtime() {
-        return updatedtime;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdatedtime(Date updatedtime) {
-        this.updatedtime = updatedtime;
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

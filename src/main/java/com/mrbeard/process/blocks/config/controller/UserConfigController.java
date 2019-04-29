@@ -117,8 +117,8 @@ public class UserConfigController {
      * @return
      */
     @GetMapping("/getDeptListWithPage")
-    public Result getDeptList(Integer pageNum, Integer pageSize){
-        return userConfigService.getDeptListWithPage(pageNum,pageSize);
+    public Result getDeptList(Integer pageNum, Integer pageSize,String name, String code){
+        return userConfigService.getDeptListWithPage(pageNum,pageSize,name,code);
     }
 
     /**
