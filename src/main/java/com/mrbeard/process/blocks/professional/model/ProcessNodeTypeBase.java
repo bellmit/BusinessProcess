@@ -2,6 +2,10 @@ package com.mrbeard.process.blocks.professional.model;
 
 import java.util.Date;
 
+/**
+ * 流程基础类型实体类
+ * @author Mrbeard
+ */
 public class ProcessNodeTypeBase {
     private String id;
 

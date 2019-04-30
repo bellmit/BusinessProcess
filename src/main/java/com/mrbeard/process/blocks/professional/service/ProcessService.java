@@ -3,6 +3,7 @@ package com.mrbeard.process.blocks.professional.service;
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
+import com.mrbeard.process.blocks.professional.dto.ProcessTypeDto;
 import com.mrbeard.process.blocks.professional.model.ProcessNode;
 import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
@@ -44,5 +45,28 @@ public interface ProcessService {
      * @param uid
      * @return
      */
-    Result getTodoList(Integer pageNum, Integer pageSize, String uid);
+    Result getTodoList(Integer pageNum, Integer pageSize, String uid ,String nodeState);
+
+    /**
+     * 获取对应用户已办事宜
+     * @param uid
+     * @return
+     */
+    Result getHaddoList(Integer pageNum, Integer pageSize, String uid, String nodeState);
+
+    /**
+     * 获取用户创建的流程信息
+     * @param pageNum
+     * @param pageSize
+     * @param uid
+     * @return
+     */
+    Result getUserProcessInfo(Integer pageNum, Integer pageSize, String uid);
+
+    /**
+     * 配置流程类型信息
+     * @param processTypeDto
+     * @return
+     */
+    Result postProcessType(ProcessTypeDto processTypeDto);
 }

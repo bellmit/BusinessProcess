@@ -3,6 +3,7 @@ package com.mrbeard.process.blocks.professional.controller;
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
+import com.mrbeard.process.blocks.professional.dto.ProcessTypeDto;
 import com.mrbeard.process.blocks.professional.model.Process;
 import com.mrbeard.process.blocks.professional.model.ProcessNode;
 import com.mrbeard.process.blocks.professional.service.ProcessService;
@@ -66,6 +67,13 @@ public class ProcessController {
     }
 
 
+    @RequestMapping(value = "/postProcessType",method = RequestMethod.POST)
+    public Result postProcessType(ProcessTypeDto processTypeDto){
+        return processService.postProcessType(processTypeDto);
+    }
+
+
+
     /**
      * 获取对应用户未办事宜
      * @param uid
@@ -76,7 +84,39 @@ public class ProcessController {
         if(!ToolUtil.checkParamter(pageNum,pageSize,uid)){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
-        return processService.getTodoList(pageNum,pageSize,uid);
+        return processService.getTodoList(pageNum,pageSize,uid,"0");
     }
+
+
+    /**
+     * 获取对应用户已办办事宜
+     * @param uid
+     * @return
+             */
+    @GetMapping("/getHaddoList")
+    public Result getHaddoList(Integer pageNum, Integer pageSize, String uid){
+        if(!ToolUtil.checkParamter(pageNum,pageSize,uid)){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
+        return processService.getHaddoList(pageNum,pageSize,uid,"1");
+    }
+
+
+    /**
+     * 获取用户创建的流程信息
+     * @param pageNum
+     * @param pageSize
+     * @param uid
+     * @return
+     */
+    @GetMapping("/getUserProcessInfo")
+    public Result getUserProcessInfo(Integer pageNum, Integer pageSize, String uid){
+        if(!ToolUtil.checkParamter(pageNum,pageSize,uid)){
+            return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
+        }
+        return processService.getUserProcessInfo(pageNum,pageSize,uid);
+    }
+
+
 
 }

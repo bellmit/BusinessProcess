@@ -1,12 +1,17 @@
-package com.mrbeard.process.blocks.professional.model;
+package com.mrbeard.process.blocks.professional.dto;
+
+import com.mrbeard.process.blocks.professional.model.ProcessType;
 
 import java.util.Date;
 
 /**
- * @author Mrbeard
- * 流程类型实体类
- */
-public class ProcessType {
+ * @ClassName ProcessTypeDto
+ * @Description TODO
+ * @Author Mrbeard
+ * @Date 2019/4/30 18:30
+ * @Version 1.0
+ **/
+public class ProcessTypeDto extends ProcessType {
     private String id;
 
     private String typename;
@@ -19,63 +24,63 @@ public class ProcessType {
 
     private Date updatedTime;
 
-    public ProcessType(String id, String typename, String description,String code,Date createdTime,Date updatedTime) {
-        this.id = id;
-        this.typename = typename;
-        this.description = description;
-        this.code = code;
-        this.createdTime = createdTime;
-        this.updatedTime = updatedTime;
-    }
 
-    public ProcessType() {
-        super();
-    }
-
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
+    @Override
     public String getTypename() {
         return typename;
     }
 
+    @Override
     public void setTypename(String typename) {
-        this.typename = typename == null ? null : typename.trim();
+        this.typename = typename;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+        this.description = description;
     }
 
+    @Override
     public String getCode() {
         return code;
     }
 
+    @Override
     public void setCode(String code) {
         this.code = code;
     }
 
+    @Override
     public Date getCreatedTime() {
         return createdTime;
     }
 
+    @Override
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
 
+    @Override
     public Date getUpdatedTime() {
         return updatedTime;
     }
 
+    @Override
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
     }

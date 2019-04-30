@@ -3,6 +3,7 @@ package com.mrbeard.process.blocks.professional.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.authority.mapper.UserLoginInfoMapper;
@@ -12,6 +13,7 @@ import com.mrbeard.process.blocks.authority.service.UserService;
 import com.mrbeard.process.blocks.professional.dto.ProcessDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeInfoDto;
+import com.mrbeard.process.blocks.professional.dto.ProcessTypeDto;
 import com.mrbeard.process.blocks.professional.mapper.*;
 import com.mrbeard.process.blocks.professional.model.*;
 import com.mrbeard.process.blocks.professional.model.Process;
@@ -36,6 +38,8 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 /**
@@ -419,7 +423,7 @@ public class ProcessServiceImpl implements ProcessService {
             throw new ProcessRuntimeException("获取用户信息失败，请重新登陆！");
         }
         //设置创建用户id
-        process.setcreatedId(userInfo.getUid());
+        process.setCreatedId(userInfo.getUid());
         process.setCreatedTime(new Date());
         process.setUpdatedTime(new Date());
         process.setFileState((byte)0);
@@ -442,6 +446,9 @@ public class ProcessServiceImpl implements ProcessService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Result postProcess(ProcessNodeDto processNodeDto) {
+        if("0".equals(processNodeDto.getIsPass()) && StrUtil.isEmpty(processNodeDto.getUnpassReason())){
+            throw new ProcessRuntimeException("请输入不通过原因！");
+        }
         //获取节点信息
         ProcessNode node = processNodeDao.selectByPrimaryKey(processNodeDto.getId());
         //设置节点信息
@@ -471,45 +478,62 @@ public class ProcessServiceImpl implements ProcessService {
      * @return
      */
     @Override
-    public Result getTodoList(Integer pageNum, Integer pageSize, String uid) {
-        ProcessNode node = new ProcessNode();
-        node.setCurrentHandlePersonId(uid);
-        node.setNodeState((byte)0);
-        PageHelper.startPage(pageNum,pageSize);
-        //查询到节点信息
-        List<ProcessNode> processNodes = processNodeDao.selectListByCondition(node);
-        //根据流程id查询流程信息并绑定到processNodeInfoDto
-        List<Process> processes = processDao.selectListByIds(processNodes);
-        List<ProcessNodeInfoDto> infoDtos = new ArrayList<>();
-        //绑定节点信息
-        for(ProcessNode processNode : processNodes){
-            ProcessNodeInfoDto nodeInfoDto = new ProcessNodeInfoDto();
-            BeanUtil.copyProperties(processNode,nodeInfoDto);
-            nodeInfoDto.setNodeId(processNode.getId());
-            infoDtos.add(nodeInfoDto);
-        }
-        //绑定流程信息
-        for(ProcessNodeInfoDto processNodeInfoDto: infoDtos){
-            processes.forEach(process -> {
-                if(process.getId().equals(processNodeInfoDto.getProId())){
-                    processNodeInfoDto.setTitle(process.getTitle());
-                    processNodeInfoDto.setLevel(process.getLevel());
-                    processNodeInfoDto.setCreatedTime(process.getCreatedTime());
-                    processNodeInfoDto.setCreatedId(process.getcreatedId());
-                }
-            });
-        }
-        //绑定创建人
-        List<User> users = userService.selectListByIds(processes);
-        for(User user : users){
-            infoDtos.forEach(infoDto ->{
-                if(infoDto.getCreatedId().equals(user.getUid())){
-                    infoDto.setCreatedName(user.getRealName());
-                }
-            });
-        }
-        PageInfo<ProcessNodeInfoDto> info = new PageInfo<>(infoDtos);
+    public Result getTodoList(Integer pageNum, Integer pageSize, String uid, String nodeState) {
+        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, nodeState);
         return ResultGenerator.getSuccessResult(info);
+    }
+    /**
+     * 获取对应用户已办事宜
+     * @param uid
+     * @return
+     */
+    @Override
+    public Result getHaddoList(Integer pageNum, Integer pageSize, String uid, String nodeState) {
+        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, nodeState);
+        return ResultGenerator.getSuccessResult(info);
+    }
+
+
+    /**
+     * 获取对应用户流程节点信息
+     * @param pageSize
+     * @param pageNum
+     * @param uid
+     * @param nodeState
+     * @return
+     */
+    private PageInfo<ProcessNodeInfoDto> getProcessNodeInfoDtoPageInfo(Integer pageSize, Integer pageNum, String uid, String nodeState) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<ProcessNodeInfoDto> infoDtoList = new ArrayList<>();
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("nodeState", nodeState);
+        infoDtoList = processDao.seleNodeInfoByUid(map);
+        return new PageInfo<>(infoDtoList);
+    }
+
+    /**
+     * 获取用户创建的流程信息
+     * @param pageNum
+     * @param pageSize
+     * @param uid
+     * @return
+     */
+    @Override
+    public Result getUserProcessInfo(Integer pageNum, Integer pageSize, String uid) {
+        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, null);
+        return ResultGenerator.getSuccessResult(info);
+    }
+
+
+    /**
+     * 配置流程
+     * @param processTypeDto
+     * @return
+     */
+    @Override
+    public Result postProcessType(ProcessTypeDto processTypeDto) {
+        return null;
     }
 
 

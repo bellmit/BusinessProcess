@@ -57,7 +57,14 @@ public class Process {
      */
     private Byte state;
 
-    public Process(String id, String title, String typeId, Byte level, String createdId, Date createdTime, Date updatedTime, Byte handleState, Byte fileState, Byte state) {
+    /**
+     * 申请原因
+     */
+    private String applicationReason;
+
+
+    public Process(String id, String title, String typeId, Byte level, String createdId, Date createdTime,
+                   Date updatedTime, Byte handleState, Byte fileState, Byte state, String applicationReason) {
         this.id = id;
         this.title = title;
         this.typeId = typeId;
@@ -68,6 +75,7 @@ public class Process {
         this.handleState = handleState;
         this.fileState = fileState;
         this.state = state;
+        this.applicationReason = applicationReason;
     }
 
     public Process() {
@@ -79,7 +87,7 @@ public class Process {
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
     public String getTitle() {
@@ -87,15 +95,15 @@ public class Process {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
-    public String gettypeId() {
+    public String getTypeId() {
         return typeId;
     }
 
-    public void settypeId(String typeId) {
-        this.typeId = typeId == null ? null : typeId.trim();
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public Byte getLevel() {
@@ -106,12 +114,12 @@ public class Process {
         this.level = level;
     }
 
-    public String getcreatedId() {
+    public String getCreatedId() {
         return createdId;
     }
 
-    public void setcreatedId(String createdId) {
-        this.createdId = createdId == null ? null : createdId.trim();
+    public void setCreatedId(String createdId) {
+        this.createdId = createdId;
     }
 
     public Date getCreatedTime() {
@@ -152,5 +160,13 @@ public class Process {
 
     public void setState(Byte state) {
         this.state = state;
+    }
+
+    public String getApplicationReason() {
+        return applicationReason;
+    }
+
+    public void setApplicationReason(String applicationReason) {
+        this.applicationReason = applicationReason;
     }
 }

@@ -6,8 +6,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.service.UserService;
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
+import com.mrbeard.process.blocks.professional.mapper.ProcessNodeMapper;
 import com.mrbeard.process.blocks.professional.mapper.ProcessNodeTypeBaseMapper;
+import com.mrbeard.process.blocks.professional.model.ProcessNode;
 import com.mrbeard.process.blocks.professional.model.ProcessNodeTypeBase;
 import com.mrbeard.process.blocks.professional.service.NodeService;
 import com.mrbeard.process.common.Constant;
@@ -38,6 +41,8 @@ public class NodeServiceImpl  implements NodeService {
 
     @Resource
     ProcessNodeTypeBaseMapper processNodeTypeBaseDao;
+    @Resource
+    ProcessNodeMapper processNodeDao;
     @Resource
     UserService userService;
 
@@ -185,5 +190,30 @@ public class NodeServiceImpl  implements NodeService {
             }
         });
         return ResultGenerator.getSuccessResult(nodeTypeBaseList);
+    }
+
+    /**
+     * 配置节点信息
+     * @param node
+     * @return
+     */
+    @Override
+    public Result postNode(ProcessNodeDto node) {
+        if("0".equals(node.getIsPass()) && StrUtil.isEmpty(node.getUnpassReason())){
+            return ResultGenerator.getErrorResult("请输入不通过原因！");
+        }
+        ProcessNode processNode = new ProcessNode();
+        BeanUtil.copyProperties(node,processNode);
+        int i = 0;
+        try {
+            i = processNodeDao.updateByPrimaryKeySelective(processNode);
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            throw new ProcessRuntimeException("审核信息失败，请稍后重试！");
+        }
+        if(i==0){
+            throw new ProcessRuntimeException("审核信息失败，请稍后重试！");
+        }
+        return ResultGenerator.getSuccessResult("审核成功！");
     }
 }

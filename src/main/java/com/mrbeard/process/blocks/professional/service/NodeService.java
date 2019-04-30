@@ -1,5 +1,6 @@
 package com.mrbeard.process.blocks.professional.service;
 
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
 import com.mrbeard.process.result.Result;
 
@@ -31,4 +32,11 @@ public interface NodeService {
      * @return
      */
     Result getNodeTypeListByQueue(String nodeTypeQueue);
+
+    /**
+     * 配置节点信息
+     * @param node
+     * @return
+     */
+    Result postNode(ProcessNodeDto node);
 }

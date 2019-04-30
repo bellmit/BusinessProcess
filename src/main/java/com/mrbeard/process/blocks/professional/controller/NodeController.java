@@ -1,5 +1,6 @@
 package com.mrbeard.process.blocks.professional.controller;
 
+import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
 import com.mrbeard.process.blocks.professional.dto.ProcessNodeTypeDto;
 import com.mrbeard.process.blocks.professional.service.NodeService;
 import com.mrbeard.process.common.Constant;
@@ -35,6 +36,7 @@ public class NodeController {
     public Result postNodeType(ProcessNodeTypeDto nodeTypeDto){
         return nodeService.postNodeType(nodeTypeDto);
     }
+
 
     /**
      * 根据typeId 、 isBegin = 1 获取流程节点类型列表

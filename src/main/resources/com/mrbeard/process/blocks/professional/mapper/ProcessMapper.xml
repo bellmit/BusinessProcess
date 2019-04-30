@@ -13,12 +13,13 @@
       <arg column="handleState" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="fileState" javaType="java.lang.Byte" jdbcType="TINYINT" />
       <arg column="state" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="applicationReason" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
 
   <sql id="Base_Column_List">
     id, title, typeId,  level, createdId, createdTime, updatedTime, handleState,
-    fileState, state
+    fileState, state, applicationReason
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -45,6 +46,29 @@
       </choose>
   </select>
 
+  <select id="seleNodeInfoByUid" parameterType="Map" resultType="com.mrbeard.process.blocks.professional.dto.ProcessNodeInfoDto">
+    select p.title, u.realName as createdName, p.applicationReason,p.createdTime, n.id as nodeId,
+        n.isPass, n.unPassReason,
+    case p.level
+        when '2' then '重要'
+        when '3' then '紧急'
+    else
+        '正常' end
+        as level
+    FROM
+	p_process p
+	LEFT JOIN p_node n ON  p.id = n.proId
+	LEFT JOIN qx_user u ON u.uid = n.currentHandlePersonId
+	<where>
+	    <if test="uid != null and uid != ''">
+          and n.currentHandlePersonId = #{uid}
+        </if>
+        <if test="nodeState != null">
+          and nodeState = #{nodeState}
+        </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from p_process
     where id = #{id,jdbcType=VARCHAR}
@@ -54,11 +78,11 @@
     insert into p_process (id, title, typeId, 
       level, createdId,
       createdTime, updatedTime, handleState, 
-      fileState, state)
+      fileState, state,applicationReason)
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR},
       #{level,jdbcType=TINYINT}, #{createdId,jdbcType=VARCHAR},
       #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{handleState,jdbcType=TINYINT}, 
-      #{fileState,jdbcType=TINYINT}, #{state,jdbcType=TINYINT})
+      #{fileState,jdbcType=TINYINT}, #{state,jdbcType=TINYINT},#{applicationReason,jdbcType=VARCHAR})
   </insert>
 
   <insert id="insertSelective" parameterType="com.mrbeard.process.blocks.professional.model.Process">
@@ -94,6 +118,9 @@
       <if test="state != null">
         state,
       </if>
+      <if test="applicationReason != null">
+        applicationReason,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -125,6 +152,9 @@
       </if>
       <if test="state != null">
         #{state,jdbcType=TINYINT},
+      </if>
+      <if test="applicationReason != null">
+        #{applicationReason,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -159,6 +189,9 @@
       <if test="state != null">
         state = #{state,jdbcType=TINYINT},
       </if>
+      <if test="applicationReason != null">
+        applicationReason = #{applicationReason,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -173,7 +206,8 @@
       updatedTime = #{updatedTime,jdbcType=TIMESTAMP},
       handleState = #{handleState,jdbcType=TINYINT},
       fileState = #{fileState,jdbcType=TINYINT},
-      state = #{state,jdbcType=TINYINT}
+      state = #{state,jdbcType=TINYINT},
+      applicationReason = #{applicationReason,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
