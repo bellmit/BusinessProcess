@@ -10,10 +10,7 @@ import com.mrbeard.process.blocks.authority.mapper.UserLoginInfoMapper;
 import com.mrbeard.process.blocks.config.model.User;
 import com.mrbeard.process.blocks.authority.model.UserLoginInfo;
 import com.mrbeard.process.blocks.authority.service.UserService;
-import com.mrbeard.process.blocks.professional.dto.ProcessDto;
-import com.mrbeard.process.blocks.professional.dto.ProcessNodeDto;
-import com.mrbeard.process.blocks.professional.dto.ProcessNodeInfoDto;
-import com.mrbeard.process.blocks.professional.dto.ProcessTypeDto;
+import com.mrbeard.process.blocks.professional.dto.*;
 import com.mrbeard.process.blocks.professional.mapper.*;
 import com.mrbeard.process.blocks.professional.model.*;
 import com.mrbeard.process.blocks.professional.model.Process;
@@ -24,6 +21,7 @@ import com.mrbeard.process.exception.ProcessRuntimeException;
 import com.mrbeard.process.result.Result;
 import com.mrbeard.process.result.ResultGenerator;
 import com.mrbeard.process.util.SessionUtil;
+import com.mrbeard.process.util.ToolUtil;
 import com.mrbeard.process.util.UUIDUtil;
 import com.mrbeard.process.util.WebUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -472,6 +470,15 @@ public class ProcessServiceImpl implements ProcessService {
         return ResultGenerator.getSuccessResult(processTypes);
     }
 
+    @Override
+    public Result getProcessTypeList(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        //获取列表
+        List<ProcessType> processTypes = processTypeDao.selectTypeList();
+        PageInfo<ProcessType> pageInfo = new PageInfo<>(processTypes);
+        return ResultGenerator.getSuccessResult(pageInfo);
+    }
+
     /**
      * 获取对应用户未办事宜
      * @param uid
@@ -527,13 +534,57 @@ public class ProcessServiceImpl implements ProcessService {
 
 
     /**
-     * 配置流程
+     * 配置流程类型
      * @param processTypeDto
      * @return
      */
     @Override
     public Result postProcessType(ProcessTypeDto processTypeDto) {
-        return null;
+        ProcessType  processType = new ProcessType();
+        BeanUtil.copyProperties(processTypeDto,processType);
+        if(!ToolUtil.checkParamter(processTypeDto.getId())){
+            //新增
+            processType.setId(UUIDUtil.getUUID());
+            processType.setCreatedTime(new Date());
+            processType.setUpdatedTime(new Date());
+            try {
+                int flag = processTypeDao.insertSelective(processType);
+                return  ResultGenerator.getSuccessResult("新增流程类型成功！");
+            } catch (Exception e) {
+                logger.error(e.getMessage(),e);
+                throw new ProcessRuntimeException("新增流程类型出错，请稍后重试!");
+            }
+        }else{
+            if(ToolUtil.checkParamter(processTypeDto.getCode(),processTypeDto.getTypename(),processTypeDto.getDescription())){
+                //更新
+                try {
+                    int flag = processTypeDao.updateByPrimaryKeySelective(processType);
+                    return  ResultGenerator.getSuccessResult("修改流程类型成功！");
+                } catch (Exception e) {
+                    logger.error(e.getMessage(),e);
+                    throw new ProcessRuntimeException("修改流程类型出错，请稍后重试!");
+                }
+            }
+            //删除
+            try {
+                //判断是否被使用了
+                ProcessNodeTypeDto nodeTypeBase = new ProcessNodeTypeDto();
+                nodeTypeBase.setProcessTypeId(processTypeDto.getId());
+                List<ProcessNodeTypeBase> nodeTypeBaseList = processNodeTypeBaseDao.selectListByCondition(nodeTypeBase);
+                if(CollectionUtil.isNotEmpty(nodeTypeBaseList)){
+                    throw  new ProcessRuntimeException("改流程类型已被使用，不允许删除！");
+                }
+                int flag = processTypeDao.deleteByPrimaryKey(processTypeDto.getId());
+                if(flag != 0){
+                    return  ResultGenerator.getSuccessResult("删除流程类型成功！");
+                }
+                throw new ProcessRuntimeException("删除流程类型出错，请稍后重试!");
+            } catch (Exception e) {
+                logger.error(e.getMessage(),e);
+                throw new ProcessRuntimeException(e.getMessage());
+            }
+
+        }
     }
 
 

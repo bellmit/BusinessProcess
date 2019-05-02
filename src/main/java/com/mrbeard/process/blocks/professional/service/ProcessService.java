@@ -39,6 +39,12 @@ public interface ProcessService {
      */
     Result getProcessTypeList();
 
+    /**
+     * 获取流程类型列表带分页
+     * @return
+     */
+    Result getProcessTypeList(Integer pageNum,Integer pageSize);
+
 
     /**
      * 获取对应用户未办事宜

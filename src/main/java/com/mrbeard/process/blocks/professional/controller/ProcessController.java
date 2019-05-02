@@ -67,6 +67,23 @@ public class ProcessController {
     }
 
 
+    /**
+     * 获取流程类型列表带分页
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/getProcessTypeListWithPage")
+    public Result getProcessTypeListWithPage(Integer pageNum, Integer pageSize){
+        return processService.getProcessTypeList(pageNum,pageSize);
+    }
+
+
+    /**
+     * 配置流程类型
+     * @param processTypeDto
+     * @return
+     */
     @RequestMapping(value = "/postProcessType",method = RequestMethod.POST)
     public Result postProcessType(ProcessTypeDto processTypeDto){
         return processService.postProcessType(processTypeDto);
