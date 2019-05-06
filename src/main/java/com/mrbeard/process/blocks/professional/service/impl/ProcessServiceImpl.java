@@ -150,7 +150,7 @@ public class ProcessServiceImpl implements ProcessService {
             case "1" : break;
             case "2" :
                 //判断是否所有上一个节点都通过
-                ProcessNodeTypeBase condition = new ProcessNodeTypeBase();
+                ProcessNodeTypeDto condition = new ProcessNodeTypeDto();
                 condition.setId(processNode.getTypeId());
                 ProcessNodeTypeBase processNodeTypeBases = processNodeTypeBaseDao.selectByCondition(condition);
                 //获取所有上级typeId
@@ -485,8 +485,8 @@ public class ProcessServiceImpl implements ProcessService {
      * @return
      */
     @Override
-    public Result getTodoList(Integer pageNum, Integer pageSize, String uid, String nodeState) {
-        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, nodeState);
+    public Result getTodoList(Integer pageNum, Integer pageSize, String uid, String nodeState,String isBeginNode,String isEndNode) {
+        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, nodeState,isBeginNode,isEndNode);
         return ResultGenerator.getSuccessResult(info);
     }
     /**
@@ -495,8 +495,8 @@ public class ProcessServiceImpl implements ProcessService {
      * @return
      */
     @Override
-    public Result getHaddoList(Integer pageNum, Integer pageSize, String uid, String nodeState) {
-        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, nodeState);
+    public Result getHaddoList(Integer pageNum, Integer pageSize, String uid, String nodeState,String isBeginNode,String isEndNode) {
+        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, nodeState,isBeginNode,isEndNode);
         return ResultGenerator.getSuccessResult(info);
     }
 
@@ -509,12 +509,14 @@ public class ProcessServiceImpl implements ProcessService {
      * @param nodeState
      * @return
      */
-    private PageInfo<ProcessNodeInfoDto> getProcessNodeInfoDtoPageInfo(Integer pageSize, Integer pageNum, String uid, String nodeState) {
+    private PageInfo<ProcessNodeInfoDto> getProcessNodeInfoDtoPageInfo(Integer pageSize, Integer pageNum, String uid, String nodeState,String isBeginNode,String isEndNode) {
         PageHelper.startPage(pageNum, pageSize);
         List<ProcessNodeInfoDto> infoDtoList = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
         map.put("uid", uid);
         map.put("nodeState", nodeState);
+        map.put("isBeginNode",isBeginNode);
+        map.put("isEndNode",isEndNode);
         infoDtoList = processDao.seleNodeInfoByUid(map);
         return new PageInfo<>(infoDtoList);
     }
@@ -528,7 +530,7 @@ public class ProcessServiceImpl implements ProcessService {
      */
     @Override
     public Result getUserProcessInfo(Integer pageNum, Integer pageSize, String uid) {
-        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, null);
+        PageInfo<ProcessNodeInfoDto> info = getProcessNodeInfoDtoPageInfo(pageSize, pageNum, uid, null,"1","0");
         return ResultGenerator.getSuccessResult(info);
     }
 

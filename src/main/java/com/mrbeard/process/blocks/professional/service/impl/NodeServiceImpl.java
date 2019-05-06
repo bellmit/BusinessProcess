@@ -60,6 +60,9 @@ public class NodeServiceImpl  implements NodeService {
         if(ToolUtil.checkParamter(nodeTypeDto.getId())){
             //修改
             if(ToolUtil.checkParamter(nodeTypeDto.getName())){
+                //获取父节点名称
+                ProcessNodeTypeBase typeBase = processNodeTypeBaseDao.selectByPrimaryKey(nodeTypeBase.getParentsId());
+                nodeTypeBase.setParentsName(typeBase.getName());
                 processNodeTypeBaseDao.updateByPrimaryKeySelective(nodeTypeBase);
                 return ResultGenerator.getSuccessResult("修改节点类型成功！");
             }else{

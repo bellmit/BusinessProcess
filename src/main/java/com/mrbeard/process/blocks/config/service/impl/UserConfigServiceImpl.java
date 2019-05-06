@@ -130,11 +130,13 @@ public class UserConfigServiceImpl implements UserConfigService {
             userService.updateById(userInData);
             //更新角色用户信息
             roleService.updateUserRoleByUserId(user.getUid(),user.getRoleId());
-            //更新岗位
-            if(!user.getStationId().equals("none")){
-                Station station = stationDao.selectByPrimaryKey(user.getStationId());
-                station.setUid(userInData.getUid());
-                stationDao.updateByPrimaryKeySelective(station);
+            if(StrUtil.isNotEmpty(user.getStationId())){
+                //更新岗位
+                if(!user.getStationId().equals("none")){
+                    Station station = stationDao.selectByPrimaryKey(user.getStationId());
+                    station.setUid(userInData.getUid());
+                    stationDao.updateByPrimaryKeySelective(station);
+                }
             }
             return ResultGenerator.getSuccessResult("修改成功！");
         } else {

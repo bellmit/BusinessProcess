@@ -32,7 +32,7 @@ public interface ProcessNodeTypeBaseMapper {
      * @param processNodeTypeBase
      * @return
      */
-    ProcessNodeTypeBase selectByCondition(ProcessNodeTypeBase processNodeTypeBase);
+    ProcessNodeTypeBase selectByCondition(ProcessNodeTypeDto processNodeTypeBase);
 
     /**
      * 多项条件查询列表

@@ -36,8 +36,7 @@ public class ProcessController {
     @RequestMapping(value = "/createProcess",method = RequestMethod.POST)
     public Result createProcess(ProcessDto processDto){
         //校验参数
-        if(ToolUtil.checkParamter(processDto.getLevel(),
-                processDto.getTempId(),processDto.getTypeId(),processDto.getNodebranch(),processDto.getNodeTypeId()) != true){
+        if(ToolUtil.checkParamter(processDto.getLevel(),processDto.getTypeId(),processDto.getNodeTypeId()) != true){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
         return processService.createProcess(processDto);
@@ -101,7 +100,7 @@ public class ProcessController {
         if(!ToolUtil.checkParamter(pageNum,pageSize,uid)){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
-        return processService.getTodoList(pageNum,pageSize,uid,"0");
+        return processService.getTodoList(pageNum,pageSize,uid,"0","0","0");
     }
 
 
@@ -115,7 +114,7 @@ public class ProcessController {
         if(!ToolUtil.checkParamter(pageNum,pageSize,uid)){
             return ResultGenerator.getErrorResult(Constant.PARAM_LOSS);
         }
-        return processService.getHaddoList(pageNum,pageSize,uid,"1");
+        return processService.getHaddoList(pageNum,pageSize,uid,"1","0","0");
     }
 
 

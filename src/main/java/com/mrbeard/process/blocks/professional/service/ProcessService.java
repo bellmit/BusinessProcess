@@ -51,14 +51,14 @@ public interface ProcessService {
      * @param uid
      * @return
      */
-    Result getTodoList(Integer pageNum, Integer pageSize, String uid ,String nodeState);
+    Result getTodoList(Integer pageNum, Integer pageSize, String uid ,String nodeState,String isBeginNode,String isEndNode);
 
     /**
      * 获取对应用户已办事宜
      * @param uid
      * @return
      */
-    Result getHaddoList(Integer pageNum, Integer pageSize, String uid, String nodeState);
+    Result getHaddoList(Integer pageNum, Integer pageSize, String uid, String nodeState,String isBeginNode,String isEndNode);
 
     /**
      * 获取用户创建的流程信息

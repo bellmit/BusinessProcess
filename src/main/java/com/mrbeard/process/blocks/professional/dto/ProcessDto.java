@@ -67,6 +67,8 @@ public class ProcessDto {
     private String id;
 
 
+    private String applicationReason;
+
     public String getTitle() {
         return title;
     }
@@ -169,5 +171,13 @@ public class ProcessDto {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getApplicationReason() {
+        return applicationReason;
+    }
+
+    public void setApplicationReason(String applicationReason) {
+        this.applicationReason = applicationReason;
     }
 }

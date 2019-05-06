@@ -58,13 +58,16 @@
     FROM
 	p_process p
 	LEFT JOIN p_node n ON  p.id = n.proId
-	LEFT JOIN qx_user u ON u.uid = n.currentHandlePersonId
+	LEFT JOIN qx_user u ON u.uid = p.createdId
 	<where>
 	    <if test="uid != null and uid != ''">
           and n.currentHandlePersonId = #{uid}
         </if>
         <if test="nodeState != null">
-          and nodeState = #{nodeState}
+          and n.nodeState = #{nodeState}
+        </if>
+        <if test="isBeginNode != null">
+          and n.isBeginNode = #{isBeginNode}
         </if>
     </where>
   </select>
